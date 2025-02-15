@@ -26,6 +26,10 @@ def topics_listing():
 def cpermutation():
     return render_template("cpermutation.html")
 
+@app.route("/cdesplazamiento")
+def cdesplazamiento():
+    return render_template("cdesplazamiento.html")
+
 # funciones de cifrado
 
 '''@app.route('/tipo')
