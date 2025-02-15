@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
@@ -37,25 +37,34 @@ def tipo_cifrado():
 
 @app.route('/encrypt', methods=['POST'])
 def encrypt():
-    mensaje = request.form.get('message', '').strip()
-    if not mensaje:
-        return render_template('topics-detail.html', error="El campo no puede estar vacío.")
+    try:
+        data = request.get_json()
+        mensaje = data.get("message", "").strip()
+        clave = data.get("key", 0)
 
-    mensaje_cifrado = shift_cipher_encrypt(mensaje, 3)
-    return render_template('topics-detail.html', encrypted_message=mensaje_cifrado)
+        # Validaciones
+        if not mensaje:
+            return jsonify({"error": "El mensaje no puede estar vacío"}), 400
+            
+        if not isinstance(clave, int) or clave < 1 or clave > 25:
+            return jsonify({"error": "La clave debe ser un número entre 1 y 25"}), 400
 
-# Desplazamiento
+        # Cifrar
+        mensaje_cifrado = shift_cipher_encrypt(mensaje, clave)
+        return jsonify({"encrypted_message": mensaje_cifrado})
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 def shift_cipher_encrypt(text, key):
     encrypted_text = ""
     for char in text:
-        if char.isalpha():  # Solo cifrar letras
+        if char.isalpha():
             base = ord('A') if char.isupper() else ord('a')
             encrypted_char = chr((ord(char) - base + key) % 26 + base)
             encrypted_text += encrypted_char
         else:
-            encrypted_text += char  # No cifrar caracteres especiales
+            encrypted_text += char
     return encrypted_text
 
 # Vigenere
