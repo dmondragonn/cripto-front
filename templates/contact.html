@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Topic Listing Contact Page</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+                        
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="../static/css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="path/to/bootstrap.css">
+
+        <!-- Incluir Bootstrap Icons -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+
+        <main>
+
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+                        <i class="bi bi-person-lock"></i>
+                        <span>CryptoPlayground</span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('index') }}">Inicio</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="{{ url_for('index') }}#section_2">Explorar cifrados</a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="{{ url_for('index') }}#section_3">Cómo funciona</a>
+                            </li>
+
+
+                            <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <header class="site-header d-flex flex-column justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-5 col-12">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Página principal</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Nosotros</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">¿Quiénes somos?</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+
+            <section class="about us">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-12 col-12">
+                            <h3 class="mb-4 pb-2">¿Quiénes están detrás de CryptoPlayground?</h3>
+                        </div>
+                        
+                        <div class="col-lg-12 col-12">
+                            <p class="mb-4 pb-2">Somos un grupo de estudiantes de la Universidad Nacional de Colombia que decidimos crear esta página web para ayudar a las personas a entender el mundo de la criptografía. Nuestro objetivo es brindar información de calidad, de fácil entendimiento, pero sobre todo de una manera más interactiva para que cualquier persona pueda aprender sobre este tema.</p>
+                        
+                            <div class="col-lg-5 col-12 mx-auto mt-5 mt-lg-0">
+                                <div class="row">
+                                    <div class="col-6 col-md-3 mb-4 text-center person-container">
+                                        <img src="../static/images/Tania.jpg" class="img-fluid rounded fixed-size" alt="Person 1">
+                                        <h5 class="mt-2">Tania Julieth Araque Dueñas</h5>
+                                        <p>Estudiante de ciencias de la computación</p>
+                                    </div>
+
+                                    <div class="col-6 col-md-3 mb-4 text-center person-container">
+                                        <img src="../static/images/Duvan.jpg" class="img-fluid rounded fixed-size" alt="Person 2">
+                                        <h5 class="mt-2">Duván Felipe Mondragón Bravo</h5>
+                                        <p>Estudiante de ingeniería de sistemas</p>
+                                    </div>
+
+                                    <div class="col-6 col-md-3 mb-4 text-center person-container">
+                                        <img src="../static/images/Deiver.jpg" class="img-fluid rounded fixed-size" alt="Person 3">
+                                        <h5 class="mt-2">Deiver Jair Bernal Garzón</h5>
+                                        <p>Estudiante de ciencias de la computación</p>
+                                    </div>
+
+                                    <div class="col-6 col-md-3 mb-4 text-center person-container">
+                                        <img src="../static/images/Camilo.jpg" class="img-fluid rounded fixed-size" alt="Person 4">
+                                        <h5 class="mt-2">Camilo Andres Roncancio Toca</h5>
+                                        <p>Estudiante de ingeniería de sistemas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <style>
+                            .fixed-size {
+                                width: 150px;
+                                height: 150px;
+                                object-fit: cover;
+                            }
+                            .person-container {
+                                margin-bottom: 50px; /* Adjust this value to increase/decrease spacing */
+                            }
+                            .person-name {
+                                font-size: 1rem; /* Adjust this value to change the font size of the names */
+                            }
+                            .person-occupation {
+                                font-size: 0.5rem; /* Adjust this value to change the font size of the occupations */
+                            }
+                        </style>
+                    </div>    
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer section-padding text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0">
+                        <div class="logo-container">
+                            <img src="../static/images/Logotipo_UNAL.svg" alt="Logo" class="img-fluid">
+                        </div>
+        
+                        <p class="copyright-text mt-lg-5 mt-4">
+                            Copyright © 2024 Crypto Playground. All rights reserved.
+                        </p>      
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <style>
+            .site-footer {
+                font-size: 1rem; /* Adjust this value to change the font size of the footer text */
+            }
+            .site-footer a {
+                font-size: 1rem; /* Adjust this value to change the font size of the footer links */
+            }
+        </style>
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/js/jquery.sticky.js"></script>
+        <script src="../static/js/custom.js"></script>
+
+    </body>
+</html>

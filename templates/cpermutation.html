@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Cifrado de permutación</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <header
+        class="site-header d-flex flex-column justify-content-center align-items-center"
+      >
+        <div class="container">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-lg-5 col-12 mb-5">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}">Inicio</a>
+
+                  <li class="breadcrumb-item active" aria-current="page">
+                    Cifrado 1
+                  </li>
+                </ol>
+              </nav>
+
+              <h2 class="text-white">Cifrado De {{tipo_cifrado}}<br /></h2>
+
+              <div class="d-flex align-items-center mt-5">
+                <a
+                  href="#topics-detail"
+                  class="btn custom-btn custom-border-btn smoothscroll me-4"
+                  >Playground!</a
+                >
+              </div>
+            </div>
+
+            <div class="col-lg-5 col-12">
+              <div class="topics-detail-block bg-white shadow-lg">
+                <img
+                  src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                  class="topics-detail-block-image img-fluid"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section-padding section-bg">
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-12 col-12">
+              <h3 class="mb-4 pb-2">Escribe el texto que quieres cifrar</h3>
+            </div>
+
+            <div class="col-lg-6 col-12">
+              <form
+                action="/encrypt"
+                method="POST"
+                class="custom-form contact-form"
+                role="form"
+              >
+                <div class="row gy-4 justify-content-center">
+                  <div class="col-lg-12 col-12">
+                    <div class="form-floating">
+                      <textarea
+                        class="form-control"
+                        id="message"
+                        name="message"
+                        placeholder="Escribe aquí..."
+                      ></textarea>
+                      <label for="floatingTextarea">Escribe aquí...</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12"> <button type="submit" class="form-control btn btn-primary"> Enviar </button> </div> </div> </form> </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="row gy-4 justify-content-center">
+        {% if encrypted_message %}
+        <div class="col-lg-12 col-12">
+          <div class="alert alert-success">
+            <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <section class="topics-detail-section section-padding" id="topics-detail">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado 1</h3>
+
+              <p>
+                So how can you stand out, do something unique and interesting,
+                build an online business, and get paid enough to change life.
+                Please visit TemplateMo website to download free website
+                templates.
+              </p>
+
+              <p>
+                <strong>There are so many ways to make money online</strong>.
+                Below are several platforms you can use to find success. Keep in
+                mind that there is no one path everyone can take. If that were
+                the case, everyone would have a million dollars.
+              </p>
+
+              <blockquote>
+                Freelancing your skills isn’t going to make you a millionaire
+                overnight.
+              </blockquote>
+
+              <div class="row my-4">
+                <div class="col-lg-6 col-md-6 col-12">
+                  <img
+                    src="../static/images/businesswoman-using-tablet-analysis.jpg"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
+                  <img
+                    src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+
+              <p>
+                Most people start with freelancing skills they already have as a
+                side hustle to build up income. This extra cash can be used for
+                a vacation, to boost up savings, investing, build business.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+</html>
