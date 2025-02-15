@@ -1,125 +1,125 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
 
-    <title>Cifrado de permutación</title>
+      <title>Cifrado de permutación</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-      rel="stylesheet"
-    />
-    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-      rel="stylesheet"
-    />
-  </head>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+        rel="stylesheet"
+      />
+      <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+      />
+      <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+      />
+    </head>
 
-  
+    
 
-  
+    
 
-  <body id="top">
-    <main>
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="{{ url_for('index') }}">
-            <i class="bi bi-person-lock"></i>
-            <span>CryptoPlayground</span>
-          </a>
-
-          <div class="d-lg-none ms-auto me-4">
-            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
-          </div>
-
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-lg-5 me-lg-auto">
-              <li class="nav-item">
-                <a class="nav-link click-scroll" href="/">Inicio</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link click-scroll" href="/"
-                  >Explorar cifrados</a
-                >
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link click-scroll" href="/ #section_3"
-                  >Cómo funciona</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-        <header
-          class="site-header d-flex flex-column justify-content-center align-items-center"
-        >
+    <body id="top">
+      <main>
+        <nav class="navbar navbar-expand-lg">
           <div class="container">
-            <div class="row justify-content-center align-items-center">
-              <div class="col-lg-5 col-12 mb-5">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="{{ url_for('index') }}">Inicio</a>
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+              <i class="bi bi-person-lock"></i>
+              <span>CryptoPlayground</span>
+            </a>
 
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Cifrado 1
-                    </li>
-                  </ol>
-                </nav>
+            <div class="d-lg-none ms-auto me-4">
+              <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+            </div>
 
-                <h2 class="text-white">Cifrado por desplazamiento<br /></h2>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="d-flex align-items-center mt-5">
-                  <a
-                    href="#playground"
-                    class="btn custom-btn custom-border-btn smoothscroll me-4"
-                    >Playground!</a
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                <li class="nav-item">
+                  <a class="nav-link click-scroll" href="/">Inicio</a
                   >
-                </div>
-              </div>
+                </li>
 
-              <div class="col-lg-5 col-12">
-                <div class="topics-detail-block bg-white shadow-lg">
-                  <img
-                    src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
-                    class="topics-detail-block-image img-fluid"
-                  />
+                <li class="nav-item">
+                  <a class="nav-link click-scroll" href="/"
+                    >Explorar cifrados</a
+                  >
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link click-scroll" href="/ #section_3"
+                    >Cómo funciona</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+          <header
+            class="site-header d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="container">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5 col-12 mb-5">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="{{ url_for('index') }}">Inicio</a>
+
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Cifrado 1
+                      </li>
+                    </ol>
+                  </nav>
+
+                  <h2 class="text-white">Cifrado por desplazamiento<br /></h2>
+
+                  <div class="d-flex align-items-center mt-5">
+                    <a
+                      href="#playground"
+                      class="btn custom-btn custom-border-btn smoothscroll me-4"
+                      >Playground!</a
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-12">
+                  <div class="topics-detail-block bg-white shadow-lg">
+                    <img
+                      src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                      class="topics-detail-block-image img-fluid"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <section class="section-padding section-bg" id="playground">
+          <section class="section-padding section-bg" id="playground">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-12 col-12">
@@ -129,150 +129,136 @@
                         <form id="cipherForm" class="custom-form contact-form">
                             <div class="row gy-4 justify-content-center">
                                 <div class="col-lg-12 col-12">
-                                    <div class="btn-group" role="group">
-                                        <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
-                                        <label class="btn btn-outline-primary" for="encryptRadio">Encriptar</label>
-                                        
-                                        <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
-                                        <label class="btn btn-outline-primary" for="decryptRadio">Desencriptar</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-12">
                                     <div class="form-floating">
                                         <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                        <label for="message">Texto a procesar</label>
+                                        <label for="message">Texto a cifrar</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-12">
                                     <div class="form-floating">
                                         <input type="number" class="form-control" id="key" placeholder="Ej: 3" min="1" max="25" required>
-                                        <label for="key">Clave de desplazamiento (1-25)</label>
+                                        <label for="key">Clave de desplazamiento (ej: 3)</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12">
-                                    <button type="submit" class="form-control btn btn-primary">Procesar</button>
+                                    <button type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
                                 </div>
                             </div>
                         </form>
                         <div id="resultado" class="mt-4 p-3 bg-light border rounded">
                             <h5>Resultado:</h5>
-                            <p id="resultText" class="fw-bold text-primary"></p>
+                            <p id="encryptedText" class="fw-bold text-primary"></p>
                         </div>
                     </div>
                 </div>
             </div>
-          </section>
-      
-      
-      <div class="row gy-4 justify-content-center">
-        {% if encrypted_message %}
-        <div class="col-lg-12 col-12">
-          <div class="alert alert-success">
-            <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
-          </div>
-        </div>
-        {% endif %}
-      </div>
-
-      <section class="topics-detail-section section-padding" id="biblio">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 col-12 m-auto">
-              <h3 class="mb-4">Cifrado de Desplazamiento (Cifrado César)</h3>
-
-              <p>
-                El cifrado de desplazamiento, también conocido como Cifrado César, es uno de los métodos de cifrado más antiguos y simples. 
-                Consiste en sustituir cada letra de un mensaje por otra que se encuentra un número fijo de posiciones más adelante en el alfabeto.
-
-                Por ejemplo, con un desplazamiento de 3 posiciones:
-
-                A → D
-                B → E
-                C → F
-                Hola → Krod
-                El receptor del mensaje puede descifrarlo simplemente retrocediendo el mismo número de posiciones en el alfabeto.
-              </p>
-
-              <p>
-                <strong>Historia del Cifrado César</strong><br>
-                El cifrado recibe su nombre del general y político romano Julio César, quien lo utilizaba para enviar mensajes secretos a sus generales. 
-                César solía usar un desplazamiento de tres posiciones, lo que garantizaba cierto nivel de seguridad en su época.
-                Aunque hoy en día este cifrado es muy fácil de romper con herramientas modernas, sigue siendo un excelente punto de partida para aprender sobre criptografía.
-              </p>
-
-              <blockquote>
-                Freelancing your skills isn’t going to make you a millionaire
-                overnight.
-              </blockquote>
-
-              <div class="row my-4">
-                <div class="col-lg-6 col-md-6 col-12">
-                  <img
-                    src="../static/images/businesswoman-using-tablet-analysis.jpg"
-                    class="topics-detail-block-image img-fluid"
-                  />
-                </div>
-
-                <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                  <img
-                    src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
-                    class="topics-detail-block-image img-fluid"
-                  />
-                </div>
-              </div>
-
-              <p>
-                Most people start with freelancing skills they already have as a
-                side hustle to build up income. This extra cash can be used for
-                a vacation, to boost up savings, investing, build business.
-              </p>
+        </section>
+        
+        
+        <div class="row gy-4 justify-content-center">
+          {% if encrypted_message %}
+          <div class="col-lg-12 col-12">
+            <div class="alert alert-success">
+              <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
             </div>
           </div>
+          {% endif %}
         </div>
-      </section>
-    </main>
 
-    <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/jquery.sticky.js"></script>
-    <script src="../static/js/custom.js"></script>
-  </body>
+        <section class="topics-detail-section section-padding" id="biblio">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-12 m-auto">
+                <h3 class="mb-4">Cifrado de Desplazamiento (Cifrado César)</h3>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("cipherForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            
-            const message = document.getElementById("message").value;
-            const key = parseInt(document.getElementById("key").value);
-            const action = document.querySelector('input[name="action"]:checked').value;
-            const resultElement = document.getElementById("resultText");
+                <p>
+                  El cifrado de desplazamiento, también conocido como Cifrado César, es uno de los métodos de cifrado más antiguos y simples. 
+                  Consiste en sustituir cada letra de un mensaje por otra que se encuentra un número fijo de posiciones más adelante en el alfabeto.
 
-            try {
-                const response = await fetch("/process", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        message: message,
-                        key: key,
-                        action: action 
-                    })
-                });
+                  Por ejemplo, con un desplazamiento de 3 posiciones:
 
-                const data = await response.json();
-                
-                if (!response.ok) throw new Error(data.error || "Error del servidor");
-                
-                resultElement.textContent = data.result;
-                resultElement.classList.remove("text-danger");
-                resultElement.classList.add("text-primary");
-            } catch (error) {
-                resultElement.textContent = `Error: ${error.message}`;
-                resultElement.classList.remove("text-primary");
-                resultElement.classList.add("text-danger");
-                console.error("Error:", error);
-            }
-        });
-    });
-    </script>
-</html>
+                  A → D
+                  B → E
+                  C → F
+                  Hola → Krod
+                  El receptor del mensaje puede descifrarlo simplemente retrocediendo el mismo número de posiciones en el alfabeto.
+                </p>
+
+                <p>
+                  <strong>Historia del Cifrado César</strong><br>
+                  El cifrado recibe su nombre del general y político romano Julio César, quien lo utilizaba para enviar mensajes secretos a sus generales. 
+                  César solía usar un desplazamiento de tres posiciones, lo que garantizaba cierto nivel de seguridad en su época.
+                  Aunque hoy en día este cifrado es muy fácil de romper con herramientas modernas, sigue siendo un excelente punto de partida para aprender sobre criptografía.
+                </p>
+
+                <blockquote>
+                  Freelancing your skills isn’t going to make you a millionaire
+                  overnight.
+                </blockquote>
+
+                <div class="row my-4">
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <img
+                      src="../static/images/businesswoman-using-tablet-analysis.jpg"
+                      class="topics-detail-block-image img-fluid"
+                    />
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
+                    <img
+                      src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
+                      class="topics-detail-block-image img-fluid"
+                    />
+                  </div>
+                </div>
+
+                <p>
+                  Most people start with freelancing skills they already have as a
+                  side hustle to build up income. This extra cash can be used for
+                  a vacation, to boost up savings, investing, build business.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <script src="../static/js/jquery.min.js"></script>
+      <script src="../static/js/bootstrap.bundle.min.js"></script>
+      <script src="../static/js/jquery.sticky.js"></script>
+      <script src="../static/js/custom.js"></script>
+    </body>
+
+      <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          document.getElementById("cipherForm").addEventListener("submit", async (e) => {
+              e.preventDefault();
+              
+              const message = document.getElementById("message").value;
+              const key = parseInt(document.getElementById("key").value);  // Convertir a número
+              const resultElement = document.getElementById("encryptedText");
+
+              try {
+                  const response = await fetch("/encrypt", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ message, key })
+                  });
+
+                  const data = await response.json();
+                  
+                  if (!response.ok) throw new Error(data.error || "Error del servidor");
+                  
+                  resultElement.textContent = data.encrypted_message;
+                  resultElement.classList.remove("text-danger");
+                  resultElement.classList.add("text-primary");
+              } catch (error) {
+                  resultElement.textContent = `Error: ${error.message}`;
+                  resultElement.classList.remove("text-primary");
+                  resultElement.classList.add("text-danger");
+                  console.error("Error:", error);
+              }
+          });
+      });
+      </script>
+  </html>
