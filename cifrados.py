@@ -3,7 +3,9 @@ from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
 from Crypto.Util.number import bytes_to_long, long_to_bytes
 
-                         
+
+# Desplazamiento
+
 def shift_cipher_encrypt(text, key):
     encrypted_text = ""
     for char in text:
@@ -14,6 +16,11 @@ def shift_cipher_encrypt(text, key):
         else:
             encrypted_text += char
     return encrypted_text
+
+
+def shift_cipher_decrypt(text, key):
+    return shift_cipher_encrypt(text, -key)
+
 
 # Vigenere
 
@@ -109,16 +116,34 @@ def cifrado_permutacion_desencriptar(texto_cifrado, clave):
 
     return ''.join(texto_desencriptado).rstrip()
 
-def generate_keys(bits=2048):  #Claves publicas y privadas
+
+# ElGamal
+
+def generate_keys(bits=512): # Genera una private key y una public
+
     key = ElGamal.generate(bits, get_random_bytes)
     return key, key.publickey()
 
-def elgamal_encrypt(public_key, message): #Cifrado de mensaje Clave pública
-    m = bytes_to_long(message.encode())  
-    k = randint(1, public_key.p - 1)  # Generar número aleatorio k
-    ciphertext = public_key.encrypt(m, k)  # Cifrar mensaje
-    return ciphertext
 
-def elgamal_decrypt(private_key, ciphertext):#Desceifrado 
-    decrypted_m = private_key.decrypt(ciphertext)
-    return long_to_bytes(decrypted_m).decode()
+def elgamal_encrypt(public_key, message):
+
+    m = bytes_to_long(message.encode())
+    k = randint(1, int(public_key.p - 2))
+
+    p, g, y = int(public_key.p), int(public_key.g), int(public_key.y)
+
+    c1 = pow(g, k, p)
+    c2 = (m * pow(y, k, p)) % p
+    return (c1, c2)
+
+
+def elgamal_decrypt(private_key, ciphertext):
+
+    c1, c2 = ciphertext
+
+    p, x = int(private_key.p), int(private_key.x)
+
+    s = pow(c1, x, p)
+    s_inv = pow(s, -1, p)
+    m = (c2 * s_inv) % p
+    return long_to_bytes(m).decode()
