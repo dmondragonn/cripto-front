@@ -32,6 +32,17 @@ def cpermutation():
 def cdesplazamiento():
     return render_template("cdesplazamiento.html")
 
+
+@app.route("/cvigenere")
+def cvigenere():
+    return render_template("cvigenere.html")
+
+
+@app.route("/cafin")
+def cafin():
+    return render_template("cafin.html")
+
+
 # funciones de cifrado
 
 

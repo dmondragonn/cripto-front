@@ -1,339 +1,498 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta name="description" content="">
-        <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Inicio | CryptoPlayground</title>
-      
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">       
-        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet">      
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    </head>
-    
-    <body id="top">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-        <main>
+  <title>Inicio | CryptoPlayground</title>
 
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('index') }}">
-                        <i class="bi bi-person-lock"></i>
-                        <span>CryptoPlayground</span>
-                    </a>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+    rel="stylesheet">
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+</head>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-    
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-lg-5 me-lg-auto">
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_1">Inicio</a>
-                            </li>
+<body id="top">
 
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_2">Explorar cifrados</a>
-                            </li>
-    
-                            <li class="nav-item">
-                                <a class="nav-link click-scroll" href="#section_3">Cómo funciona</a>
-                            </li>
+  <main>
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <i class="bi bi-person-lock"></i>
+          <span>CryptoPlayground</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-lg-5 me-lg-auto">
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="#section_1">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="#section_2">Explorar cifrados</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="#section_3">Cómo funciona</a>
+            </li>
 
 
-                            <li class="nav-item">
-                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
-                            </li>
-                        </ul>
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-8 col-12 mx-auto">
+            <h1 class="text-white text-center">Bienvenid@ a CryptoPlayground</h1>
+
+            <h6 class="text-center">Conoce el funcionamiento de los cifrados más importantes en la industria</h6>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        background-color: #000;
+        /* Cambia el color de fondo de las flechas */
+        border-radius: 50%;
+        /* Hace que las flechas sean redondas */
+      }
+
+      .carousel-indicators .active {
+        background-color: #101010;
+        /* Cambia el color del botón activo */
+      }
+    </style>
+
+    <section class="explore-section section-padding" id="section_2">
+      <div class="container">
+        <div class="col-12 text-center">
+          <h2 class="mb-4">Explorar</h2>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="design-tab" data-bs-toggle="tab" data-bs-target="#design-tab-pane"
+                type="button" role="tab" aria-controls="design-tab-pane" aria-selected="true">Cifrados clásicos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane"
+                type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">Categoría 2</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane"
+                type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Categoría 3</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane"
+                type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Categoría 4</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="tab-content" id="myTabContent">
+              <!-- Categoria 1: Carrusel -->
+              <div class="tab-pane fade show active" id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab"
+                tabindex="0">
+                <div id="cifrados2" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                      class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cdesplazamiento')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de desplazamiento</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cafin') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado afín</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                    <div class="carousel-item">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cvigenere') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado Vigenére</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('topics_detail') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado Hill</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <!-- Add more items as needed -->
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#cifrados2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#cifrados2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-            </nav>
-            
+              </div>
 
-            <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
-                <div class="container">
-                    <div class="row">
+              <!-- Categoria 2: Estilo actual -->
 
-                        <div class="col-lg-8 col-12 mx-auto">
-                            <h1 class="text-white text-center">Bienvenid@ a CryptoPlayground</h1>
+              <div class="tab-pane fade show active" id="marketing-tab-pane" role="tabpanel"
+                aria-labelledby="marketing-tab" tabindex="0">
+                <div id="cifrados2" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                      class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
 
-                            <h6 class="text-center">Conoce el funcionamiento de los cifrados más importantes en la industria</h6>
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
                         </div>
 
-                    </div>
-                </div>
-            </section> 
+                        <!-- Add more items as needed -->
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
 
-            <style>
-                .carousel-control-prev-icon,
-                .carousel-control-next-icon {
-                    background-color: #000; /* Cambia el color de fondo de las flechas */
-                    border-radius: 50%; /* Hace que las flechas sean redondas */
-                }
-                
-                .carousel-indicators .active {
-                    background-color: #101010; /* Cambia el color del botón activo */
-                }
-
-            </style>
-
-            <section class="explore-section section-padding" id="section_2">
-                <div class="container">
-                    <div class="col-12 text-center">
-                        <h2 class="mb-4">Explorar</h2>
-                    </div>
-                </div>
-            
-                <div class="container-fluid">
-                    <div class="row">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="design-tab" data-bs-toggle="tab" data-bs-target="#design-tab-pane" type="button" role="tab" aria-controls="design-tab-pane" aria-selected="true">Cifrados clásicos</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane" type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">Categoría 2</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Categoría 3</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane" type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Categoría 4</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="tab-content" id="myTabContent">
-                                <!-- Categoria 1: Carrusel -->
-                                <div class="tab-pane fade show active" id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab" tabindex="0">
-                                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-indicators">
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        </div>
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-
-                                                        <div class="custom-block bg-white shadow-lg">
-                                                            <a href="/cpermutation">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Cifrado de permutación</h5>
-                                                                        <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave específica, ocultando su contenido</p>
-                                                                    </div>
-                                                                </div>
-                                                                <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                                        <div class="custom-block bg-white shadow-lg">
-                                                            <a href="/cdesplazamiento">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Cifrado de desplazamiento</h5>
-                                                                        <p class="mb-0">Descripción</p>
-                                                                    </div>
-                                                                </div>
-                                                                <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                                        <div class="custom-block bg-white shadow-lg">
-                                                            <a href="{{ url_for('topics_detail') }}">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Cifrado afín</h5>
-                                                                        <p class="mb-0">Descripción</p>
-                                                                    </div>
-                                                                </div>
-                                                                <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                                        <div class="custom-block bg-white shadow-lg">
-                                                            <a href="{{ url_for('topics_detail') }}">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Cifrado Vigenére</h5>
-                                                                        <p class="mb-0">Descripción</p>
-                                                                    </div>
-                                                                </div>
-                                                                <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                                        <div class="custom-block bg-white shadow-lg">
-                                                            <a href="{{ url_for('topics_detail') }}">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Cifrado Hill</h5>
-                                                                        <p class="mb-0">Descripción</p>
-                                                                    </div>
-                                                                </div>
-                                                                <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Add more items as needed -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
-                                    </div>
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
                                 </div>
-            
-                                <!-- Categoria 2: Estilo actual -->
-                                <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                            <div class="custom-block bg-white shadow-lg">
-                                                <a href="topics-detail.html">
-                                                    <div class="d-flex">
-                                                        <div>
-                                                            <h5 class="mb-2">Explorar categoría 2</h5>
-                                                            <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
-                                                        </div>
-                                                    </div>
-                                                    <img src="../static/images/topics/undraw_Redesign_feedback_re_jvm0.png" class="custom-block-image img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Add more items as needed -->
-                                    </div>
-                                </div>
-            
-                                <!-- Categoria 3: Estilo actual -->
-                                <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                            <div class="custom-block bg-white shadow-lg">
-                                                <a href="topics-detail.html">
-                                                    <div class="d-flex">
-                                                        <div>
-                                                            <h5 class="mb-2">Explorar categoría 3</h5>
-                                                            <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
-                                                        </div>
-                                                    </div>
-                                                    <img src="../static/images/topics/undraw_Redesign_feedback_re_jvm0.png" class="custom-block-image img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Add more items as needed -->
-                                    </div>
-                                </div>
-            
-                                <!-- Categoria 4: Estilo actual -->
-                                <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                            <div class="custom-block bg-white shadow-lg">
-                                                <a href="topics-detail.html">
-                                                    <div class="d-flex">
-                                                        <div>
-                                                            <h5 class="mb-2">Explorar categoría 4</h5>
-                                                            <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
-                                                        </div>
-                                                    </div>
-                                                    <img src="../static/images/topics/undraw_Redesign_feedback_re_jvm0.png" class="custom-block-image img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Add more items as needed -->
-                                    </div>
-                                </div>
-                            </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
                         </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#cifrados2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#cifrados2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-            </section>
+              </div>
+              <!-- Categoria 3: Estilo actual -->
+              <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab"
+                tabindex="0">
+                <div id="cifrados3" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#cifrados3" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#cifrados3" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
 
-            <section class="timeline-section section-padding" id="section_3">
-                <div class="section-overlay"></div>
-
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-12 text-center">
-                            <h2 class="text-white mb-4">¿Cómo funciona?</h1>
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
                         </div>
 
-                        <div class="col-lg-10 col-12 mx-auto">
-                            <div class="timeline-container">
-                                <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
-                                    <div class="list-progress">
-                                        <div class="inner"></div>
-                                    </div>
+                        <!-- Add more items as needed -->
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
 
-                                    <li>
-                                        <h4 class="text-white mb-3">Encuentra el cifrado de tu preferencia.</h4>
-
-                                        <p class="text-white">Tendrás acceso a múltiples cifrados; simplemente busca el que necesites o el que más te guste y selecciónalo.</p>
-
-                                        <div class="icon-holder">
-                                          <i class="bi-search"></i>
-                                        </div>
-                                    </li>
-                                    
-                                    <li>
-                                        <h4 class="text-white mb-3">Mira comó funciona.</h4>
-
-                                        <p class="text-white">Una vez seleccionado un cifrado, serás dirigido a una página donde lo primero que verás es un cuadro de texto en el cual podrás poner el texto que quieras cifrar o descifrar. Recuerda llenar la información complementaria, la cual será de gran importancia para lograr proteger o cifrar tu mensaje.</p>
-
-                                        <div class="icon-holder">
-                                          <i class="bi-bookmark"></i>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <h4 class="text-white mb-3">¿Quieres saber más?</h4>
-
-                                        <p class="text-white">CryptoPlayground cuenta con la información, la cual fue la base con la cual se desarrollaron estos cifrados.</p>
-
-                                        <div class="icon-holder">
-                                          <i class="bi-book"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
                         </div>
+
+                      </div>
                     </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#cifrados3" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#cifrados3" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-            </section>
+              </div>
+              <!-- Categoria 4: Estilo actual -->
+              <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
+                <div id="cifrados4" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#cifrados4" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#cifrados4" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+
+                          <div class="custom-block bg-white shadow-lg">
+                            <a href="{{ url_for('cpermutation')}}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Reordena los caracteres de un mensaje según un patrón o clave
+                                    específica, ocultando su contenido</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- Add more items as needed -->
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#cifrados4" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#cifrados4" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+    </section>
+
+    <section class="timeline-section section-padding" id="section_3">
+      <div class="section-overlay"></div>
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col-12 text-center">
+            <h2 class="text-white mb-4">¿Cómo funciona?</h1>
+          </div>
+
+          <div class="col-lg-10 col-12 mx-auto">
+            <div class="timeline-container">
+              <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                <div class="list-progress">
+                  <div class="inner"></div>
+                </div>
+
+                <li>
+                  <h4 class="text-white mb-3">Encuentra el cifrado de tu preferencia.</h4>
+
+                  <p class="text-white">Tendrás acceso a múltiples cifrados; simplemente busca el que necesites o el que
+                    más te guste y selecciónalo.</p>
+
+                  <div class="icon-holder">
+                    <i class="bi-search"></i>
+                  </div>
+                </li>
+
+                <li>
+                  <h4 class="text-white mb-3">Mira comó funciona.</h4>
+
+                  <p class="text-white">Una vez seleccionado un cifrado, serás dirigido a una página donde lo primero
+                    que verás es un cuadro de texto en el cual podrás poner el texto que quieras cifrar o descifrar.
+                    Recuerda llenar la información complementaria, la cual será de gran importancia para lograr proteger
+                    o cifrar tu mensaje.</p>
+
+                  <div class="icon-holder">
+                    <i class="bi-bookmark"></i>
+                  </div>
+                </li>
+
+                <li>
+                  <h4 class="text-white mb-3">¿Quieres saber más?</h4>
+
+                  <p class="text-white">CryptoPlayground cuenta con la información, la cual fue la base con la cual se
+                    desarrollaron estos cifrados.</p>
+
+                  <div class="icon-holder">
+                    <i class="bi-book"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
-        </main>
-        
-        <script src="../static/js/jquery.min.js"></script>
-        <script src="../static/js/bootstrap.bundle.min.js"></script>
-        <script src="../static/js/jquery.sticky.js"></script>
-        <script src="../static/js/click-scroll.js"></script>
-        <script src="../static/js/custom.js"></script>
+  </main>
 
-    </body>
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/js/jquery.sticky.js"></script>
+  <script src="../static/js/click-scroll.js"></script>
+  <script src="../static/js/custom.js"></script>
+
+</body>
+
 </html>
