@@ -1111,11 +1111,31 @@ blockquote {
     width: auto;
   }
 
+  /*---------------------------------------
+  Botón custom             
+-----------------------------------------*/
+
+.btn-check:checked + .custom-radio-btn {
+  background-color: #80d0c7 !important; /* Asegurar prioridad */
+  color: white !important;
+  border-color: #80d0c7 !important;
+}
+
+.custom-radio-btn {
+  background-color: white;
+  color: #80d0c7;
+  border: 2px solid #80d0c7;
+  transition: all 0.3s ease;
+}
+
   .custom-block-topics-listing > .d-flex,
   .custom-block-topics-listing-info,
   .custom-block-topics-listing a {
     flex-direction: column;
   }
+
+ /*---------------------------------------         
+-----------------------------------------*/
 
   .timeline-container .vertical-scrollable-timeline .list-progress {
     height: 75%;
