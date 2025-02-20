@@ -239,7 +239,7 @@
               const resultElement = document.getElementById("encryptedText");
 
               try {
-                  const response = await fetch("/encrypt", {
+                  const response = await fetch("/process-desplazamiento", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ message, key })
