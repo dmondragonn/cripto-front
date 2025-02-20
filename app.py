@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+import cifrados
 
 app = Flask(__name__)
 
@@ -58,12 +59,12 @@ def encrypt():
         # Validaciones
         if not mensaje:
             return jsonify({"error": "El mensaje no puede estar vacío"}), 400
-            
+
         if not isinstance(clave, int) or clave < 1 or clave > 25:
             return jsonify({"error": "La clave debe ser un número entre 1 y 25"}), 400
 
         # Cifrar
-        mensaje_cifrado = shift_cipher_encrypt(mensaje, clave)
+        mensaje_cifrado = cifrados.shift_cipher_encrypt(mensaje, clave)
         return jsonify({"encrypted_message": mensaje_cifrado})
 
     except Exception as e:

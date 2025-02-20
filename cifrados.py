@@ -19,39 +19,6 @@ def shift_cipher_encrypt(text, key):
 
 
 # Permutacion
-
-
-@app.route('/process-permutacion', methods=['POST'])
-def process_permutacion():
-    try:
-        data = request.get_json()
-        mensaje = data.get("message", "").strip()
-        clave = data.get("key", "").strip()
-        action = data.get("action", "encrypt")
-
-        # Validaciones
-        if not mensaje or not clave:
-            return jsonify({"error": "Todos los campos son requeridos"}), 400
-            
-        if not clave.isdigit():
-            return jsonify({"error": "La clave debe ser numérica (ej: 231)"}), 400
-
-        # Validar permutación válida
-        longitud = len(clave)
-        if sorted(clave) != sorted(str(i) for i in range(1, longitud+1)):
-            return jsonify({"error": f"Clave inválida. Ejemplo: {''.join(map(str, range(1, longitud+1)))}"}), 400
-
-        # Procesar
-        if action == "encrypt":
-            resultado = cifrado_permutacion_encriptar(mensaje, clave)
-        else:
-            resultado = cifrado_permutacion_desencriptar(mensaje, clave)
-
-        return jsonify({"result": resultado})
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
         
 def cifrado_permutacion_encriptar(texto_plano, clave):
     permutacion = [int(x) - 1 for x in clave]
