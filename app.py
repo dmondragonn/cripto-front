@@ -35,10 +35,31 @@ def cdesplazamiento():
 def cvigenere():
     return render_template("cvigenere.html")
 
+@app.route('/process-affine', methods=['POST'])
+def process_affine():
+    data = request.get_json()
+    message = data['message']
+    key1 = int(data['key1'])
+    key2 = int(data['key2'])
+    action = data['action']
 
-@app.route("/cafin")
+    if action == 'encrypt':
+        result = cifrados.affine_encryption(message, key1, key2)
+    else:
+        result = cifrados.affine_decrypt(message, key1, key2)
+
+    return jsonify(result=result)
+
+@app.route('/cifrado_afin', methods=['GET', 'POST'])
 def cafin():
-    return render_template("cafin.html")
+    if request.method == 'POST':
+        texto_plano = request.form['texto_plano']
+        a = int(request.form['a'])
+        b = int(request.form['b'])
+        texto_cifrado = cifrados.affine_encryption(texto_plano, a, b)
+        return render_template('cafin.html', texto_cifrado=texto_cifrado)
+    return render_template('cafin.html')
+
 
 # funciones de cifrado
 
