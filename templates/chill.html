@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Cifrado afín</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado 1
+                    </li>
+                  </ol>
+                </nav>
+
+                <h2 class="text-white">Cifrado de Hill<br /></h2>
+
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="section-padding section-bg" id="playground">
+          <div class="container">
+              <div class="row justify-content-center text-center">
+                  <div class="col-lg-12 col-12">
+                      <h3 class="mb-4 pb-2">Cifrado afín</h3>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                    <form id="cipherForm" class="custom-form contact-form">
+                      <div class="row gy-4 justify-content-center">
+                          <div class="col-lg-12 col-12">
+                              <div class="btn-group" role="group">
+                                  <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
+                                  <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
+                  
+                                  <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
+                                  <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
+                              </div>
+                          </div>
+                  
+                          <div class="col-lg-12 col-12">
+                              <div class="form-floating">
+                                  <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
+                                  <label for="message">Texto cifrar</label>
+                              </div>
+                          </div>
+                  
+                        <div class="col-lg-6 col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="key" placeholder="Ej: 231" required>
+                                <label for="key1">Clave nxn: (ej: ((17, 4), (14, 39)))</label>
+                            </div>
+                        </div>
+                  
+                          <div class="col-lg-4 col-12">
+                              <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
+                          </div>
+                        </div>
+                      </form>
+                      <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
+                          <h5>Texto cifrado:</h5>
+                          <p id="resultText" class="fw-bold text-primary"></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      
+      
+      <div class="row gy-4 justify-content-center">
+        {% if texto_cifrado %}
+        <div class="col-lg-12 col-12">
+          <div class="alert alert-success">
+            <strong>Mensaje cifrado:</strong> {{ texto_cifrado }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado de Hill</h3>
+
+                <p>
+                El cifrado de Hill es un método de cifrado basado en la multiplicación de matrices y la aritmética modular.
+                Fue creado en 1929 por el matemático estadounidense Lester S. Hill. Fue uno de los primeros cifrados polialfabéticos
+                basados completamente en álgebra lineal y el primero en usar la multiplicación de matrices para la encriptación de mensajes
+                lo cual ayudaba a que este cifrado fuera más resistente al análisis de frecuencia.<br>
+                </p>
+
+                <p><strong>Ejemplo con matriz \( 2 \times 2 \)</strong></p>
+
+                <p>Clave:</p>
+                <p>
+                    \[
+                    K =
+                    \begin{bmatrix}
+                    3 & 3 \\
+                    2 & 5
+                    \end{bmatrix}
+                    \]
+                </p>
+
+                <p>Mensaje: "HI" → \( H = 7, I = 8 \)</p>
+
+                <p>Vector del mensaje:</p>
+                <p>
+                    \[
+                    P =
+                    \begin{bmatrix}
+                    7 \\
+                    8
+                    \end{bmatrix}
+                    \]
+                </p>
+
+                <p>Multiplicación:</p>
+                <p>
+                    \[
+                    C = K \times P \mod 26
+                    \]
+                    \[
+                    \begin{bmatrix}
+                    3 & 3 \\
+                    2 & 5
+                    \end{bmatrix}
+                    \begin{bmatrix}
+                    7 \\
+                    8
+                    \end{bmatrix}
+                    =
+                    \begin{bmatrix}
+                    (3\times7 + 3\times8) \mod 26 \\
+                    (2\times7 + 5\times8) \mod 26
+                    \end{bmatrix}
+                    \]
+                    \[
+                    =
+                    \begin{bmatrix}
+                    45 \mod 26 \\
+                    54 \mod 26
+                    \end{bmatrix}
+                    =
+                    \begin{bmatrix}
+                    19 \\
+                    2
+                    \end{bmatrix}
+                    \]
+                </p>
+
+                <p>Esto da "TC" (T=19, C=2).</p>
+
+                <p><strong>¿Cómo desciframos?</strong></p>
+
+                <p>Para descifrar, se usa la <strong>matriz inversa</strong> de \( K \) en módulo 26.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("cipherForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const message = document.getElementById("message").value;
+            const key = document.getElementById("key").value;
+            const action = document.querySelector('input[name="action"]:checked').value;
+            const resultElement = document.getElementById("resultText");
+
+            try {
+                const response = await fetch("/process-hill", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        message: message,
+                        key: key,
+                        action: action
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.error || "Error del servidor");
+                
+                resultElement.textContent = data.result;
+                resultElement.classList.remove("text-danger");
+                resultElement.classList.add("text-primary");
+            } catch (error) {
+                resultElement.textContent = `Error: ${error.message}`;
+                resultElement.classList.remove("text-primary");
+                resultElement.classList.add("text-danger");
+                console.error("Error:", error);
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const resultadoDiv = document.getElementById("resultado");
+        const procesarBtn = document.getElementById("procesarBtn");
+
+        // Ocultar el div al cargar la página
+        resultadoDiv.style.display = "none";
+
+        procesarBtn.addEventListener("click", function () {
+            // Aquí podrías agregar la lógica para enviar los datos al backend
+            // Por ahora, solo mostramos el div de resultado
+            resultadoDiv.style.display = "block";
+        });
+    });
+</script>
+
+</html>
+

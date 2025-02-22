@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
+import ast
 
 app = Flask(__name__)
 
@@ -50,15 +51,30 @@ def process_affine():
 
     return jsonify(result=result)
 
-@app.route('/cifrado_afin', methods=['GET', 'POST'])
+@app.route('/cifrado_afin')
 def cafin():
-    if request.method == 'POST':
-        texto_plano = request.form['texto_plano']
-        a = int(request.form['a'])
-        b = int(request.form['b'])
-        texto_cifrado = cifrados.affine_encryption(texto_plano, a, b)
-        return render_template('cafin.html', texto_cifrado=texto_cifrado)
     return render_template('cafin.html')
+
+@app.route('/process-hill', methods=['POST'])
+def process_hill():
+    data = request.get_json()
+    message = data['message']
+    key = data['key']
+    action = data['action']
+
+    key_matrix = ast.literal_eval(key)
+    print(key_matrix)
+
+    if action == 'encrypt':
+        result = cifrados.hill_encriptar(message, key_matrix)
+    else:
+        result = cifrados.hill_desencriptar(message, key_matrix)
+
+    return jsonify(result=result)
+
+@app.route('/cifrado_hill')
+def cifrado_hill():
+    return render_template('chill.html')
 
 
 # funciones de cifrado
