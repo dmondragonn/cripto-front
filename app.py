@@ -1,5 +1,10 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
+<<<<<<< HEAD
+=======
+import ast
+
+>>>>>>> main
 app = Flask(__name__)
 
 
@@ -38,9 +43,59 @@ def cvigenere():
     return render_template("cvigenere.html")
 
 
+<<<<<<< HEAD
 @app.route("/cafin")
 def cafin():
     return render_template("cafin.html")
+=======
+@app.route('/process-affine', methods=['POST'])
+def process_affine():
+    data = request.get_json()
+    message = data['message']
+    key1 = int(data['key1'])
+    key2 = int(data['key2'])
+    action = data['action']
+
+    if action == 'encrypt':
+        result = cifrados.affine_encryption(message, key1, key2)
+    else:
+        result = cifrados.affine_decrypt(message, key1, key2)
+
+    return jsonify(result=result)
+
+
+@app.route('/cifrado_afin')
+def cafin():
+    return render_template('cafin.html')
+
+
+@app.route('/process-hill', methods=['POST'])
+def process_hill():
+    data = request.get_json()
+    message = data['message']
+    key = data['key']
+    action = data['action']
+
+    key_matrix = ast.literal_eval(key)
+    print(key_matrix)
+
+    if action == 'encrypt':
+        result = cifrados.hill_encriptar(message, key_matrix)
+    else:
+        result = cifrados.hill_desencriptar(message, key_matrix)
+
+    return jsonify(result=result)
+
+
+@app.route('/cifrado_hill')
+def cifrado_hill():
+    return render_template('chill.html')
+
+
+@app.route('/hill-image')
+def hill_image():
+    return render_template('hill-image.html')
+>>>>>>> main
 
 
 # funciones de cifrado
@@ -53,7 +108,7 @@ def tipo_cifrado():
 '''
 
 
-@app.route('/encrypt', methods=['POST'])
+@app.route('/process-desplazamiento', methods=['POST'])
 def encrypt():
     try:
         data = request.get_json()
@@ -74,6 +129,52 @@ def encrypt():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+<<<<<<< HEAD
+=======
+
+@app.route('/process-permutacion', methods=['POST'])
+def process_permutacion():
+    try:
+        data = request.get_json()
+        mensaje = data.get("message", "").strip()
+        clave = data.get("key", "").strip()
+        action = data.get("action", "encrypt")
+
+        # Validaciones
+        if not mensaje or not clave:
+            return jsonify({"error": "Todos los campos son requeridos"}), 400
+
+        if not clave.isdigit():
+            return jsonify({"error": "La clave debe ser numérica (ej: 231)"}), 400
+
+        # Validar permutación válida
+        longitud = len(clave)
+        if sorted(clave) != sorted(str(i) for i in range(1, longitud+1)):
+            return jsonify({"error": f"Clave inválida. Ejemplo: {''.join(map(str, range(1, longitud+1)))}"}), 400
+
+        # Validar longitud en descifrado
+        if action == "decrypt" and len(mensaje) % longitud != 0:
+            return jsonify({"error": "Texto cifrado inválido (longitud incorrecta)"}), 400
+
+        # Procesar
+        if action == "encrypt":
+            resultado = cifrados.cifrado_permutacion_encriptar(mensaje, clave)
+        else:
+            resultado = cifrados.cifrado_permutacion_desencriptar(
+                mensaje, clave)
+
+        return jsonify({"result": resultado})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('procesar-hill-img', methods=['POST'])
+def process_hillimg():
+
+    pass
+
+>>>>>>> main
 
 if __name__ == "__main__":
     app.run(debug=True)

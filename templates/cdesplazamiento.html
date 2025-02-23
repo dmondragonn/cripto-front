@@ -141,11 +141,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-12">
-                                    <button type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
+                                    <button id="procesarBtn" type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
                                 </div>
                             </div>
                         </form>
-                        <div id="resultado" class="mt-4 p-3 bg-light border rounded">
+                        <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
                             <h5>Resultado:</h5>
                             <p id="encryptedText" class="fw-bold text-primary"></p>
                         </div>
@@ -239,7 +239,7 @@
               const resultElement = document.getElementById("encryptedText");
 
               try {
-                  const response = await fetch("/encrypt", {
+                  const response = await fetch("/process-desplazamiento", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ message, key })
@@ -260,5 +260,19 @@
               }
           });
       });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const resultadoDiv = document.getElementById("resultado");
+        const procesarBtn = document.getElementById("procesarBtn");
+
+        // Ocultar el div al cargar la página
+        resultadoDiv.style.display = "none";
+
+        procesarBtn.addEventListener("click", function () {
+            // Aquí podrías agregar la lógica para enviar los datos al backend
+            // Por ahora, solo mostramos el div de resultado
+            resultadoDiv.style.display = "block";
+        });
+    });
       </script>
   </html>
