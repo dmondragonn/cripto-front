@@ -89,321 +89,363 @@
       }
     </style>
 
-<section class="explore-section section-padding" id="section_2">
-  <div class="container">
-    <div class="col-12 text-center">
-      <h2 class="mb-4">Explorar </h2>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div class="row">
-      <ul class="nav nav-tabs" id="ctext" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="classic-tab" data-bs-toggle="tab" data-bs-target="#classic-tab-pane"
-            type="button" role="tab" aria-controls="classic-tab-pane" aria-selected="true">Criptografía clásica</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="modern-tab" data-bs-toggle="tab" data-bs-target="#modern-tab-pane"
-            type="button" role="tab" aria-controls="modern-tab-pane" aria-selected="false">Criptografía moderna</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="visual-tab" data-bs-toggle="tab" data-bs-target="#visual-tab-pane"
-            type="button" role="tab" aria-controls="visual-tab-pane" aria-selected="false">Criptografía visual</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <div class="tab-content" id="ctextContent">
-  
-              <!-- Cifrados Clásicos -->
-              <div class="tab-pane fade show active" id="classic-tab-pane" role="tabpanel" aria-labelledby="classic-tab">
-                <div id="carouselCifrados1" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselCifrados1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselCifrados1" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    </div>
-
-                    <div class="carousel-inner py-3">
-                        <!-- Primer Slide -->
-                        <div class="carousel-item active">
-                            <div class="row">
-
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="/cpermutation">
-                                          <div class="d-flex">
-                                              <div>
-                                                  <h5 class="mb-2">Cifrado de permutación</h5>
-                                                  <p class="mb-0">Es un método de transposición en el que el orden de las letras del mensaje original se reorganiza según una regla o clave específica, sin alterar su identidad.</p>
-                                              </div>
-                                          </div>
-                                          <img src="../static/images/topics/permutation.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="/cdesplazamiento">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <h5 class="mb-2">Cifrado de desplazamiento</h5>
-                                                    <p class="mb-0">Es un método de sustitución monoalfabética en el que cada letra del mensaje original se reemplaza por otra que se encuentra un número fijo de posiciones adelante en el alfabeto</p>
-                                                </div>
-                                            </div>
-                                            <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="{{ url_for('cafin') }}">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <h5 class="mb-2">Cifrado afín</h5>
-                                                    <p class="mb-0">Es un método de sustitución monoalfabética que aplica una función matemática lineal a cada letra del mensaje original, usando una clave con dos valores para cifrar y descifrar.</p>
-                                                </div>
-                                            </div>
-                                            <img src="../static/images/topics/afin.jpg" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <!-- Segundo Slide -->
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="{{ url_for('cvigenere') }}">
-                                            <h5 class="mb-2">Cifrado Vigenére</h5>
-                                            <p>Es un método de sustitución polialfabética que utiliza una clave en forma de palabra o frase para cifrar el mensaje, aplicando diferentes desplazamientos en el alfabeto según cada letra de la clave.</p>
-                                            <img src="../static/images/topics/vigenere.png" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="{{ url_for('chill') }}">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <h5 class="mb-2">Cifrado de Hill</h5>
-                                                    <p class="mb-0">Es un método de sustitución poligrámica que usa álgebra matricial para transformar bloques de letras en texto cifrado, multiplicando cada bloque por una matriz clave invertible en un módulo específico.</p>
-                                                </div>
-                                            </div>
-                                            <img src="../static/images/topics/hill.png" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados1" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados1" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-              </div>
-            
-
-              <!-- Criptografía moderna -->
-              <div class="tab-pane fade"1 id="modern-tab-pane" role="tabpanel" aria-labelledby="modern-tab">
-                <div id="carouselCifrados2" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselCifrados2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselCifrados2" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    </div>
-                    <div class="carousel-inner py-3">
-                        <!-- Primer Slide -->
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="/cpermutation">
-                                            <h5 class="mb-2">Cifrado AES</h5>
-                                            <p>Es un cifrado simétrico por bloques que emplea sustitución y permutación en múltiples rondas para transformar el mensaje original en texto cifrado.</p>
-                                            <img src="../static/images/topics/aes.jpg" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="/cdesplazamiento">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <h5 class="mb-2">Cifrado DES-S</h5>
-                                                    <p class="mb-0">Es una variante del algoritmo DES que utiliza una estructura de Feistel con permutaciones y sustituciones, aplicando 16 rondas de operaciones para cifrar bloques de datos.</p>
-                                                </div>
-                                            </div>
-                                            <img src="../static/images/topics/sdes.jpg" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                    <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                        <a href="/cafin">
-                                            <div class="d-flex">
-                                                <div>
-                                                    <h5 class="mb-2">Cifrado DSA</h5>
-                                                    <p class="mb-0">Es un algoritmo de firma digital basado en exponentiación modular que permite la autenticación y verificación de la integridad de los mensajes sin cifrar su contenido.</p>
-                                                </div>
-                                            </div>
-                                            <img src="../static/images/topics/dsa.jpg" class="custom-block-image img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-            
-                        <!-- Segundo Slide -->
-                        <div class="carousel-item">
-                          <div class="row">
-                            <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                              <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                  <a href="/cvigenere">
-                                      <h5 class="mb-2">Cifrado RSA</h5>
-                                      <p>Es un sistema de cifrado asimétrico que utiliza la factorización de números primos para generar claves públicas y privadas, permitiendo el cifrado seguro y la firma digital.</p>
-                                      <img src="../static/images/topics/rsa.png" class="custom-block-image img-fluid" alt="">
-                                  </a>
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                    <a href="{{ url_for('topics_detail') }}">
-                                        <div class="d-flex">
-                                            <div>
-                                                <h5 class="mb-2">Cifrado ECC (Criptografía de Curvas Elípticas)</h5>
-                                                <p class="mb-0">Es un método de criptografía asimétrica basado en curvas elípticas que ofrece la misma seguridad que RSA con claves más pequeñas.</p>
-                                            </div>
-                                        </div>
-                                        <img src="../static/images/topics/ecc.jpg" class="custom-block-image img-fluid" alt="">
-                                    </a>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <!-- Controles corregidos -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados2" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados2" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Criptografía visual -->
-
-            <div class="tab-pane fade"1 id="visual-tab-pane" role="tabpanel" aria-labelledby="visual-tab">
-              <div id="carouselCifrados3" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselCifrados3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselCifrados3" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  </div>
-                  <div class="carousel-inner py-3">
-                      <!-- Primer Slide -->
-                      <div class="carousel-item active">
-                          <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="/cpermutation">
-                                          <h5 class="mb-2">Cifrado de permutación</h5>
-                                          <p>Reordena los caracteres de un mensaje...</p>
-                                          <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="/cdesplazamiento">
-                                          <div class="d-flex">
-                                              <div>
-                                                  <h5 class="mb-2">Cifrado de desplazamiento</h5>
-                                                  <p class="mb-0">holahola</p>
-                                              </div>
-                                          </div>
-                                          <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="/cafin">
-                                          <div class="d-flex">
-                                              <div>
-                                                  <h5 class="mb-2">Cifrado afín</h5>
-                                                  <p class="mb-0">Descripción</p>
-                                              </div>
-                                          </div>
-                                          <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-          
-                      <!-- Segundo Slide -->
-                      <div class="carousel-item">
-                          <div class="row">
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="/cvigenere">
-                                          <h5 class="mb-2">Cifrado Vigenére</h5>
-                                          <p>Descripción</p>
-                                          <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-                                  <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
-                                      <a href="{{ url_for('topics_detail') }}">
-                                          <div class="d-flex">
-                                              <div>
-                                                  <h5 class="mb-2">Cifrado Hill</h5>
-                                                  <p class="mb-0">Descripción</p>
-                                              </div>
-                                          </div>
-                                          <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid" alt="">
-                                      </a>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-          
-                  <!-- Controles corregidos -->
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados3" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados3" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                  </button>
-              </div>
-          </div>
-      
+    <section class="explore-section section-padding" id="section_2">
+      <div class="container">
+        <div class="col-12 text-center">
+          <h2 class="mb-4">Explorar </h2>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+
+      <div class="container-fluid">
+        <div class="row">
+          <ul class="nav nav-tabs" id="ctext" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="classic-tab" data-bs-toggle="tab" data-bs-target="#classic-tab-pane"
+                type="button" role="tab" aria-controls="classic-tab-pane" aria-selected="true">Criptografía
+                clásica</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="modern-tab" data-bs-toggle="tab" data-bs-target="#modern-tab-pane"
+                type="button" role="tab" aria-controls="modern-tab-pane" aria-selected="false">Criptografía
+                moderna</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="visual-tab" data-bs-toggle="tab" data-bs-target="#visual-tab-pane"
+                type="button" role="tab" aria-controls="visual-tab-pane" aria-selected="false">Criptografía
+                visual</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="tab-content" id="ctextContent">
+
+              <!-- Cifrados Clásicos -->
+              <div class="tab-pane fade show active" id="classic-tab-pane" role="tabpanel"
+                aria-labelledby="classic-tab">
+                <div id="carouselCifrados1" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselCifrados1" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselCifrados1" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+
+                  <div class="carousel-inner py-3">
+                    <!-- Primer Slide -->
+                    <div class="carousel-item active">
+                      <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cpermutation">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de permutación</h5>
+                                  <p class="mb-0">Es un método de transposición en el que el orden de las letras del
+                                    mensaje original se reorganiza según una regla o clave específica, sin alterar su
+                                    identidad.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/permutation.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cdesplazamiento">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de desplazamiento</h5>
+                                  <p class="mb-0">Es un método de sustitución monoalfabética en el que cada letra del
+                                    mensaje original se reemplaza por otra que se encuentra un número fijo de posiciones
+                                    adelante en el alfabeto</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="{{ url_for('cafin') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado afín</h5>
+                                  <p class="mb-0">Es un método de sustitución monoalfabética que aplica una función
+                                    matemática lineal a cada letra del mensaje original, usando una clave con dos
+                                    valores para cifrar y descifrar.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/afin.jpg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Segundo Slide -->
+                    <div class="carousel-item">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="{{ url_for('cvigenere') }}">
+                              <h5 class="mb-2">Cifrado Vigenére</h5>
+                              <p>Es un método de sustitución polialfabética que utiliza una clave en forma de palabra o
+                                frase para cifrar el mensaje, aplicando diferentes desplazamientos en el alfabeto según
+                                cada letra de la clave.</p>
+                              <img src="../static/images/topics/vigenere.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="{{ url_for('cifrado_hill') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de Hill</h5>
+                                  <p class="mb-0">Es un método de sustitución poligrámica que usa álgebra matricial para
+                                    transformar bloques de letras en texto cifrado, multiplicando cada bloque por una
+                                    matriz clave invertible en un módulo específico.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/hill.png" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados1"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados1"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+
+
+              <!-- Criptografía moderna -->
+              <div class="tab-pane fade" 1 id="modern-tab-pane" role="tabpanel" aria-labelledby="modern-tab">
+                <div id="carouselCifrados2" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselCifrados2" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselCifrados2" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner py-3">
+                    <!-- Primer Slide -->
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cpermutation">
+                              <h5 class="mb-2">Cifrado AES</h5>
+                              <p>Es un cifrado simétrico por bloques que emplea sustitución y permutación en múltiples
+                                rondas para transformar el mensaje original en texto cifrado.</p>
+                              <img src="../static/images/topics/aes.jpg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cdesplazamiento">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado DES-S</h5>
+                                  <p class="mb-0">Es una variante del algoritmo DES que utiliza una estructura de
+                                    Feistel con permutaciones y sustituciones, aplicando 16 rondas de operaciones para
+                                    cifrar bloques de datos.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/sdes.jpg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cafin">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado DSA</h5>
+                                  <p class="mb-0">Es un algoritmo de firma digital basado en exponentiación modular que
+                                    permite la autenticación y verificación de la integridad de los mensajes sin cifrar
+                                    su contenido.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/dsa.jpg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Segundo Slide -->
+                    <div class="carousel-item">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cvigenere">
+                              <h5 class="mb-2">Cifrado RSA</h5>
+                              <p>Es un sistema de cifrado asimétrico que utiliza la factorización de números primos para
+                                generar claves públicas y privadas, permitiendo el cifrado seguro y la firma digital.
+                              </p>
+                              <img src="../static/images/topics/rsa.png" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="{{ url_for('topics_detail') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado ECC (Criptografía de Curvas Elípticas)</h5>
+                                  <p class="mb-0">Es un método de criptografía asimétrica basado en curvas elípticas que
+                                    ofrece la misma seguridad que RSA con claves más pequeñas.</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/ecc.jpg" class="custom-block-image img-fluid" alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Controles corregidos -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados2"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados2"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Criptografía visual -->
+
+              <div class="tab-pane fade" 1 id="visual-tab-pane" role="tabpanel" aria-labelledby="visual-tab">
+                <div id="carouselCifrados3" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselCifrados3" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselCifrados3" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                  </div>
+                  <div class="carousel-inner py-3">
+                    <!-- Primer Slide -->
+                    <div class="carousel-item active">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cpermutation">
+                              <h5 class="mb-2">Cifrado de permutación</h5>
+                              <p>Reordena los caracteres de un mensaje...</p>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cdesplazamiento">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado de desplazamiento</h5>
+                                  <p class="mb-0">holahola</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cafin">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado afín</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Segundo Slide -->
+                    <div class="carousel-item">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="/cvigenere">
+                              <h5 class="mb-2">Cifrado Vigenére</h5>
+                              <p>Descripción</p>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                          <div class="custom-block bg-white" style="border: 2px solid #80d0c7;">
+                            <a href="{{ url_for('hill_image') }}">
+                              <div class="d-flex">
+                                <div>
+                                  <h5 class="mb-2">Cifrado Hill</h5>
+                                  <p class="mb-0">Descripción</p>
+                                </div>
+                              </div>
+                              <img src="../static/images/topics/despla_img.png" class="custom-block-image img-fluid"
+                                alt="">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Controles corregidos -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCifrados3"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselCifrados3"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
     <section class="timeline-section section-padding" id="section_3">

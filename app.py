@@ -24,17 +24,21 @@ def topics_detail():
 def topics_listing():
     return render_template("topics-listing.html")
 
+
 @app.route("/cpermutation")
 def cpermutation():
     return render_template("cpermutation.html")
+
 
 @app.route("/cdesplazamiento")
 def cdesplazamiento():
     return render_template("cdesplazamiento.html")
 
+
 @app.route("/cvigenere")
 def cvigenere():
     return render_template("cvigenere.html")
+
 
 @app.route('/process-affine', methods=['POST'])
 def process_affine():
@@ -51,9 +55,11 @@ def process_affine():
 
     return jsonify(result=result)
 
+
 @app.route('/cifrado_afin')
 def cafin():
     return render_template('cafin.html')
+
 
 @app.route('/process-hill', methods=['POST'])
 def process_hill():
@@ -72,9 +78,15 @@ def process_hill():
 
     return jsonify(result=result)
 
+
 @app.route('/cifrado_hill')
 def cifrado_hill():
     return render_template('chill.html')
+
+
+@app.route('/hill-image')
+def hill_image():
+    return render_template('hill-image.html')
 
 
 # funciones de cifrado
@@ -108,7 +120,6 @@ def encrypt():
         return jsonify({"error": str(e)}), 500
 
 
-
 @app.route('/process-permutacion', methods=['POST'])
 def process_permutacion():
     try:
@@ -120,7 +131,7 @@ def process_permutacion():
         # Validaciones
         if not mensaje or not clave:
             return jsonify({"error": "Todos los campos son requeridos"}), 400
-            
+
         if not clave.isdigit():
             return jsonify({"error": "La clave debe ser numérica (ej: 231)"}), 400
 
@@ -137,12 +148,19 @@ def process_permutacion():
         if action == "encrypt":
             resultado = cifrados.cifrado_permutacion_encriptar(mensaje, clave)
         else:
-            resultado = cifrados.cifrado_permutacion_desencriptar(mensaje, clave)
+            resultado = cifrados.cifrado_permutacion_desencriptar(
+                mensaje, clave)
 
         return jsonify({"result": resultado})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('procesar-hill-img', methods=['POST'])
+def process_hillimg():
+
+    pass
 
 
 if __name__ == "__main__":
