@@ -72,7 +72,7 @@ def process_hill():
 
     return jsonify(result=result)
 
-@app.route('/cifrado_hill')
+@app.route('/chill')
 def cifrado_hill():
     return render_template('chill.html')
 
