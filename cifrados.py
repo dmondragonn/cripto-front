@@ -2,25 +2,18 @@ from Crypto.PublicKey import ElGamal
 from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
 from Crypto.Util.number import bytes_to_long, long_to_bytes
-<<<<<<< HEAD
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Signature import pkcs1_15
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import DSA
 from Crypto.Signature import DSS
-
-# Desplazamiento
-
-=======
 from sympy import Matrix
-
 import numpy as np
 import random
 import string
 
 #Desplazamiento
->>>>>>> main
 
 def shift_cipher_encrypt(text, key):
     encrypted_text = ""
@@ -34,10 +27,8 @@ def shift_cipher_encrypt(text, key):
     return encrypted_text
 
 
-<<<<<<< HEAD
 def shift_cipher_decrypt(text, key):
     return shift_cipher_encrypt(text, -key)
-=======
 # Permutacion
         
 def cifrado_permutacion_encriptar(texto_plano, clave):
@@ -78,7 +69,6 @@ def cifrado_permutacion_desencriptar(texto_cifrado, clave):
     texto_plano = texto_plano.rstrip()
     
     return texto_plano
->>>>>>> main
 
 
 # Vigenere
@@ -131,7 +121,6 @@ def cifrado_vigenere_desencriptar(texto_cifrado, clave):
 
     return ''.join(texto_desencriptado)
 
-<<<<<<< HEAD
 # Permutacion
 
 
@@ -176,18 +165,9 @@ def cifrado_permutacion_desencriptar(texto_cifrado, clave):
 
     return ''.join(texto_desencriptado).rstrip()
 
-
-# ElGamal
-
-def generate_keys(bits=512):  # Genera una private key y una public
-=======
-
-
-
 # ElGamal
 
 def generate_keys(bits=512): # Genera una private key y una public
->>>>>>> main
 
     key = ElGamal.generate(bits, get_random_bytes)
     return key, key.publickey()
@@ -216,7 +196,6 @@ def elgamal_decrypt(private_key, ciphertext):
     m = (c2 * s_inv) % p
     return long_to_bytes(m).decode()
 
-<<<<<<< HEAD
 # cifrado RSA
 
 
@@ -308,7 +287,7 @@ def verificar_firma_dsa(mensaje, firma, public_key_pem):
         return "✅ Firma válida."
     except ValueError:
         return "❌ Firma inválida."
-=======
+
 ########## Cifrado afín ###########
 
 def affine_encryption(plaintext, a, b):
@@ -502,5 +481,3 @@ def hill_desencriptar(message, key):
 
     print(plaintext)
     return plaintext
-
->>>>>>> main

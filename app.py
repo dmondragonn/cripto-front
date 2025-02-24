@@ -1,11 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
 import os
-<<<<<<< HEAD
-=======
 import ast
-
->>>>>>> main
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
@@ -50,11 +46,9 @@ def cvigenere():
     return render_template("cvigenere.html")
 
 
-<<<<<<< HEAD
 @app.route("/cafin")
 def cafin():
     return render_template("cafin.html")
-=======
 @app.route('/process-affine', methods=['POST'])
 def process_affine():
     data = request.get_json()
@@ -69,12 +63,6 @@ def process_affine():
         result = cifrados.affine_decrypt(message, key1, key2)
 
     return jsonify(result=result)
-
-
-@app.route('/cifrado_afin')
-def cafin():
-    return render_template('cafin.html')
-
 
 @app.route('/process-hill', methods=['POST'])
 def process_hill():
@@ -102,8 +90,6 @@ def cifrado_hill():
 @app.route('/hill-image')
 def hill_image():
     return render_template('hill-image.html')
->>>>>>> main
-
 
 # funciones de cifrado
 
@@ -135,9 +121,6 @@ def encrypt():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-<<<<<<< HEAD
-=======
 
 @app.route('/process-permutacion', methods=['POST'])
 def process_permutacion():
@@ -181,7 +164,7 @@ def process_permutacion():
 
 
 
-@app.route('procesar-hill-img', methods=['POST'])
+@app.route('/procesar-hill-img', methods=['POST'])
 
 def upload_image():
     try:
@@ -207,10 +190,6 @@ def upload_image():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-
->>>>>>> main
 
 if __name__ == "__main__":
     app.run(debug=True)
