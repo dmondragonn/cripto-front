@@ -8,6 +8,12 @@ import ast
 >>>>>>> main
 app = Flask(__name__)
 
+UPLOAD_FOLDER = "uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
 
 @app.route("/")
 def index():
@@ -173,22 +179,34 @@ def process_permutacion():
 
 #----------- Prueba ---------------------------------------
 
+
+
 @app.route('procesar-hill-img', methods=['POST'])
 
-UPLOAD_FOLDER = 'uploads'  # Carpeta donde se guardarán los archivos
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Crea la carpeta si no existe
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
 def upload_image():
-    if 'image' not in request.files:
-        return jsonify({"error": "No se envió ninguna imagen"}), 400
+    try:
+        files = {
+            "image": request.files.get("image"),
+            "image1": request.files.get("image1"),
+            "image2": request.files.get("image2"),
+        }
 
-    file = request.files['image']
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(file_path)  # Guarda el archivo en la carpeta definida
+        saved_files = {}
 
-    return jsonify({"message": f"Archivo {file.filename} subido exitosamente"}), 200
+        for key, file in files.items():
+            if file:
+                filename = file.filename
+                file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                file.save(file_path)
+                saved_files[key] = file_path
+
+        if not saved_files:
+            return jsonify({"error": "No se recibieron archivos"}), 400
+
+        return jsonify({"message": "Archivos guardados exitosamente", "files": saved_files}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 

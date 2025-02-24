@@ -105,23 +105,47 @@
             <form id="cipherForm" class="custom-form contact-form">
               <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 col-12">
-                  <div class="btn-group" role="group">
-                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked />
-                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn"
-                      for="encryptRadio">Encriptar</label>
+                  <div class="btn-group" role="group">  
+                    
+                    
+                   <!-- Botones de selección -->
+                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" onchange="toggleUploadMenu()" checked />
+                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
 
-                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" />
-                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn"
-                      for="decryptRadio">Desencriptar</label>
-                  </div>
+                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" onchange="toggleUploadMenu()" />
+                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
                 </div>
-                <div>
-                  <div>
-                    <div class="container-xd">
-                      <label for="file" class="custom-file-upload">Seleccione imagen</label>
-                      <input type="file" id="file" accept="image/*" class="ocultar">
-                      <p id="file-name">Sin archivos seleccionados</p>
-                   </div>
+
+                    <!-- Menú de Encriptación (Subir 1 imagen) -->
+                    <div id="encryptMenu" class="container-xd mt-3">
+                        <label for="file" class="custom-file-upload">Seleccione imágen</label>
+                        <input type="file" id="file" accept="image/*" class="ocultar">
+                        <p id="file-name">Sin archivos seleccionados</p>
+                    </div>
+
+
+                    <!-- Menú de Desencriptación (Subir 2 imágenes) -->
+                    <div id="decryptMenu" class="container-xd mt-3" style="display: none;">
+                        <label for="file1" class="custom-file-upload">Seleccione imágen encriptada</label>
+                        <input type="file" id="file1" accept="image/*" class="ocultar">
+                        <p id="file-name1">Sin archivos seleccionados</p>
+
+                        <label for="file2" class="custom-file-upload mt-3">Seleccione imágen Llave</label>
+                        <input type="file" id="file2" accept="image/*" class="ocultar">
+                        <p id="file-name2">Sin archivos seleccionados</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
                     <div class="col-lg-4 col-12">
                       <button id="procesar-hill" type="submit" class="form-control btn btn-primary">
                         Procesar
@@ -130,7 +154,7 @@
                   </div>
             </form>
             <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px">
-              <h5>Texto cifrado:</h5>
+              <h5>Imagen cifrada:</h5>
               <p id="resultText" class="fw-bold text-primary"></p>
             </div>
           </div>
@@ -139,20 +163,18 @@
     </section>
 
     <div class="row gy-4 justify-content-center">
-      {% if encrypted_message %}
       <div class="col-lg-12 col-12">
         <div class="alert alert-success">
-          <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
+          <strong>Mensaje cifrado:</strong> Exitosamente
         </div>
       </div>
-      {% endif %}
     </div>
 
     <section class="topics-detail-section section-padding" id="biblio">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-12 m-auto">
-            <h3 class="mb-4">Cifrado de permutación</h3>
+            <h3 class="mb-4">Cifrado Hill para imagenes</h3>
 
             <p>
              texto
@@ -163,8 +185,7 @@
              texto
 
             <blockquote>
-              Freelancing your skills isn’t going to make you a millionaire
-              overnight.
+              texto
             </blockquote>
 
             <div class="row my-4">
@@ -196,53 +217,94 @@
   <script src="../static/js/custom.js"></script>
 </body>
 
-<form id="imageForm" enctype="multipart/form-data">
-  <input type="file" id="image" accept="image/*" required>
-  <button type="submit">Subir Imagen</button>
-</form>
 
-<p id="uploadResult"></p>
+
 
 <script>
-  document.getElementById("file").addEventListener("change", function () {
+    function toggleUploadMenu() {
+            let encryptDiv = document.getElementById("encryptMenu");
+            let decryptDiv = document.getElementById("decryptMenu");
+            let encryptRadio = document.getElementById("encryptRadio");
+
+            if (encryptRadio.checked) {
+                encryptDiv.style.display = "block";
+                decryptDiv.style.display = "none";
+            } else {
+                encryptDiv.style.display = "none";
+                decryptDiv.style.display = "block";
+            }
+        }
+
+        document.getElementById("file").addEventListener("change", function () {
     const fileInput = this;
     const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
     document.getElementById("file-name").textContent = fileName;
-  });
+});
 
-  document.getElementById("procesar-hill").addEventListener("click", async function (event) {
-    event.preventDefault(); // Evitar que el formulario recargue la página
+document.getElementById("file1").addEventListener("change", function () {
+    const fileInput = this;
+    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+    document.getElementById("file-name1").textContent = fileName;
+});
+
+document.getElementById("file2").addEventListener("change", function () {
+    const fileInput = this;
+    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+    document.getElementById("file-name2").textContent = fileName;
+});
+
+document.getElementById("procesar-hill").addEventListener("click", async function (event) {
+    event.preventDefault();
 
     const fileInput = document.getElementById("file");
+    const fileInput1 = document.getElementById("file1");
+    const fileInput2 = document.getElementById("file2");
     const uploadResult = document.getElementById("resultText");
 
-    if (fileInput.files.length === 0) {
-      uploadResult.textContent = "Por favor, seleccione un archivo.";
-      uploadResult.style.color = "red";
-      return;
-    }
+    // Verifica qué menú está activo y qué archivos deben enviarse
+    const encryptMenu = document.getElementById("encryptMenu").style.display !== "none";
+    const decryptMenu = document.getElementById("decryptMenu").style.display !== "none";
 
     const formData = new FormData();
-    formData.append("image", fileInput.files[0]);
+
+    if (encryptMenu) {
+        if (fileInput.files.length === 0) {
+            uploadResult.textContent = "Por favor, seleccione un archivo.";
+            uploadResult.style.color = "red";
+            return;
+        }
+        formData.append("image", fileInput.files[0]);
+    }
+
+    if (decryptMenu) {
+        if (fileInput1.files.length === 0 || fileInput2.files.length === 0) {
+            uploadResult.textContent = "Por favor, seleccione ambas imágenes.";
+            uploadResult.style.color = "red";
+            return;
+        }
+        formData.append("image1", fileInput1.files[0]);
+        formData.append("image2", fileInput2.files[0]);
+    }
 
     try {
-      const response = await fetch("/upload-image", {
-        method: "POST",
-        body: formData
-      });
+        const response = await fetch("/upload-image", {
+            method: "POST",
+            body: formData
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (!response.ok) throw new Error(data.error || "Error del servidor");
+        if (!response.ok) throw new Error(data.error || "Error del servidor");
 
-      uploadResult.textContent = "Archivo cargado con éxito.";
-      uploadResult.style.color = "green";
+        uploadResult.textContent = "Archivo(s) cargado(s) con éxito.";
+        uploadResult.style.color = "green";
     } catch (error) {
-      uploadResult.textContent = `Error: ${error.message}`;
-      uploadResult.style.color = "red";
-      console.error("Error:", error);
+        uploadResult.textContent = `Error: ${error.message}`;
+        uploadResult.style.color = "red";
+        console.error("Error:", error);
     }
-  });
+});
+
 </script>
 
 
