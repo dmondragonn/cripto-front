@@ -155,26 +155,12 @@
             <h3 class="mb-4">Cifrado de permutación</h3>
 
             <p>
-              El cifrado de desplazamiento, también conocido como Cifrado
-              César, es uno de los métodos de cifrado más antiguos y simples.
-              Consiste en sustituir cada letra de un mensaje por otra que se
-              encuentra un número fijo de posiciones más adelante en el
-              alfabeto. Por ejemplo, con un desplazamiento de 3 posiciones: A
-              → D B → E C → F Hola → Krod El receptor del mensaje puede
-              descifrarlo simplemente retrocediendo el mismo número de
-              posiciones en el alfabeto.
+             texto
             </p>
 
             <p>
-              <strong>Historia del Cifrado César</strong><br />
-              El cifrado recibe su nombre del general y político romano Julio
-              César, quien lo utilizaba para enviar mensajes secretos a sus
-              generales. César solía usar un desplazamiento de tres
-              posiciones, lo que garantizaba cierto nivel de seguridad en su
-              época. Aunque hoy en día este cifrado es muy fácil de romper con
-              herramientas modernas, sigue siendo un excelente punto de
-              partida para aprender sobre criptografía.
-            </p>
+              <strong>Historia </strong><br />
+             texto
 
             <blockquote>
               Freelancing your skills isn’t going to make you a millionaire
@@ -210,62 +196,54 @@
   <script src="../static/js/custom.js"></script>
 </body>
 
+<form id="imageForm" enctype="multipart/form-data">
+  <input type="file" id="image" accept="image/*" required>
+  <button type="submit">Subir Imagen</button>
+</form>
+
+<p id="uploadResult"></p>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document
-      .getElementById("cipherForm")
-      .addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const message = document.getElementById("message").value;
-        const key = document.getElementById("key").value;
-        const action = document.querySelector(
-          'input[name="action"]:checked',
-        ).value;
-        const resultElement = document.getElementById("resultText");
-
-        try {
-          const response = await fetch("/process-permutation", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-              message: message,
-              key: key,
-              action: action,
-              longitud_original: message.length, // Enviar longitud original
-            }),
-          });
-
-          const data = await response.json();
-
-          if (!response.ok)
-            throw new Error(data.error || "Error del servidor");
-
-          resultElement.textContent = data.result;
-          resultElement.classList.remove("text-danger");
-          resultElement.classList.add("text-primary");
-        } catch (error) {
-          resultElement.textContent = `Error: ${error.message}`;
-          resultElement.classList.remove("text-primary");
-          resultElement.classList.add("text-danger");
-          console.error("Error:", error);
-        }
-      });
+  document.getElementById("file").addEventListener("change", function () {
+    const fileInput = this;
+    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+    document.getElementById("file-name").textContent = fileName;
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const resultadoDiv = document.getElementById("resultado");
-    const procesarBtn = document.getElementById("procesarBtn");
+  document.getElementById("procesar-hill").addEventListener("click", async function (event) {
+    event.preventDefault(); // Evitar que el formulario recargue la página
 
-    // Ocultar el div al cargar la página
-    resultadoDiv.style.display = "none";
+    const fileInput = document.getElementById("file");
+    const uploadResult = document.getElementById("resultText");
 
-    procesarBtn.addEventListener("click", function () {
-      // Aquí podrías agregar la lógica para enviar los datos al backend
-      // Por ahora, solo mostramos el div de resultado
-      resultadoDiv.style.display = "block";
-    });
+    if (fileInput.files.length === 0) {
+      uploadResult.textContent = "Por favor, seleccione un archivo.";
+      uploadResult.style.color = "red";
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
+
+    try {
+      const response = await fetch("/upload-image", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error || "Error del servidor");
+
+      uploadResult.textContent = "Archivo cargado con éxito.";
+      uploadResult.style.color = "green";
+    } catch (error) {
+      uploadResult.textContent = `Error: ${error.message}`;
+      uploadResult.style.color = "red";
+      console.error("Error:", error);
+    }
   });
 </script>
+
 
 </html>

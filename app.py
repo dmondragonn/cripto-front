@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
+import os
 <<<<<<< HEAD
 =======
 import ast
@@ -169,10 +170,27 @@ def process_permutacion():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('procesar-hill-img', methods=['POST'])
-def process_hillimg():
 
-    pass
+#----------- Prueba ---------------------------------------
+
+@app.route('procesar-hill-img', methods=['POST'])
+
+UPLOAD_FOLDER = 'uploads'  # Carpeta donde se guardarán los archivos
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Crea la carpeta si no existe
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def upload_image():
+    if 'image' not in request.files:
+        return jsonify({"error": "No se envió ninguna imagen"}), 400
+
+    file = request.files['image']
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(file_path)  # Guarda el archivo en la carpeta definida
+
+    return jsonify({"message": f"Archivo {file.filename} subido exitosamente"}), 200
+
+
 
 >>>>>>> main
 
