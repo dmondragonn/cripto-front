@@ -1,8 +1,14 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
+import os
 import ast
-
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 
 @app.route("/")
@@ -24,18 +30,25 @@ def topics_detail():
 def topics_listing():
     return render_template("topics-listing.html")
 
+
 @app.route("/cpermutation")
 def cpermutation():
     return render_template("cpermutation.html")
+
 
 @app.route("/cdesplazamiento")
 def cdesplazamiento():
     return render_template("cdesplazamiento.html")
 
+
 @app.route("/cvigenere")
 def cvigenere():
     return render_template("cvigenere.html")
 
+
+@app.route("/cafin")
+def cafin():
+    return render_template("cafin.html")
 @app.route('/process-affine', methods=['POST'])
 def process_affine():
     data = request.get_json()
@@ -50,10 +63,6 @@ def process_affine():
         result = cifrados.affine_decrypt(message, key1, key2)
 
     return jsonify(result=result)
-
-@app.route('/cifrado_afin')
-def cafin():
-    return render_template('cafin.html')
 
 @app.route('/process-hill', methods=['POST'])
 def process_hill():
@@ -72,12 +81,19 @@ def process_hill():
 
     return jsonify(result=result)
 
+
+
 @app.route('/chill')
 def cifrado_hill():
     return render_template('chill.html')
 
 
+@app.route('/hill-image')
+def hill_image():
+    return render_template('hill-image.html')
+
 # funciones de cifrado
+
 
 '''@app.route('/tipo')
 def tipo_cifrado():
@@ -107,8 +123,6 @@ def encrypt():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-
 @app.route('/process-permutacion', methods=['POST'])
 def process_permutacion():
     try:
@@ -120,7 +134,7 @@ def process_permutacion():
         # Validaciones
         if not mensaje or not clave:
             return jsonify({"error": "Todos los campos son requeridos"}), 400
-            
+
         if not clave.isdigit():
             return jsonify({"error": "La clave debe ser numérica (ej: 231)"}), 400
 
@@ -137,13 +151,46 @@ def process_permutacion():
         if action == "encrypt":
             resultado = cifrados.cifrado_permutacion_encriptar(mensaje, clave)
         else:
-            resultado = cifrados.cifrado_permutacion_desencriptar(mensaje, clave)
+            resultado = cifrados.cifrado_permutacion_desencriptar(
+                mensaje, clave)
 
         return jsonify({"result": resultado})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+
+#----------- Prueba ---------------------------------------
+
+
+
+@app.route('/procesar-hill-img', methods=['POST'])
+
+def upload_image():
+    try:
+        files = {
+            "image": request.files.get("image"),
+            "image1": request.files.get("image1"),
+            "image2": request.files.get("image2"),
+        }
+
+        saved_files = {}
+
+        for key, file in files.items():
+            if file:
+                filename = file.filename
+                file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                file.save(file_path)
+                saved_files[key] = file_path
+
+        if not saved_files:
+            return jsonify({"error": "No se recibieron archivos"}), 400
+
+        return jsonify({"message": "Archivos guardados exitosamente", "files": saved_files}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
