@@ -7,7 +7,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Cifrado afín</title>
+    <title>Cifrado Hill</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -113,7 +113,7 @@
               <div class="col-lg-5 col-12">
                 <div class="topics-detail-block bg-white shadow-lg">
                   <img
-                    src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                    src="../static/images/topics/hill.png"
                     class="topics-detail-block-image img-fluid"
                   />
                 </div>
@@ -122,63 +122,7 @@
           </div>
         </header>
 
-        <section class="section-padding section-bg" id="playground">
-          <div class="container">
-              <div class="row justify-content-center text-center">
-                  <div class="col-lg-12 col-12">
-                      <h3 class="mb-4 pb-2">Cifrado afín</h3>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                    <form id="cipherForm" class="custom-form contact-form">
-                      <div class="row gy-4 justify-content-center">
-                          <div class="col-lg-12 col-12">
-                              <div class="btn-group" role="group">
-                                  <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
-                                  <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
-                  
-                                  <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
-                                  <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
-                              </div>
-                          </div>
-                  
-                          <div class="col-lg-12 col-12">
-                              <div class="form-floating">
-                                  <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                  <label for="message">Texto cifrar</label>
-                              </div>
-                          </div>
-                  
-                        <div class="col-lg-6 col-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="key" placeholder="Ej: 231" required>
-                                <label for="key1">Clave nxn: (ej: ((17, 4), (14, 39)))</label>
-                            </div>
-                        </div>
-                  
-                          <div class="col-lg-4 col-12">
-                              <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
-                          </div>
-                        </div>
-                      </form>
-                      <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
-                          <h5>Texto cifrado:</h5>
-                          <p id="resultText" class="fw-bold text-primary"></p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-      
-      
-      <div class="row gy-4 justify-content-center">
-        {% if texto_cifrado %}
-        <div class="col-lg-12 col-12">
-          <div class="alert alert-success">
-            <strong>Mensaje cifrado:</strong> {{ texto_cifrado }}
-          </div>
-        </div>
-        {% endif %}
-      </div>
+        
 
       <section class="topics-detail-section section-padding" id="biblio">
         <div class="container">
@@ -263,6 +207,75 @@
           </div>
         </div>
       </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-12 col-12">
+                    <h3 class="mb-4 pb-2">Playground!</h3>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <form id="cipherForm" class="custom-form contact-form">
+                        <div class="row gy-4 justify-content-center">
+                            <div class="col-lg-12 col-12">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
+    
+                                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-12 col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
+                                    <label for="message">Texto cifrar</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-12 col-12">
+                              <p class="mb-2">Construye tu clave</p>
+                              <label for="matrixSize" class="d-block mb-2">Seleccionar tamaño de la matriz:</label>
+                              <select id="matrixSize" class="form-control" onchange="generateMatrix()">
+                                  <option value="2">2x2</option>
+                                  <option value="3">3x3</option>
+                                  <option value="4">4x4</option>
+                                  <option value="5">5x5</option>
+                              </select>
+                            </div>
+                          
+    
+                            <div id="matrixContainer" class="col-lg-12 col-12 mt-3">
+                                <!-- La matriz se generará aquí -->
+                            </div>
+    
+                            <div class="col-lg-4 col-12">
+                                <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
+                        <h5>Texto cifrado:</h5>
+                        <p id="resultText" class="fw-bold text-primary"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <div class="row gy-4 justify-content-center">
+      {% if texto_cifrado %}
+      <div class="col-lg-12 col-12">
+        <div class="alert alert-success">
+          <strong>Mensaje cifrado:</strong> {{ texto_cifrado }}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+
     </main>
 
     <script src="../static/js/jquery.min.js"></script>
@@ -272,30 +285,79 @@
   </body>
 
   <script>
+    // Función para generar la matriz dinámica según el tamaño seleccionado
+    function generateMatrix() {
+        const size = parseInt(document.getElementById('matrixSize').value);
+        const matrixContainer = document.getElementById('matrixContainer');
+        matrixContainer.innerHTML = ''; // Limpiar contenido anterior
+  
+        let table = '<table class="table table-bordered text-center"><tbody>';
+        for (let i = 0; i < size; i++) {
+            table += '<tr>';
+            for (let j = 0; j < size; j++) {
+                table += `<td><input type="number" class="form-control" id="matrix_${i}_${j}" placeholder="0"></td>`;
+            }
+            table += '</tr>';
+        }
+        table += '</tbody></table>';
+        matrixContainer.innerHTML = table;
+    }
+  
+    // Ejecutar cuando el DOM esté listo
     document.addEventListener("DOMContentLoaded", () => {
+        // Generar la matriz por defecto (2x2)
+        generateMatrix();
+  
+        // Actualizar la matriz cuando se cambie el tamaño
+        document.getElementById('matrixSize').addEventListener('change', generateMatrix);
+  
+        // Ocultar el div de resultado al cargar la página
+        const resultadoDiv = document.getElementById("resultado");
+        resultadoDiv.style.display = "none";
+  
+        // Manejar el envío del formulario
         document.getElementById("cipherForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-            
+  
+            // Construir la matriz con los valores de la tabla
+            const size = parseInt(document.getElementById('matrixSize').value);
+            let matrix = [];
+            for (let i = 0; i < size; i++) {
+                let row = [];
+                for (let j = 0; j < size; j++) {
+                    let value = document.getElementById(`matrix_${i}_${j}`).value;
+                    row.push(parseInt(value) || 0); // Asegurar número, sino 0
+                }
+                matrix.push(row);
+            }
+  
+            // Convertir la matriz a formato JSON estándar
+            let matrixJson = JSON.stringify(matrix);
+            // Si se requiere el formato con paréntesis en lugar de corchetes, descomenta la siguiente línea:
+            // matrixJson = matrixJson.replace(/\[/g, "(").replace(/\]/g, ")");
+  
+            console.log("Clave en formato JSON:", matrixJson);
+  
+            // Recoger el mensaje y la acción (encriptar/desencriptar)
             const message = document.getElementById("message").value;
-            const key = document.getElementById("key").value;
             const action = document.querySelector('input[name="action"]:checked').value;
             const resultElement = document.getElementById("resultText");
-
+  
+            // Enviar la información al backend
             try {
                 const response = await fetch("/process-hill", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         message: message,
-                        key: key,
+                        key: matrixJson,  // Se envía la matriz en formato JSON (o con paréntesis si se modifica)
                         action: action
                     })
                 });
-
+  
                 const data = await response.json();
-                
                 if (!response.ok) throw new Error(data.error || "Error del servidor");
-                
+  
                 resultElement.textContent = data.result;
                 resultElement.classList.remove("text-danger");
                 resultElement.classList.add("text-primary");
@@ -305,23 +367,13 @@
                 resultElement.classList.add("text-danger");
                 console.error("Error:", error);
             }
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const resultadoDiv = document.getElementById("resultado");
-        const procesarBtn = document.getElementById("procesarBtn");
-
-        // Ocultar el div al cargar la página
-        resultadoDiv.style.display = "none";
-
-        procesarBtn.addEventListener("click", function () {
-            // Aquí podrías agregar la lógica para enviar los datos al backend
-            // Por ahora, solo mostramos el div de resultado
+  
+            // Mostrar el div de resultado
             resultadoDiv.style.display = "block";
         });
     });
-</script>
+  </script>
+  
 
 </html>
 
