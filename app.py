@@ -1,8 +1,14 @@
 from flask import Flask, render_template, jsonify, request
 import cifrados
+import os
 import ast
-
 app = Flask(__name__)
+
+UPLOAD_FOLDER = "uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 
 @app.route("/")
@@ -76,6 +82,22 @@ def process_hill():
 def cifrado_hill():
     return render_template('chill.html')
 
+@app.route('/hill-image')
+def hill_image():
+    return render_template('hill-image.html')
+
+@app.route('/dsa')
+def dsa():
+    return render_template('dsa.html')
+
+@app.route('/sha256')
+def sha256():
+    return render_template('sha256.html')
+
+@app.route('/rsa')
+def rsa():
+    return render_template('rsa.html')
+
 
 # funciones de cifrado
 
@@ -109,7 +131,7 @@ def encrypt():
 
 
 
-@app.route('/process-permutacion', methods=['POST'])
+@app.route('/process-permutation', methods=['POST'])
 def process_permutacion():
     try:
         data = request.get_json()
@@ -144,6 +166,36 @@ def process_permutacion():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#----------- Prueba ---------------------------------------
+
+
+
+@app.route('/procesar-hill-img', methods=['POST'])
+
+def upload_image():
+    try:
+        files = {
+            "image": request.files.get("image"),
+            "image1": request.files.get("image1"),
+            "image2": request.files.get("image2"),
+        }
+
+        saved_files = {}
+
+        for key, file in files.items():
+            if file:
+                filename = file.filename
+                file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                file.save(file_path)
+                saved_files[key] = file_path
+
+        if not saved_files:
+            return jsonify({"error": "No se recibieron archivos"}), 400
+
+        return jsonify({"message": "Archivos guardados exitosamente", "files": saved_files}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
