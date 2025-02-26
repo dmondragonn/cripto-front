@@ -165,36 +165,36 @@ def cifrado_permutacion_desencriptar(texto_cifrado, clave):
 
     return ''.join(texto_desencriptado).rstrip()
 
-# ElGamal
+# ElGamal---------------
 
-def generate_keys(bits=512): # Genera una private key y una public
-
+# Generación de claves
+def generate_keys(bits=512):
     key = ElGamal.generate(bits, get_random_bytes)
-    return key, key.publickey()
+    public_key = (int(key.p), int(key.g), int(key.y))  # Clave pública
+    private_key = (int(key.x), int(key.p))  # Clave privada incluye 'x' y 'p'
+    return public_key, private_key
 
-
+# Cifrado
 def elgamal_encrypt(public_key, message):
+    p, g, y = public_key
+    m = bytes_to_long(message.encode())  # Convierte texto a número
+    if m >= p:
+        raise ValueError("El mensaje es demasiado grande para el tamaño del primo.")
 
-    m = bytes_to_long(message.encode())
-    k = randint(1, int(public_key.p - 2))
-
-    p, g, y = int(public_key.p), int(public_key.g), int(public_key.y)
-
-    c1 = pow(g, k, p)
-    c2 = (m * pow(y, k, p)) % p
+    k = randint(1, p - 2)  # Número aleatorio secreto
+    c1 = pow(g, k, p)  # c1 = g^k mod p
+    c2 = (m * pow(y, k, p)) % p  # c2 = m * y^k mod p
     return (c1, c2)
 
-
+# Descifrado (solo requiere clave privada y texto cifrado)
 def elgamal_decrypt(private_key, ciphertext):
-
+    x, p = private_key  # Extraer x y p de la clave privada
     c1, c2 = ciphertext
 
-    p, x = int(private_key.p), int(private_key.x)
-
-    s = pow(c1, x, p)
-    s_inv = pow(s, -1, p)
-    m = (c2 * s_inv) % p
-    return long_to_bytes(m).decode()
+    s = pow(c1, x, p)  # s = c1^x mod p
+    s_inv = pow(s, -1, p)  # Inverso modular de s
+    m = (c2 * s_inv) % p  # m = c2 * s^(-1) mod p
+    return long_to_bytes(m).decode()  # Convierte número a texto
 
 # cifrado RSA
 
