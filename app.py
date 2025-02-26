@@ -1,7 +1,16 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, send_file, render_template, jsonify, request
 import cifrados
 import os
+from os.path import join
+from tempfile import gettempdir
 import ast
+import io
+import json
+import math
+import numpy as np
+from PIL import Image
+
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
@@ -222,6 +231,99 @@ def upload_image():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+    
+@app.route('/des3/encrypt', methods=['POST'])
+def encrypt_r():
+# Verificar que se envíen key, mode y file
+    if "key" in request.form and "mode" in request.form and "file" in request.files:
+        key_hex = request.form["key"]
+        mode = request.form["mode"].upper()
+        img_file = request.files["file"]
+
+        # Definir ruta temporal para la imagen
+        file_type = img_file.filename.rsplit(".", 1)[1].lower() if img_file.filename else "png"
+        img_path = join(gettempdir(), f"plain_image.{file_type}")
+        img_file.save(img_path)
+
+        # Convertir la imagen a arreglo (PIL admite color o gris)
+        plain_img_arr = np.array(Image.open(img_path))
+        original_shape = plain_img_arr.shape
+
+        # Convertir la clave de hexadecimal a bytes
+        key = bytes.fromhex(key_hex)
+
+        # Para modos que requieren IV o counter, se deben enviar en el formulario
+        kwargs = {}
+        if mode in ["CBC", "OFB", "CFB"]:
+            if "initializationVector" in request.form:
+                iv = bytes.fromhex(request.form["initializationVector"])
+                kwargs["iv"] = iv
+        elif mode == "CTR":
+            if "counter" in request.form:
+                ctr = bytes.fromhex(request.form["counter"])
+                kwargs["nonce"] = ctr
+
+        # Aplanar la imagen (trabaja sobre el flujo completo)
+        plain_flat = plain_img_arr.flatten()
+
+        # Encriptar la secuencia (la función retorna el arreglo cifrado y la longitud padded)
+        encrypted_arr, padded_length = cifrados.encrypt_image(plain_flat, key, mode, **kwargs)
+        # Guardar la imagen cifrada (visual) con metadatos embebidos
+        encrypted_path = join(gettempdir(), "encrypted_image.png")
+        cifrados.save_encrypted_image(encrypted_arr, padded_length, original_shape, encrypted_path)
+
+        # Devolver el archivo cifrado al cliente
+        return send_file(encrypted_path, mimetype='image/png')
+
+    return jsonify({"error": "Faltan parámetros"}), 400
+
+@app.route('/des3/decrypt', methods=['POST'])
+def decrypt_r():
+    if "key" in request.form and "mode" in request.form and "file" in request.files:
+        key_hex = request.form["key"]
+        mode = request.form["mode"].upper()
+        img_file = request.files["file"]
+
+        # Definir ruta temporal para la imagen cifrada
+        file_type = img_file.filename.rsplit(".", 1)[1].lower() if img_file.filename else "png"
+        img_path = join(gettempdir(), f"encrypted_image.{file_type}")
+        img_file.save(img_path)
+
+        # Convertir la imagen cifrada usando PIL
+        encrypted_image = Image.open(img_path)
+        # Extraer metadatos embebidos
+        padded_length, original_shape = cifrados.load_encrypted_metadata(encrypted_image)
+
+        # Convertir la imagen cifrada visual a arreglo 1D
+        encrypted_img_arr = np.array(encrypted_image).flatten()
+        # Recortar la secuencia cifrada a la longitud real (con padding)
+        encrypted_sequence = encrypted_img_arr[:padded_length]
+
+        key = bytes.fromhex(key_hex)
+        kwargs = {}
+        if mode in ["CBC", "OFB", "CFB"]:
+            if "initializationVector" in request.form:
+                iv = bytes.fromhex(request.form["initializationVector"])
+                kwargs["iv"] = iv
+        elif mode == "CTR":
+            if "counter" in request.form:
+                ctr = bytes.fromhex(request.form["counter"])
+                kwargs["nonce"] = ctr
+
+        # Descifrar la secuencia
+        decrypted_flat = cifrados.decrypt_image(encrypted_sequence, key, mode, **kwargs)
+        total_pixels = np.prod(original_shape)
+        decrypted_flat = decrypted_flat[:total_pixels]
+        decrypted_img_arr = np.array(decrypted_flat).reshape(original_shape)
+
+        # Guardar la imagen descifrada
+        plain_path = join(gettempdir(), f"plain_image.{file_type}")
+        Image.fromarray(decrypted_img_arr).save(plain_path, "PNG")
+
+        return send_file(plain_path, mimetype='image/png')
+
+    return jsonify({"error": "Faltan parámetros"}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)

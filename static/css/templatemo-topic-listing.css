@@ -1174,3 +1174,10 @@ blockquote {
   }
 }
 
+.img-preview {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin: 10px 0;
+}

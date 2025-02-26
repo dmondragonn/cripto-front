@@ -1,17 +1,23 @@
+import io
+import json
+import math
+import random
+import string
+from os.path import join
+from tempfile import gettempdir
+
+import numpy as np
+from PIL import Image, PngImagePlugin
+
 from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
 from Crypto.Util.number import bytes_to_long, long_to_bytes
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from Crypto.Signature import pkcs1_15
+from Crypto.PublicKey import RSA, DSA
+from Crypto.Cipher import PKCS1_OAEP, DES3
+from Crypto.Signature import pkcs1_15, DSS
 from Crypto.Hash import SHA256
-from Crypto.PublicKey import DSA
-from Crypto.Signature import DSS
-from sympy import Matrix
 
-import numpy as np
-import random
-import string
+from sympy import Matrix
 
 #Desplazamiento
 
@@ -485,3 +491,104 @@ def multi_decrypt(ciphertext, key):
     return plaintext
 
 ########## Cifrado DES-S ###########
+
+########## Visual Triple DES ###########
+# --- Funciones de padding PKCS7 ---
+def pad_image_arr(arr, block_size=8):
+    flat = arr.flatten()
+    pad_len = block_size - (len(flat) % block_size)
+    if pad_len == 0:
+        pad_len = block_size
+    padding = np.full((pad_len,), pad_len, dtype=np.uint8)
+    padded = np.concatenate([flat, padding])
+    return padded
+
+def unpad_image_arr(arr):
+    flat = arr.flatten()
+    pad_len = int(flat[-1])
+    return flat[:-pad_len]
+
+# --- Funciones de encriptado y desencriptado 3DES ---
+def encrypt_image(plain_img_arr, key, mode, **kwargs):
+    modes = {
+        "ECB": DES3.MODE_ECB,
+        "CBC": DES3.MODE_CBC,
+        "OFB": DES3.MODE_OFB,
+        "CFB": DES3.MODE_CFB,
+        "CTR": DES3.MODE_CTR,
+    }
+    mode_val = modes[mode]
+    # Para modos que requieren IV o nonce, se esperan en kwargs
+    if mode == "CTR":
+        if "nonce" not in kwargs:
+            raise ValueError("El modo CTR requiere un nonce.")
+    elif mode in ["CBC", "OFB", "CFB"]:
+        if "iv" not in kwargs:
+            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+    key = DES3.adjust_key_parity(key)
+    # Se trabaja sobre la imagen aplanada (todos los bytes de la imagen)
+    padded_arr = pad_image_arr(plain_img_arr, 8)
+    des3 = DES3.new(key, mode_val, **kwargs)
+    encrypted_bytes = des3.encrypt(padded_arr.tobytes())
+    encrypted_arr = np.frombuffer(encrypted_bytes, dtype=np.uint8)
+    # Se devuelve también la longitud con padding para reconstrucción
+    return encrypted_arr, int(encrypted_arr.size)
+
+def decrypt_image(cipher_img_arr, key, mode, **kwargs):
+    modes = {
+        "ECB": DES3.MODE_ECB,
+        "CBC": DES3.MODE_CBC,
+        "OFB": DES3.MODE_OFB,
+        "CFB": DES3.MODE_CFB,
+        "CTR": DES3.MODE_CTR,
+    }
+    mode_val = modes[mode]
+    if mode == "CTR":
+        if "nonce" not in kwargs:
+            raise ValueError("El modo CTR requiere un nonce.")
+    elif mode in ["CBC", "OFB", "CFB"]:
+        if "iv" not in kwargs:
+            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+    key = DES3.adjust_key_parity(key)
+    des3 = DES3.new(key, mode_val, **kwargs)
+    cipher_bytes = cipher_img_arr.tobytes()
+    decrypted_bytes = des3.decrypt(cipher_bytes)
+    decrypted_arr = np.frombuffer(decrypted_bytes, dtype=np.uint8)
+    unpadded = unpad_image_arr(decrypted_arr)
+    return unpadded
+
+# --- Funciones para incorporar metadatos en el PNG ---
+def save_encrypted_image(encrypted_arr, padded_length, original_shape, save_path):
+    """
+    Para facilitar la reconstrucción, se guarda el arreglo cifrado (que es 1D)
+    en un PNG "visual" con ancho fijo; los metadatos (longitud padded y forma original)
+    se incorporan en el PNG usando PngInfo.
+    """
+    fixed_width = 256
+    height_enc = math.ceil(encrypted_arr.size / fixed_width)
+    total_pixels = height_enc * fixed_width
+    if total_pixels > encrypted_arr.size:
+        extra = np.zeros(total_pixels - encrypted_arr.size, dtype=np.uint8)
+        encrypted_full = np.concatenate([encrypted_arr, extra])
+    else:
+        encrypted_full = encrypted_arr
+    encrypted_img_visual = encrypted_full.reshape((height_enc, fixed_width))
+    
+    # Incrustar metadatos
+    metadata = {"padded_length": padded_length, "original_shape": original_shape}
+    pnginfo = PngImagePlugin.PngInfo()
+    pnginfo.add_text("padded_length", str(padded_length))
+    pnginfo.add_text("original_shape", json.dumps(original_shape))
+    
+    Image.fromarray(encrypted_img_visual).save(save_path, "PNG", pnginfo=pnginfo)
+    return save_path
+
+def load_encrypted_metadata(image):
+    info = image.info
+    padded_length = int(info.get("padded_length"))
+    original_shape = json.loads(info.get("original_shape"))
+    return padded_length, original_shape
+
+
+
+######################
