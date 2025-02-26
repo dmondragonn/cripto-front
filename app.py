@@ -116,6 +116,14 @@ def sha256():
 def rsa():
     return render_template('rsa.html')
 
+@app.route('/des3')
+def des3():
+    return render_template('des3.html')
+
+@app.route('/sdes')
+def sdes():
+    return render_template('sdes.html')
+
 
 # funciones de cifrado
 
