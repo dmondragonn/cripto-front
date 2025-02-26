@@ -133,6 +133,10 @@ def des3():
 def sdes():
     return render_template('sdes.html')
 
+@app.route('/elgamal')
+def elgamal():
+    return render_template('elgamal.html')
+
 
 # funciones de cifrado
 
@@ -231,7 +235,7 @@ def upload_image():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
     
 @app.route('/des3/encrypt', methods=['POST'])
 def encrypt_r():
@@ -324,6 +328,38 @@ def decrypt_r():
         return send_file(plain_path, mimetype='image/png')
 
     return jsonify({"error": "Faltan parámetros"}), 400
+
+@app.route('/generar_llaves_elgamal', methods=['GET'])
+def generar_llaves_elgamal():
+    public_key, private_key = cifrados.generate_keys()
+    return jsonify(
+        public_key=str(public_key),
+        private_key=str(private_key)
+    )
+
+# Ruta para procesar cifrado ElGamal
+@app.route('/elgamal-encrypt', methods=['POST'])
+def elgamal_encrypt():
+    data = request.get_json()
+    try:
+        public_key = tuple(map(int, data['public_key'].strip('()').split(', ')))
+        message = data['message']
+        ciphertext = cifrados.elgamal_encrypt(public_key, message)
+        return jsonify(ciphertext=str(ciphertext))
+    except Exception as e:
+        return jsonify(error=str(e)), 400
+
+# Ruta para procesar descifrado ElGamal
+@app.route('/elgamal-decrypt', methods=['POST'])
+def elgamal_decrypt():
+    data = request.get_json()
+    try:
+        private_key = tuple(map(int, data['private_key'].strip('()').split(', ')))
+        ciphertext = tuple(map(int, data['ciphertext'].strip('()').split(', ')))
+        plaintext = cifrados.elgamal_decrypt(private_key, ciphertext)
+        return jsonify(plaintext=plaintext)
+    except Exception as e:
+        return jsonify(error=str(e)), 400
 
 if __name__ == "__main__":
     app.run(debug=True)

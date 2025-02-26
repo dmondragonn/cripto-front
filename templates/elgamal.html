@@ -1,0 +1,492 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Cifrado de permutación</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado ElGamal
+                    </li>
+                  </ol>
+                </nav>
+
+                <h2 class="text-white">Cifrado ElGamal<br /></h2>
+
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/elgamal.png"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        
+
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado ElGamal</h3>
+
+                <p>
+                    El cifrado ElGamal es un sistema de cifrado asimétrico basado en la dificultad del problema del logaritmo discreto en grupos cíclicos. Fue desarrollado por Taher ElGamal en 1985 y se usa en aplicaciones de seguridad, como PGP (Pretty Good Privacy) y firmas digitales.<br>
+                </p>
+
+                
+                <div class="section">
+                  
+                    <p><strong>Generación de claves</strong></p>
+                    
+                    <p id="clave" class="hidden">Se elige un número primo grande \( p \) y una base primitiva \( g \), luego se genera una clave privada \( x \) y la clave pública \( (p, g, y) \).</p>
+                    
+                    <p><strong>Cifrado</strong></p>
+                    <p id="cifrado" class="hidden">El mensaje \( M \) se transforma en dos valores \( (c_1, c_2) \) utilizando una clave aleatoria \( k \).</p>
+                    <p><strong>Descifrado</strong></p>
+                    <p id="descifrado" class="hidden">Se usa la clave privada \( x \) para recuperar el mensaje original.</p>
+                </div>
+
+                <p><strong>Pequeño ejemplo </strong></p>
+                <p id="clave" class="hidden">
+                    Se elige un número primo grande \( p = 17 \) y una base primitiva \( g = 3 \). Luego se genera una clave privada \( x = 15 \) y la clave pública \( (p, g, y) \), donde:
+                    \[
+                    y = g^x \mod p = 3^{15} \mod 17 = 6
+                    \]
+                </p>
+
+                <p><strong>¿Cómo ciframos?</strong></p>
+                <p id="cifrado" class="hidden">
+                    Para cifrar \( M = 10 \), se elige \( k = 7 \) y se calculan:
+                    \[
+                    c_1 = g^k \mod p = 3^7 \mod 17 = 11
+                    \]
+                    \[
+                    c_2 = M \cdot y^k \mod p = 10 \times 6^7 \mod 17 = 14
+                    \]
+                </p>
+
+
+
+                <p><strong>¿Cómo desciframos?</strong></p>
+                <p id="descifrado" class="hidden">
+                    Para descifrar, se calcula:
+                    \[
+                    s = c_1^x \mod p = 11^{15} \mod 17 = 15
+                    \]
+                    Se encuentra el inverso modular:
+                    \[
+                    s^{-1} = 8 \mod 17
+                    \]
+                    Y finalmente, se recupera el mensaje original:
+                    \[
+                    M = c_2 \cdot s^{-1} \mod p = 14 \times 8 \mod 17 = 10
+                    \]
+                </p>
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-12 col-12">
+                    <h3 class="mb-4 pb-2">Playground!</h3>
+    
+                    <!-- Sección de generación de llaves -->
+                    <div class="container-xd mt-3 bg-light p-4" style="border-radius: 35px;">
+                        <p class="mb-3 fs-5">Llaves de encriptación</p>
+                        
+                        <div class="mb-3">
+                            <textarea id="generatedPublicKey" 
+                                   class="form-control public-key-field mb-3" 
+                                   readonly
+                                   style="border-radius: 20px; padding: 1rem; height: 120px"></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <textarea id="generatedPrivateKey" 
+                                   class="form-control private-key-field mb-3" 
+                                   readonly
+                                   style="border-radius: 20px; padding: 1rem; height: 120px"></textarea>
+                        </div>
+    
+                        <div class="d-flex justify-content-center">
+                            <button onclick="generar_llaves()" 
+                                 class="btn btn-outline-primary px-4 py-2" 
+                                 style="border-radius: 20px">
+                                 Generar llaves
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Selector de acción -->
+                    <div class="col-lg-6 col-12 mt-5">
+                        <form id="cipherForm" class="custom-form contact-form">
+                            <div class="row gy-4 justify-content-center">
+                                <div class="col-lg-12 col-12">
+                                    <div class="d-flex justify-content-center"> <!-- Contenedor flex agregado -->
+                                        <div class="btn-group gap-3" role="group"> <!-- Añadida clase gap-3 de Bootstrap -->
+                                            <input type="radio" class="btn-check" name="action" 
+                                                id="encryptRadio" value="encrypt" 
+                                                onchange="toggleUploadMenu()" checked>
+                                            <label class="btn btn-outline-primary px-4 py-2" 
+                                                style="border-radius: 20px" 
+                                                for="encryptRadio">Encriptar</label>
+                    
+                                            <input type="radio" class="btn-check" name="action" 
+                                                id="decryptRadio" value="decrypt" 
+                                                onchange="toggleUploadMenu()">
+                                            <label class="btn btn-outline-primary px-4 py-2" 
+                                                style="border-radius: 20px" 
+                                                for="decryptRadio">Desencriptar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+    
+                    <!-- Menú de Cifrado -->
+                    <div id="encryptMenu" class="container-xd mt-4 bg-light p-4" style="border-radius: 35px;">
+                        <h5 class="mb-4"><strong>Cifrado</strong></h5>
+                        
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="encryptMessage" 
+                                    placeholder="Escribe aquí..."
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="encryptMessage">Texto a cifrar</label>
+                            </div>
+    
+                            <div class="form-floating mb-4">
+                                <textarea id="encryptPublicKey" 
+                                    class="form-control public-key-field"
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="encryptPublicKey">Llave Pública</label>
+                            </div>
+    
+                            <div class="d-flex justify-content-center mb-4">
+                                <button onclick="procesarCifrado()" 
+                                    class="btn btn-primary px-5 py-2" 
+                                    style="border-radius: 20px">
+                                    Procesar
+                                </button>
+                            </div>
+    
+                            <h5 class="mb-3"><strong>Mensaje Cifrado</strong></h5>
+                            <div class="input-group">
+                                <textarea id="encryptedMessage" 
+                                    class="form-control" 
+                                    readonly
+                                    style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                <button class="btn btn-outline-secondary copy-btn" 
+                                    style="border-radius: 0 20px 20px 0"
+                                    data-copy-target="encryptedMessage">
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Menú de Descifrado -->
+                    <div id="decryptMenu" class="container-xd mt-4 bg-light p-4" style="border-radius: 35px; display: none;">
+                        <h5 class="mb-4"><strong>Descifrado</strong></h5>
+    
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="decryptCiphertext" 
+                                    placeholder="Escribe aquí..."
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="decryptCiphertext">Texto cifrado (formato c1,c2)</label>
+                            </div>
+    
+                            <div class="form-floating mb-4">
+                                <textarea id="decryptPrivateKey" 
+                                    class="form-control private-key-field"
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="decryptPrivateKey">Llave Privada</label>
+                            </div>
+    
+                            <div class="d-flex justify-content-center mb-4">
+                                <button onclick="procesardesCifrado()" 
+                                    class="btn btn-primary px-5 py-2" 
+                                    style="border-radius: 20px">
+                                    Procesar
+                                </button>
+                            </div>
+    
+                            <h5 class="mb-3"><strong>Mensaje Descifrado</strong></h5>
+                            <div class="input-group">
+                                <textarea id="decryptedMessage" 
+                                    class="form-control" 
+                                    readonly
+                                    style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                <button class="btn btn-outline-secondary copy-btn" 
+                                    style="border-radius: 0 20px 20px 0"
+                                    data-copy-target="decryptedMessage">
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+
+  <script>
+    // Función para generar la matriz dinámica según el tamaño seleccionado (para Hill)
+    function generateMatrix() {
+        const size = parseInt(document.getElementById('matrixSize').value);
+        const matrixContainer = document.getElementById('matrixContainer');
+        matrixContainer.innerHTML = ''; // Limpiar contenido anterior
+  
+        let table = '<table class="table table-bordered text-center"><tbody>';
+        for (let i = 0; i < size; i++) {
+            table += '<tr>';
+            for (let j = 0; j < size; j++) {
+                table += `<td><input type="number" class="form-control" id="matrix_${i}_${j}" placeholder="0"></td>`;
+            }
+            table += '</tr>';
+        }
+        table += '</tbody></table>';
+        matrixContainer.innerHTML = table;
+    }
+  
+    // Ejecutar cuando el DOM esté listo
+    document.addEventListener("DOMContentLoaded", () => {
+        // Generar la matriz por defecto (2x2) para Hill
+        generateMatrix();
+        document.getElementById('matrixSize').addEventListener('change', generateMatrix);
+
+        // Inicializar elementos específicos de ElGamal
+        const elgamalPublicKeyField = document.getElementById("encryptPublicKey");
+        const elgamalPrivateKeyField = document.getElementById("decryptPrivateKey");
+        
+        // Ocultar menús inicialmente
+        toggleUploadMenu();
+    });
+
+    // Generar llaves ElGamal
+    async function generar_llaves() {
+        try {
+            let response = await fetch('/generar_llaves_elgamal', { method: 'GET' });
+            let data = await response.json();
+
+            // Actualizar ambos campos de llaves en ambas secciones
+            document.querySelectorAll('.public-key-field').forEach(field => {
+                field.value = data.public_key;
+            });
+            document.querySelectorAll('.private-key-field').forEach(field => {
+                field.value = data.private_key;
+            });
+        } catch (error) {
+            console.error("Error al generar claves:", error);
+            alert("Error al generar claves: " + error.message);
+        }
+    }
+
+    // Procesar cifrado ElGamal
+    async function procesarCifrado() {
+        try {
+            const publicKey = document.getElementById("encryptPublicKey").value;
+            const message = document.getElementById("encryptMessage").value;
+            
+            const response = await fetch('/elgamal-encrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    public_key: publicKey,
+                    message: message
+                })
+            });
+            
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            
+            document.getElementById("encryptedMessage").value = data.ciphertext;
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al cifrar: " + error.message);
+        }
+    }
+
+    // Procesar descifrado ElGamal
+    async function procesardesCifrado() {
+        try {
+            const privateKey = document.getElementById("decryptPrivateKey").value;
+            const ciphertext = document.getElementById("decryptCiphertext").value;
+            
+            const response = await fetch('/elgamal-decrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    private_key: privateKey,
+                    ciphertext: ciphertext
+                })
+            });
+            
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            
+            document.getElementById("decryptedMessage").value = data.plaintext;
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al descifrar: " + error.message);
+        }
+    }
+
+    // Alternar entre menús de cifrado/descifrado
+    function toggleUploadMenu() {
+        const encryptDiv = document.getElementById("encryptMenu");
+        const decryptDiv = document.getElementById("decryptMenu");
+        const encryptRadio = document.getElementById("encryptRadio");
+
+        if (encryptRadio.checked) {
+            encryptDiv.style.display = "block";
+            decryptDiv.style.display = "none";
+        } else {
+            encryptDiv.style.display = "none";
+            decryptDiv.style.display = "block";
+        }
+    }
+
+    // Copiar texto al portapapeles (genérico)
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const targetId = e.target.dataset.copyTarget;
+                const text = document.getElementById(targetId).value;
+                
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        const message = document.createElement('div');
+                        message.textContent = '¡Copiado!';
+                        message.className = 'copy-message';
+                        document.body.appendChild(message);
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(message);
+                        }, 2000);
+                    })
+                    .catch(err => console.error("Error al copiar: ", err));
+            });
+        });
+    });
+</script>
+  
+
+</html>
