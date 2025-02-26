@@ -94,7 +94,7 @@
                       <a href="{{ url_for('index') }}">Inicio</a>
 
                     <li class="breadcrumb-item active" aria-current="page">
-                      Cifrado 1
+                      Cifrado de Hill
                     </li>
                   </ol>
                 </nav>
@@ -203,6 +203,40 @@
 
                 <p>Para descifrar, se usa la <strong>matriz inversa</strong> de \( K \) en módulo 26.</p>
 
+                <p>
+                  En la implementación de nuestro playground, el cifrado de Hill se ha adaptado para trabajar 
+                  con un conjunto predefinido de 41 caracteres, que incluye las 26 letras mayúsculas, los 10 
+                  dígitos y algunos símbolos básicos (punto, coma, dos puntos, signo de interrogación y espacio). 
+                  Esto significa que todas las operaciones de cifrado y descifrado se realizan en el anillo \( \mathbb{Z}_{41} \).
+                </p>
+                
+                <p>
+                  <strong>Conjunto de caracteres y mapeo:</strong> Se utiliza un diccionario bidireccional 
+                  para asignar a cada uno de los 41 caracteres un valor numérico único. Esto facilita la 
+                  conversión de bloques de texto en vectores numéricos y viceversa, pero también implica que 
+                  el cifrado solo es aplicable a los caracteres definidos, no a la totalidad de UTF-8.
+                </p>
+                
+                <p>
+                  <strong>División del mensaje en bloques:</strong> El mensaje se segmenta en bloques de 
+                  tamaño igual a la dimensión de la matriz clave. Si la longitud del mensaje no es múltiplo
+                   del tamaño del bloque, se añade padding (utilizando la letra "X") para completar el bloque, 
+                   asegurando que cada vector tenga la dimensión requerida para la operación matricial.
+                </p>
+                
+                <p>
+                  <strong>Operación matricial y módulo:</strong> Cada bloque se transforma en un vector numérico,
+                   que es multiplicado por la matriz clave y, posteriormente, se aplica la operación módulo 41. 
+                   Este proceso genera un nuevo vector que se remapea a caracteres para formar el mensaje cifrado.
+                </p>
+                
+                <p>
+                  <strong>Invertibilidad de la matriz clave:</strong> Para poder descifrar el mensaje, es imprescindible 
+                  que la matriz clave sea invertible en \( \mathbb{Z}_{41} \). Esto se traduce en que el determinante de 
+                  la matriz no solo debe ser distinto de cero, sino que además debe ser coprimo con 41 (\( \gcd(\det(K), 41) = 1 \)).
+                   Sin esta propiedad, no sería posible calcular la matriz inversa necesaria para el descifrado.
+                </p>
+
             </div>
           </div>
         </div>
@@ -255,10 +289,13 @@
                             </div>
                         </div>
                     </form>
-                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
-                        <h5>Texto cifrado:</h5>
-                        <p id="resultText" class="fw-bold text-primary"></p>
+                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px; display: none;">
+                      <h5>Texto cifrado:</h5>
+                      <p id="resultText" class="fw-bold text-primary"></p>
+                      <button id="copyBtn" class="btn btn-outline-secondary btn-sm"  style="border-radius: 35px;" disabled>Copiar</button>
+                      <span id="copyMessage" class="text-success ms-2" style="display: none;">¡Copiado!</span>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -305,6 +342,7 @@
   
     // Ejecutar cuando el DOM esté listo
     document.addEventListener("DOMContentLoaded", () => {
+        
         // Generar la matriz por defecto (2x2)
         generateMatrix();
   
@@ -373,6 +411,40 @@
         });
     });
   </script>
+
+<script>
+  // Este script adicional no modifica nada de tu código original,
+  // solo agrega la funcionalidad para copiar el texto cifrado.
+  document.addEventListener("DOMContentLoaded", () => {
+      const copyBtn = document.getElementById("copyBtn");
+      const resultText = document.getElementById("resultText");
+      const copyMessage = document.getElementById("copyMessage");
+
+      if (!copyBtn || !resultText || !copyMessage) {
+          console.error("Elementos para la funcionalidad de copiar no encontrados.");
+          return;
+      }
+
+      // Observar cambios en el contenido de resultText para habilitar o deshabilitar el botón
+      const observer = new MutationObserver(() => {
+          copyBtn.disabled = resultText.textContent.trim() === "";
+      });
+      observer.observe(resultText, { childList: true, subtree: true });
+
+      // Agregar la funcionalidad de copiar al portapapeles al hacer clic
+      copyBtn.addEventListener("click", () => {
+          navigator.clipboard.writeText(resultText.textContent)
+              .then(() => {
+                  // Mostrar mensaje de confirmación durante 2 segundos
+                  copyMessage.style.display = "inline";
+                  setTimeout(() => {
+                      copyMessage.style.display = "none";
+                  }, 2000);
+              })
+              .catch(err => console.error("Error al copiar: ", err));
+      });
+  });
+</script>
   
 
 </html>

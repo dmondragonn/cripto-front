@@ -42,6 +42,24 @@ def cdesplazamiento():
 def cvigenere():
     return render_template("cvigenere.html")
 
+@app.route("/cmultiplicative")
+def cmultiplicative():
+    return render_template("cmulti.html")
+
+@app.route("/process-multiplicative", methods=['POST'])
+def process_multiplicative():
+    data = request.get_json()
+    message = data['message']
+    key = int(data['key'])
+    action = data['action']
+
+    if action == 'encrypt':
+        result = cifrados.multi_encrypt(message, key)
+    else:
+        result = cifrados.multi_decrypt(message, key)
+
+    return jsonify(result=result)
+
 @app.route('/process-affine', methods=['POST'])
 def process_affine():
     data = request.get_json()
@@ -119,8 +137,8 @@ def encrypt():
         if not mensaje:
             return jsonify({"error": "El mensaje no puede estar vacío"}), 400
 
-        if not isinstance(clave, int) or clave < 1 or clave > 25:
-            return jsonify({"error": "La clave debe ser un número entre 1 y 25"}), 400
+        if not isinstance(clave, int) or clave < 1 or clave > 26:
+            return jsonify({"error": "La clave debe ser un número entre 1 y 26"}), 400
 
         # Cifrar
         mensaje_cifrado = cifrados.shift_cipher_encrypt(mensaje, clave)

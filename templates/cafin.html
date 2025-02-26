@@ -94,7 +94,7 @@
                       <a href="{{ url_for('index') }}">Inicio</a>
 
                     <li class="breadcrumb-item active" aria-current="page">
-                      Cifrado 1
+                      Cifrado afín
                     </li>
                   </ol>
                 </nav>
@@ -251,66 +251,95 @@
                     <h3 class="mb-4 pb-2">Playground!</h3>
                 </div>
                 <div class="col-lg-6 col-12">
-                  <form id="cipherForm" class="custom-form contact-form">
-                    <div class="row gy-4 justify-content-center">
-                        <div class="col-lg-12 col-12">
-                            <div class="btn-group" role="group">
-                                <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
-                                <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
-            
-                                <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
-                                <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
+                    <form id="cipherForm" class="custom-form contact-form">
+                        <div class="row gy-4 justify-content-center">
+                            <div class="col-lg-12 col-12">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
+    
+                                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-12 col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
+                                    <label for="message">Texto cifrar</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-12">
+                                <div class="form-floating">
+                                    <select id="key1" class="form-control" required>
+                                        <option value="1">1</option>
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="7">7</option>
+                                        <option value="9">9</option>
+                                        <option value="11">11</option>
+                                        <option value="15">15</option>
+                                        <option value="17">17</option>
+                                        <option value="19">19</option>
+                                        <option value="21">21</option>
+                                        <option value="23">23</option>
+                                        <option value="25">25</option>
+                                    </select>
+                                    <label for="key1">Clave a</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-12">
+                                <div class="form-floating">
+                                    <select id="key2" class="form-control" required>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                    </select>
+                                    <label for="key2">Clave b</label>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 col-12">
+                                <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
                             </div>
                         </div>
-            
-                        <div class="col-lg-12 col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                <label for="message">Texto cifrar</label>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                          <div class="col-lg-6 col-12">
-                              <div class="form-floating">
-                                  <select id="key1" class="form-control" required>
-                                      <option value="1">1</option>
-                                      <option value="3">3</option>
-                                      <option value="5">5</option>
-                                      <option value="7">7</option>
-                                      <option value="9">9</option>
-                                      <option value="11">11</option>
-                                      <option value="15">15</option>
-                                      <option value="17">17</option>
-                                      <option value="19">19</option>
-                                      <option value="21">21</option>
-                                      <option value="23">23</option>
-                                      <option value="25">25</option>
-                                  </select>
-                                  <label for="key1">Clave a</label>
-                              </div>
-                          </div>
-                          <div class="col-lg-6 col-12">
-                              <div class="form-floating">
-                                  <input type="text" class="form-control" id="key2" placeholder="Ej: 10" required>
-                                  <label for="key2">Clave b (ej: 10)</label>
-                              </div>
-                          </div>
-                        </div>
-            
-                        <div class="col-lg-4 col-12">
-                            <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
-                        </div>
-                      </div>
                     </form>
-                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
-                        <h5>Texto cifrado:</h5>
-                        <p id="resultText" class="fw-bold text-primary"></p>
+    
+                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px; display: none;">
+                      <h5>Texto cifrado:</h5>
+                      <p id="resultText" class="fw-bold text-primary"></p>
+                      <button id="copyBtn" class="btn btn-outline-secondary btn-sm"  style="border-radius: 35px;" disabled>Copiar</button>
+                      <span id="copyMessage" class="text-success ms-2" style="display: none;">¡Copiado!</span>
                     </div>
+
                 </div>
             </div>
         </div>
-      </section>
+    </section>
     </main>
 
     <script src="../static/js/jquery.min.js"></script>
@@ -321,7 +350,14 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("cipherForm").addEventListener("submit", async (e) => {
+        const resultadoDiv = document.getElementById("resultado");
+        const procesarBtn = document.getElementById("procesarBtn");
+        const copyBtn = document.getElementById("copyBtn");
+
+        // Ocultar el div al cargar la página
+        resultadoDiv.style.display = "none";
+
+        procesarBtn.addEventListener("click", async (e) => {
             e.preventDefault();
             
             const message = document.getElementById("message").value;
@@ -349,26 +385,34 @@
                 resultElement.textContent = data.result;
                 resultElement.classList.remove("text-danger");
                 resultElement.classList.add("text-primary");
+
+                // Mostrar el div solo si hay un resultado
+                resultadoDiv.style.display = "block";
+                copyBtn.disabled = false; // Habilitar botón de copiar
             } catch (error) {
                 resultElement.textContent = `Error: ${error.message}`;
                 resultElement.classList.remove("text-primary");
                 resultElement.classList.add("text-danger");
                 console.error("Error:", error);
+
+                // En caso de error, no mostramos el div
+                resultadoDiv.style.display = "none";
             }
         });
-    });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const resultadoDiv = document.getElementById("resultado");
-        const procesarBtn = document.getElementById("procesarBtn");
+        // Función para copiar el resultado al portapapeles
+        copyBtn.addEventListener("click", () => {
+            const resultText = document.getElementById("resultText").textContent;
+            const copyMessage = document.getElementById("copyMessage");
 
-        // Ocultar el div al cargar la página
-        resultadoDiv.style.display = "none";
-
-        procesarBtn.addEventListener("click", function () {
-            // Aquí podrías agregar la lógica para enviar los datos al backend
-            // Por ahora, solo mostramos el div de resultado
-            resultadoDiv.style.display = "block";
+            if (resultText) {
+                navigator.clipboard.writeText(resultText).then(() => {
+                    copyMessage.style.display = "inline";
+                    setTimeout(() => {
+                        copyMessage.style.display = "none";
+                    }, 2000);
+                }).catch(err => console.error("Error al copiar:", err));
+            }
         });
     });
 </script>

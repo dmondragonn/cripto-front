@@ -91,7 +91,7 @@
                         <a href="{{ url_for('index') }}">Inicio</a>
 
                       <li class="breadcrumb-item active" aria-current="page">
-                        Cifrado 1
+                        Cifrado de desplazamiento
                       </li>
                     </ol>
                   </nav>
@@ -110,7 +110,7 @@
                 <div class="col-lg-5 col-12">
                   <div class="topics-detail-block bg-white shadow-lg">
                     <img
-                      src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                      src="../static/images/topics/despla_img.png"
                       class="topics-detail-block-image img-fluid"
                     />
                   </div>
@@ -118,42 +118,6 @@
               </div>
             </div>
           </header>
-
-          <section class="section-padding section-bg" id="playground">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-lg-12 col-12">
-                        <h3 class="mb-4 pb-2">Cifrado de Desplazamiento</h3>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <form id="cipherForm" class="custom-form contact-form">
-                            <div class="row gy-4 justify-content-center">
-                                <div class="col-lg-12 col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                        <label for="message">Texto a cifrar</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-12">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="key" placeholder="Ej: 3" min="1" max="25" required>
-                                        <label for="key">Clave de desplazamiento (ej: 3)</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12">
-                                    <button id="procesarBtn" type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
-                            <h5>Resultado:</h5>
-                            <p id="encryptedText" class="fw-bold text-primary"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
         
         <div class="row gy-4 justify-content-center">
           {% if encrypted_message %}
@@ -174,53 +138,77 @@
                 <p>
                   El cifrado de desplazamiento, también conocido como Cifrado César, es uno de los métodos de cifrado más antiguos y simples. 
                   Consiste en sustituir cada letra de un mensaje por otra que se encuentra un número fijo de posiciones más adelante en el alfabeto.
-
+                  <br><br>
                   Por ejemplo, con un desplazamiento de 3 posiciones:
-
-                  A → D
-                  B → E
-                  C → F
-                  Hola → Krod
+                  <br>
+                  A → D<br>
+                  B → E<br>
+                  C → F<br>
+                  Hola → Krod<br><br>
                   El receptor del mensaje puede descifrarlo simplemente retrocediendo el mismo número de posiciones en el alfabeto.
+                  <br>
                 </p>
 
                 <p>
-                  <strong>Historia del Cifrado César</strong><br>
+                  <strong>Historia del Cifrado César</strong><br><br>
                   El cifrado recibe su nombre del general y político romano Julio César, quien lo utilizaba para enviar mensajes secretos a sus generales. 
                   César solía usar un desplazamiento de tres posiciones, lo que garantizaba cierto nivel de seguridad en su época.
                   Aunque hoy en día este cifrado es muy fácil de romper con herramientas modernas, sigue siendo un excelente punto de partida para aprender sobre criptografía.
                 </p>
 
-                <blockquote>
-                  Freelancing your skills isn’t going to make you a millionaire
-                  overnight.
-                </blockquote>
-
-                <div class="row my-4">
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <img
-                      src="../static/images/businesswoman-using-tablet-analysis.jpg"
-                      class="topics-detail-block-image img-fluid"
-                    />
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                    <img
-                      src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
-                      class="topics-detail-block-image img-fluid"
-                    />
-                  </div>
-                </div>
-
-                <p>
-                  Most people start with freelancing skills they already have as a
-                  side hustle to build up income. This extra cash can be used for
-                  a vacation, to boost up savings, investing, build business.
-                </p>
+                <p><strong>Restricciones y consideraciones:</strong></p>
+                <ul>
+                  <li>
+                    <strong>Clave de desplazamiento:</strong> La clave es un número entero que indica cuántas posiciones se desplazarán las letras. Debido a que el alfabeto inglés tiene 26 letras, un desplazamiento de 26 (o cualquier múltiplo de 26) equivale a un desplazamiento de 0, es decir, no produce ningún cambio en el mensaje. Por ello, se limita la clave a valores entre 1 y 25, asegurando que siempre se genere una transformación significativa.
+                  </li>
+                  <br>
+                  <li>
+                    <strong>Sensibilidad a mayúsculas y minúsculas:</strong> El cifrado distingue entre letras mayúsculas y minúsculas, de modo que se respeta el formato original del texto. Esto significa que una "A" y una "a" se cifran de manera independiente, manteniendo su correspondiente rango en el alfabeto.
+                  </li>
+                  <br>
+                  <li>
+                    <strong>Tratamiento de caracteres no alfabéticos:</strong> Los caracteres que no pertenecen al alfabeto (como números, espacios o símbolos) permanecen sin cambios, lo que permite conservar la estructura y legibilidad del mensaje original.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
+
+        <section class="section-padding section-bg" id="playground">
+          <div class="container">
+              <div class="row justify-content-center text-center">
+                  <div class="col-lg-12 col-12">
+                      <h3 class="mb-4 pb-2">Cifrado de Desplazamiento</h3>
+                  </div>
+                  <div class="col-lg-6 col-12">
+                      <form id="cipherForm" class="custom-form contact-form">
+                          <div class="row gy-4 justify-content-center">
+                              <div class="col-lg-12 col-12">
+                                  <div class="form-floating">
+                                      <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
+                                      <label for="message">Texto a cifrar</label>
+                                  </div>
+                              </div>
+                              <div class="col-lg-12 col-12">
+                                  <div class="form-floating">
+                                      <input type="number" class="form-control" id="key" placeholder="Ej: 3" min="1" max="25" required>
+                                      <label for="key">Clave de desplazamiento (ej: 3)</label>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4 col-12">
+                                  <button id="procesarBtn" type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
+                              </div>
+                          </div>
+                      </form>
+                      <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
+                          <h5>Resultado:</h5>
+                          <p id="encryptedText" class="fw-bold text-primary"></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
       </main>
 
       <script src="../static/js/jquery.min.js"></script>
@@ -269,8 +257,6 @@
         resultadoDiv.style.display = "none";
 
         procesarBtn.addEventListener("click", function () {
-            // Aquí podrías agregar la lógica para enviar los datos al backend
-            // Por ahora, solo mostramos el div de resultado
             resultadoDiv.style.display = "block";
         });
     });

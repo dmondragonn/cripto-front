@@ -147,7 +147,7 @@ def elgamal_decrypt(private_key, ciphertext):
     c1, c2 = ciphertext
 
     p, x = int(private_key.p), int(private_key.x)
-    
+
     s = pow(c1, x, p)
     s_inv = pow(s, -1, p)
     m = (c2 * s_inv) % p
@@ -439,3 +439,49 @@ def hill_desencriptar(message, key):
     print(plaintext)
     return plaintext
 
+########## Cifrado multiplicativo ###########
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def modular_inverse(a, m):
+    a = a % m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return None
+
+def multi_encrypt(plaintext, key):
+    print("entre")
+    if gcd(key, 26) != 1:
+        raise ValueError("Key must be coprime to 26.")
+    
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            shift = ord('A') if char.isupper() else ord('a')
+            encrypted_char = chr((key * (ord(char) - shift)) % 26 + shift)
+            ciphertext += encrypted_char
+        else:
+            ciphertext += char
+    print(ciphertext)
+    return ciphertext
+
+def multi_decrypt(ciphertext, key):
+    if gcd(key, 26) != 1:
+        raise ValueError("Key must be coprime to 26.")
+    
+    key_inverse = modular_inverse(key, 26)
+    plaintext = ""
+    for char in ciphertext:
+        if char.isalpha():
+            shift = ord('A') if char.isupper() else ord('a')
+            decrypted_char = chr((key_inverse * (ord(char) - shift)) % 26 + shift)
+            plaintext += decrypted_char
+        else:
+            plaintext += char
+    return plaintext
+
+########## Cifrado DES-S ###########
