@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Cifrado ElGamal</title>
+    <title>Cifrado de permutación</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,10 +25,7 @@
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
       rel="stylesheet"
-      />
-    <link rel="stylesheet" href="../static/css/images-selection.css">
-    
-
+    />
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
@@ -197,186 +195,157 @@
             <div class="row justify-content-center text-center">
                 <div class="col-lg-12 col-12">
                     <h3 class="mb-4 pb-2">Playground!</h3>
+                    <div class="container d-flex flex-column align-items-center">
 
-
-
-
-
-
-                    <div class="container-xd mt-3">
-                        <p class="mb-2">Llaves de encriptación</p>
+    
+                    <!-- Sección de generación de llaves -->
                      
-                     
-            
-                         <label for="publicKey" class="mb-2">Llave pública</label>
-                            <textarea id="publicKey" class="form-control mb-3" readonly></textarea>
+                    <div class="container mt-3 bg-light p-4" style="border-radius: 35px;">
+                        <p class="mb-3 fs-5">Llaves de encriptación</p>
                         
-                            <label for="privateKey" class="mb-2">Llave privada</label>
-                            <textarea id="privateKey" class="form-control mb-3" readonly></textarea>
-                        
-                    
-                     
-                                <!-- Contenedor del botón separado -->
-                                <div class="mb-4">
-                                    <label onclick="generar_llaves()" 
-                                        class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn mt-3">
-                                        Generar llaves
-                                    </label>
-                                </div>
-                    </div>
-     
-
-
-
-
-                                    <!-- Menú de Encriptación (generar llaves) -->
-                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-     
-
-                            <!-- Contenedor del formulario -->
-                            <div class="col-lg-6 col-12">
-                                <form id="cipherForm" class="custom-form contact-form">
-                                    <div class="row gy-4 justify-content-center">
-                                        <div class="col-lg-12 col-12">
-                                            <div class="btn-group" role="group">  
-                                                <!-- Botones de selección -->
-                                                <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" onchange="toggleUploadMenu()" checked />
-                                                <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
-
-                                                <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" onchange="toggleUploadMenu()" />
-                                                <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                 
-                                    
-
-
-
-                                         <div id="encryptMenu" class="container-xd mt-3">
-                                            <h5 class="mb-3"><strong>Cifrado</strong></h5>
-
-
-                                                <!-- Campo de texto flotante -->
-                                            <div class="col-lg-12 col-12 mt-3">
-                                                <div class="form-floating">
-                                                    <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                                    <label for="message">Texto a cifrar</label>
-                                                </div>
-                                            </div>
-                                            <!-- Llave Pública -->
-                                             <div class="container mt-4">
-                                        
-                                                
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text custom-label">Ingrese llave pública</span>
-                                                    <textarea id="publicKey" class="form-control custom-textarea"></textarea>
-                                                </div>
-
-                                               
-                                                   
-
-                                                <div class="col-lg-4 col-12">
-                                                    <button onclick="procesarCifrado()" id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
-                                                </div>
-                                                <label for="publicKey" class="mb-2"></label>
-                                                <h5 class="mb-3"><strong>Mensaje Cifrado</strong></h5>
-                                            <textarea id="publicKey" class="form-control mb-3" readonly></textarea>
-
-
-                                                
-
-
-
-                                             
-                                            </div>
-
-
-              
-    
-                                            
-                                        </div>
-                                     
-                                     </div>
-                                     
-                                  
-                                                                     
-                 
-                 
-                                     <!-- Menú de Desencriptación (Subir 2 imágenes) -->
-                                     <div id="decryptMenu" class="container-xd mt-3" style="display: none;">
-                                        <h5 class="mb-3"><strong>Descifrado</strong></h5>
-
-                                    <!-- Campo de texto flotante -->
-                                    <div class="col-lg-12 col-12 mt-4"> <!-- Aumenté mt-3 a mt-4 para más espacio -->
-                                        <div class="form-floating">
-                                            <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                            <label for="message">Texto a descifrar</label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Espaciado adicional -->
-                                    <div class="mt-4"></div>
-
-                                    <!-- Campo para ingresar llave privada -->
-                                    <div class="input-group mb-3"> <!-- Aumenté mb-2 a mb-3 para más espacio abajo -->
-                                        <span class="input-group-text custom-label">Ingrese llave privada</span>
-                                        <textarea id="privateKey" class="form-control custom-textarea"></textarea> <!-- Corregí id, antes estaba duplicado -->
-                                    </div>
-
-                                    <!-- Espaciado adicional -->
-                                    <div class="mt-3"></div>
-
-                                    <!-- Botón para procesar -->
-                                    <div class="col-lg-4 col-12">
-                                        <button onclick="procesardesCifrado()" id="procesarBtn" type="submit" class="form-control btn btn-primary">
-                                            Procesar
-                                        </button>
-                                    </div>
-
-                                    <!-- Espaciado adicional -->
-                                    <div class="mt-4"></div>
-
-                                    <!-- Mensaje descifrado -->
-                                    <h5 class="mb-3"><strong>Mensaje Descifrado</strong></h5>
-                                    <textarea id="decryptedMessage" class="form-control mb-4" readonly></textarea> <!-- Agregué más espacio abajo -->
-
-
-
-
-
-
-
-
-
-
-
-                                     </div>
-                                 </div>
-                            </div>
-    
-                           
-
-
-                          
-             
-             
-    
+                        <div class="mb-3">
+                            <textarea id="generatedPublicKey" 
+                                   class="form-control public-key-field mb-3" 
+                                   readonly
+                                   style="border-radius: 20px; padding: 1rem; height: 120px"></textarea>
                         </div>
-                    </form>
+                        
+                        <div class="mb-4">
+                            <textarea id="generatedPrivateKey" 
+                                   class="form-control private-key-field mb-3" 
+                                   readonly
+                                   style="border-radius: 20px; padding: 1rem; height: 120px"></textarea>
+                        </div>
+    
+                        <div class="d-flex justify-content-center">
+                            <button onclick="generar_llaves()" 
+                                 class="btn btn-outline-primary px-4 py-2" 
+                                 style="border-radius: 20px">
+                                 Generar llaves
+                            </button>
+                        </div>
+                    </div>
+    
+                                <!-- Selector de acción -->
+                                <div class="col-lg-6 col-12 mt-5">
+                                  <form id="cipherForm" class="custom-form contact-form">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-12 col-12 text-center">
+                                              <div class="d-flex justify-content-center"> <!-- Flexbox para centrar -->
+                                                  <div class="btn-group gap-3 d-flex justify-content-center" role="group"> <!-- Asegura el centrado -->
+                                                      <input type="radio" class="btn-check" name="action" 
+                                                          id="encryptRadio" value="encrypt" 
+                                                          onchange="toggleUploadMenu()" checked>
+                                                      <label class="btn btn-outline-primary px-4 py-2" 
+                                                          style="border-radius: 20px" 
+                                                          for="encryptRadio">Encriptar</label>
+                              
+                                                      <input type="radio" class="btn-check" name="action" 
+                                                          id="decryptRadio" value="decrypt" 
+                                                          onchange="toggleUploadMenu()">
+                                                      <label class="btn btn-outline-primary px-4 py-2" 
+                                                          style="border-radius: 20px" 
+                                                          for="decryptRadio">Desencriptar</label>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </form>
+                              </div>
+                              
+                  
 
+
+    
+                    <!-- Menú de Cifrado -->
+                    <div id="encryptMenu" class="container mt-4 bg-light p-4" style="border-radius: 35px;">
+                        <h5 class="mb-4"><strong>Cifrado</strong></h5>
+                        
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="encryptMessage" 
+                                    placeholder="Escribe aquí..."
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="encryptMessage">Texto a cifrar</label>
+                            </div>
+    
+                            <div class="form-floating mb-4">
+                                <textarea id="encryptPublicKey" 
+                                    class="form-control public-key-field"
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="encryptPublicKey">Llave Pública</label>
+                            </div>
+    
+                            <div class="d-flex justify-content-center mb-4">
+                                <button onclick="procesarCifrado()" 
+                                    class="btn btn-primary px-5 py-2" 
+                                    style="border-radius: 20px">
+                                    Procesar
+                                </button>
+                            </div>
+    
+                            <h5 class="mb-3"><strong>Mensaje Cifrado</strong></h5>
+                            <div class="input-group">
+                                <textarea id="encryptedMessage" 
+                                    class="form-control" 
+                                    readonly
+                                    style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                <button class="btn btn-outline-secondary copy-btn" 
+                                    style="border-radius: 0 20px 20px 0"
+                                    data-copy-target="encryptedMessage">
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Menú de Descifrado -->
+                    <div id="decryptMenu" class="container mt-4 bg-light p-4" style="border-radius: 35px; display: none;">
+                        <h5 class="mb-4"><strong>Descifrado</strong></h5>
+    
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="decryptCiphertext" 
+                                    placeholder="Escribe aquí..."
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="decryptCiphertext">Texto cifrado (formato c1,c2)</label>
+                            </div>
+    
+                            <div class="form-floating mb-4">
+                                <textarea id="decryptPrivateKey" 
+                                    class="form-control private-key-field"
+                                    style="border-radius: 20px; height: 120px"></textarea>
+                                <label for="decryptPrivateKey">Llave Privada</label>
+                            </div>
+    
+                            <div class="d-flex justify-content-center mb-4">
+                                <button onclick="procesardesCifrado()" 
+                                    class="btn btn-primary px-5 py-2" 
+                                    style="border-radius: 20px">
+                                    Procesar
+                                </button>
+                            </div>
+    
+                            <h5 class="mb-3"><strong>Mensaje Descifrado</strong></h5>
+                            <div class="input-group">
+                                <textarea id="decryptedMessage" 
+                                    class="form-control" 
+                                    readonly
+                                    style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                <button class="btn btn-outline-secondary copy-btn" 
+                                    style="border-radius: 0 20px 20px 0"
+                                    data-copy-target="decryptedMessage">
+                                    Copiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>
     </section>
     
-    
-
-
 
     </main>
 
@@ -387,7 +356,7 @@
   </body>
 
   <script>
-    // Función para generar la matriz dinámica según el tamaño seleccionado
+    // Función para generar la matriz dinámica según el tamaño seleccionado (para Hill)
     function generateMatrix() {
         const size = parseInt(document.getElementById('matrixSize').value);
         const matrixContainer = document.getElementById('matrixContainer');
@@ -407,159 +376,132 @@
   
     // Ejecutar cuando el DOM esté listo
     document.addEventListener("DOMContentLoaded", () => {
-        
-        // Generar la matriz por defecto (2x2)
+        // Generar la matriz por defecto (2x2) para Hill
         generateMatrix();
-  
-        // Actualizar la matriz cuando se cambie el tamaño
         document.getElementById('matrixSize').addEventListener('change', generateMatrix);
-  
-        // Ocultar el div de resultado al cargar la página
-        const resultadoDiv = document.getElementById("resultado");
-        resultadoDiv.style.display = "none";
-  
-        // Manejar el envío del formulario
-        document.getElementById("cipherForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-  
-            // Construir la matriz con los valores de la tabla
-            const size = parseInt(document.getElementById('matrixSize').value);
-            let matrix = [];
-            for (let i = 0; i < size; i++) {
-                let row = [];
-                for (let j = 0; j < size; j++) {
-                    let value = document.getElementById(`matrix_${i}_${j}`).value;
-                    row.push(parseInt(value) || 0); // Asegurar número, sino 0
-                }
-                matrix.push(row);
-            }
-  
-            // Convertir la matriz a formato JSON estándar
-            let matrixJson = JSON.stringify(matrix);
-            // Si se requiere el formato con paréntesis en lugar de corchetes, descomenta la siguiente línea:
-            // matrixJson = matrixJson.replace(/\[/g, "(").replace(/\]/g, ")");
-  
-            console.log("Clave en formato JSON:", matrixJson);
-  
-            // Recoger el mensaje y la acción (encriptar/desencriptar)
-            const message = document.getElementById("message").value;
-            const action = document.querySelector('input[name="action"]:checked').value;
-            const resultElement = document.getElementById("resultText");
-  
-            // Enviar la información al backend
-            try {
-                const response = await fetch("/process-hill", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        message: message,
-                        key: matrixJson,  // Se envía la matriz en formato JSON (o con paréntesis si se modifica)
-                        action: action
+
+
+
+
+
+
+
+
+        // Inicializar elementos específicos de ElGamal
+        const elgamalPublicKeyField = document.getElementById("encryptPublicKey");
+        const elgamalPrivateKeyField = document.getElementById("decryptPrivateKey");
+        
+        // Ocultar menús inicialmente
+        toggleUploadMenu();
+    });
+
+    // Generar llaves ElGamal
+    async function generar_llaves() {
+        try {
+            let response = await fetch('/generar_llaves_elgamal', { method: 'GET' });
+            let data = await response.json();
+
+            // Actualizar ambos campos de llaves en ambas secciones
+            document.querySelectorAll('.public-key-field').forEach(field => {
+                field.value = data.public_key;
+            });
+            document.querySelectorAll('.private-key-field').forEach(field => {
+                field.value = data.private_key;
+            });
+        } catch (error) {
+            console.error("Error al generar claves:", error);
+            alert("Error al generar claves: " + error.message);
+        }
+    }
+
+    // Procesar cifrado ElGamal
+    async function procesarCifrado() {
+        try {
+            const publicKey = document.getElementById("encryptPublicKey").value;
+            const message = document.getElementById("encryptMessage").value;
+            
+            const response = await fetch('/elgamal-encrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    public_key: publicKey,
+                    message: message
+                })
+            });
+            
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            
+            document.getElementById("encryptedMessage").value = data.ciphertext;
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al cifrar: " + error.message);
+        }
+    }
+
+    // Procesar descifrado ElGamal
+    async function procesardesCifrado() {
+        try {
+            const privateKey = document.getElementById("decryptPrivateKey").value;
+            const ciphertext = document.getElementById("decryptCiphertext").value;
+            
+            const response = await fetch('/elgamal-decrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    private_key: privateKey,
+                    ciphertext: ciphertext
+                })
+            });
+            
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+            
+            document.getElementById("decryptedMessage").value = data.plaintext;
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al descifrar: " + error.message);
+        }
+    }
+
+    // Alternar entre menús de cifrado/descifrado
+    function toggleUploadMenu() {
+        const encryptDiv = document.getElementById("encryptMenu");
+        const decryptDiv = document.getElementById("decryptMenu");
+        const encryptRadio = document.getElementById("encryptRadio");
+
+        if (encryptRadio.checked) {
+            encryptDiv.style.display = "block";
+            decryptDiv.style.display = "none";
+        } else {
+            encryptDiv.style.display = "none";
+            decryptDiv.style.display = "block";
+        }
+    }
+
+    // Copiar texto al portapapeles (genérico)
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const targetId = e.target.dataset.copyTarget;
+                const text = document.getElementById(targetId).value;
+                
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        const message = document.createElement('div');
+                        message.textContent = '¡Copiado!';
+                        message.className = 'copy-message';
+                        document.body.appendChild(message);
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(message);
+                        }, 2000);
                     })
-                });
-  
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || "Error del servidor");
-  
-                resultElement.textContent = data.result;
-                resultElement.classList.remove("text-danger");
-                resultElement.classList.add("text-primary");
-            } catch (error) {
-                resultElement.textContent = `Error: ${error.message}`;
-                resultElement.classList.remove("text-primary");
-                resultElement.classList.add("text-danger");
-                console.error("Error:", error);
-            }
-  
-            // Mostrar el div de resultado
-            resultadoDiv.style.display = "block";
+                    .catch(err => console.error("Error al copiar: ", err));
+            });
         });
     });
-  </script>
-
-<script>
-    
-    async function generar_llaves() {
-    try {
-        let response = await fetch('/generar_llaves_elgamal', { method: 'GET' });
-        let data = await response.json();
-
-        document.getElementById("publicKey").value = data.public_key;
-        document.getElementById("privateKey").value = data.private_key;
-    } catch (error) {
-        console.error("Error al generar claves:", error);
-    }
-}
-
-      
-    function procesarCifrado() {
-        let mensaje = document.getElementById("publicKey").value; // Obtiene la llave pública o mensaje a cifrar
-
-        // Llamar a la función de cifrado en Python
-        fetch('/cifrar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mensaje: mensaje })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("encryptedMessage").value = data.cifrado; // Muestra el mensaje cifrado
-        })
-        .catch(error => console.error("Error:", error));
-    }
-
-
-
-        function toggleUploadMenu() {
-                    let encryptDiv = document.getElementById("encryptMenu");
-                    let decryptDiv = document.getElementById("decryptMenu");
-                    let encryptRadio = document.getElementById("encryptRadio");
-
-                    if (encryptRadio.checked) {
-                        encryptDiv.style.display = "block";
-                        decryptDiv.style.display = "none";
-                    } else {
-                        encryptDiv.style.display = "none";
-                        decryptDiv.style.display = "block";
-                    }
-                }
-
-
-
-        
-  // Este script adicional no modifica nada de tu código original,
-  // solo agrega la funcionalidad para copiar el texto cifrado.
-  document.addEventListener("DOMContentLoaded", () => {
-      const copyBtn = document.getElementById("copyBtn");
-      const resultText = document.getElementById("resultText");
-      const copyMessage = document.getElementById("copyMessage");
-
-      if (!copyBtn || !resultText || !copyMessage) {
-          console.error("Elementos para la funcionalidad de copiar no encontrados.");
-          return;
-      }
-
-      // Observar cambios en el contenido de resultText para habilitar o deshabilitar el botón
-      const observer = new MutationObserver(() => {
-          copyBtn.disabled = resultText.textContent.trim() === "";
-      });
-      observer.observe(resultText, { childList: true, subtree: true });
-
-      // Agregar la funcionalidad de copiar al portapapeles al hacer clic
-      copyBtn.addEventListener("click", () => {
-          navigator.clipboard.writeText(resultText.textContent)
-              .then(() => {
-                  // Mostrar mensaje de confirmación durante 2 segundos
-                  copyMessage.style.display = "inline";
-                  setTimeout(() => {
-                      copyMessage.style.display = "none";
-                  }, 2000);
-              })
-              .catch(err => console.error("Error al copiar: ", err));
-      });
-  });
 </script>
   
 
 </html>
-

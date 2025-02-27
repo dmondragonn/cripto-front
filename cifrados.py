@@ -1,17 +1,24 @@
+import io
+import json
+import math
+import random
+import string
+from os.path import join
+from tempfile import gettempdir
+
+import numpy as np
+from PIL import Image, PngImagePlugin
+
 from Crypto.PublicKey import ElGamal
 from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
 from Crypto.Util.number import bytes_to_long, long_to_bytes
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from Crypto.Signature import pkcs1_15
+from Crypto.PublicKey import RSA, DSA
+from Crypto.Cipher import PKCS1_OAEP, DES3
+from Crypto.Signature import pkcs1_15, DSS
 from Crypto.Hash import SHA256
-from Crypto.PublicKey import DSA
-from Crypto.Signature import DSS
+
 from sympy import Matrix
-import numpy as np
-import random
-import string
 
 #Desplazamiento
 
@@ -27,103 +34,8 @@ def shift_cipher_encrypt(text, key):
     return encrypted_text
 
 
-def shift_cipher_decrypt(text, key):
-    return shift_cipher_encrypt(text, -key)
 # Permutacion
         
-def cifrado_permutacion_encriptar(texto_plano, clave):
-    permutacion = [int(x) - 1 for x in clave]
-    longitud_bloque = len(permutacion)
-    
-    # Añadir espacios como relleno
-    padding = (longitud_bloque - (len(texto_plano) % longitud_bloque)) % longitud_bloque
-    texto_plano += ' ' * padding  # Relleno con espacios
-    
-    # Cifrar el texto
-    bloques = [texto_plano[i:i+longitud_bloque] for i in range(0, len(texto_plano), longitud_bloque)]
-    texto_cifrado = ''.join([''.join([bloque[i] for i in permutacion]) for bloque in bloques])
-    
-    # Eliminar los espacios adicionales antes de mostrar
-    texto_cifrado_sin_espacios = texto_cifrado[:len(texto_plano) - padding]
-    
-    return texto_cifrado_sin_espacios
-
-def cifrado_permutacion_desencriptar(texto_cifrado, clave):
-    permutacion = [int(x) - 1 for x in clave]
-    longitud_bloque = len(permutacion)
-    
-    # Añadir espacios temporalmente para completar los bloques
-    padding = (longitud_bloque - (len(texto_cifrado) % longitud_bloque)) % longitud_bloque
-    texto_cifrado += ' ' * padding  # Relleno con espacios
-    
-    # Calcular permutación inversa
-    inversa = [0] * longitud_bloque
-    for i, pos in enumerate(permutacion):
-        inversa[pos] = i
-    
-    # Descifrar el texto
-    bloques = [texto_cifrado[i:i+longitud_bloque] for i in range(0, len(texto_cifrado), longitud_bloque)]
-    texto_plano = ''.join([''.join([bloque[i] for i in inversa]) for bloque in bloques])
-    
-    # Eliminar los espacios adicionales después de descifrar
-    texto_plano = texto_plano.rstrip()
-    
-    return texto_plano
-
-
-# Vigenere
-
-
-def cifrado_vigenere_encriptar(texto_plano, clave):
-
-    texto_encriptado = []
-    clave = clave.upper()
-    indice_clave = 0
-
-    for caracter in texto_plano:
-        if caracter.isalpha():
-            desplazamiento = ord(clave[indice_clave]) - ord('A')
-            if caracter.isupper():
-                caracter_encriptado = chr(
-                    (ord(caracter) - ord('A') + desplazamiento) % 26 + ord('A'))
-            else:
-                caracter_encriptado = chr(
-                    (ord(caracter) - ord('a') + desplazamiento) % 26 + ord('a'))
-            texto_encriptado.append(caracter_encriptado)
-            indice_clave = (indice_clave + 1) % len(clave)
-        else:
-            # Caracteres no alfabéticos no se encriptan
-            texto_encriptado.append(caracter)
-
-    return ''.join(texto_encriptado)
-
-
-def cifrado_vigenere_desencriptar(texto_cifrado, clave):
-
-    texto_desencriptado = []
-    clave = clave.upper()
-    indice_clave = 0
-
-    for caracter in texto_cifrado:
-        if caracter.isalpha():
-            desplazamiento = ord(clave[indice_clave]) - ord('A')
-            if caracter.isupper():
-                caracter_desencriptado = chr(
-                    (ord(caracter) - ord('A') - desplazamiento) % 26 + ord('A'))
-            else:
-                caracter_desencriptado = chr(
-                    (ord(caracter) - ord('a') - desplazamiento) % 26 + ord('a'))
-            texto_desencriptado.append(caracter_desencriptado)
-            indice_clave = (indice_clave + 1) % len(clave)
-        else:
-            # Caracteres no alfabéticos no se desencriptan
-            texto_desencriptado.append(caracter)
-
-    return ''.join(texto_desencriptado)
-
-# Permutacion
-
-
 def cifrado_permutacion_encriptar(texto_plano, clave):
 
     permutacion = [int(x) - 1 for x in clave]
@@ -164,6 +76,61 @@ def cifrado_permutacion_desencriptar(texto_cifrado, clave):
         texto_desencriptado.append(bloque_desencriptado)
 
     return ''.join(texto_desencriptado).rstrip()
+
+
+# Vigenere-----------
+
+def cifrado_vigenere_encriptar(texto_plano, clave):
+
+    texto_encriptado = []
+    clave = clave.upper()
+    indice_clave = 0
+
+    for caracter in texto_plano:
+        if caracter.isalpha():
+            desplazamiento = ord(clave[indice_clave]) - ord('A')
+            if caracter.isupper():
+                caracter_encriptado = chr(
+                    (ord(caracter) - ord('A') + desplazamiento) % 26 + ord('A'))
+            else:
+                caracter_encriptado = chr(
+                    (ord(caracter) - ord('a') + desplazamiento) % 26 + ord('a'))
+            texto_encriptado.append(caracter_encriptado)
+            indice_clave = (indice_clave + 1) % len(clave)
+        else:
+            # Caracteres no alfabéticos no se encriptan
+            texto_encriptado.append(caracter)
+
+    return ''.join(texto_encriptado) 
+
+
+def cifrado_vigenere_desencriptar(texto_cifrado, clave):
+    if not isinstance(clave, str) or not clave.isalpha():
+        raise ValueError("La clave debe ser un string alfabético")
+
+    texto_desencriptado = []
+    clave = clave.upper()
+    indice_clave = 0
+
+    for caracter in texto_cifrado:
+        if caracter.isalpha():
+            desplazamiento = ord(clave[indice_clave]) - ord('A')  # POSIBLE ERROR AQUÍ
+            if caracter.isupper():
+                caracter_desencriptado = chr(
+                    (ord(caracter) - ord('A') - desplazamiento) % 26 + ord('A'))
+            else:
+                caracter_desencriptado = chr(
+                    (ord(caracter) - ord('a') - desplazamiento) % 26 + ord('a'))
+            texto_desencriptado.append(caracter_desencriptado)
+            indice_clave = (indice_clave + 1) % len(clave)
+        else:
+            texto_desencriptado.append(caracter)
+
+    return ''.join(texto_desencriptado)
+
+
+
+
 
 # ElGamal---------------
 
@@ -429,7 +396,7 @@ def hill_encriptar(message, key):
 
 
 def hill_desencriptar(message, key):
-    """ Generar desencriptacion
+    """ Generar descifrado
 
     Args:
         message ( str ): Recibe frase encriptada
@@ -481,3 +448,151 @@ def hill_desencriptar(message, key):
 
     print(plaintext)
     return plaintext
+
+########## Cifrado multiplicativo ###########
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def modular_inverse(a, m):
+    a = a % m
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return None
+
+def multi_encrypt(plaintext, key):
+    print("entre")
+    if gcd(key, 26) != 1:
+        raise ValueError("Key must be coprime to 26.")
+    
+    ciphertext = ""
+    for char in plaintext:
+        if char.isalpha():
+            shift = ord('A') if char.isupper() else ord('a')
+            encrypted_char = chr((key * (ord(char) - shift)) % 26 + shift)
+            ciphertext += encrypted_char
+        else:
+            ciphertext += char
+    print(ciphertext)
+    return ciphertext
+
+def multi_decrypt(ciphertext, key):
+    if gcd(key, 26) != 1:
+        raise ValueError("Key must be coprime to 26.")
+    
+    key_inverse = modular_inverse(key, 26)
+    plaintext = ""
+    for char in ciphertext:
+        if char.isalpha():
+            shift = ord('A') if char.isupper() else ord('a')
+            decrypted_char = chr((key_inverse * (ord(char) - shift)) % 26 + shift)
+            plaintext += decrypted_char
+        else:
+            plaintext += char
+    return plaintext
+
+########## Cifrado DES-S ###########
+
+########## Visual Triple DES ###########
+# --- Funciones de padding PKCS7 ---
+def pad_image_arr(arr, block_size=8):
+    flat = arr.flatten()
+    pad_len = block_size - (len(flat) % block_size)
+    if pad_len == 0:
+        pad_len = block_size
+    padding = np.full((pad_len,), pad_len, dtype=np.uint8)
+    padded = np.concatenate([flat, padding])
+    return padded
+
+def unpad_image_arr(arr):
+    flat = arr.flatten()
+    pad_len = int(flat[-1])
+    return flat[:-pad_len]
+
+# --- Funciones de encriptado y desencriptado 3DES ---
+def encrypt_image(plain_img_arr, key, mode, **kwargs):
+    modes = {
+        "ECB": DES3.MODE_ECB,
+        "CBC": DES3.MODE_CBC,
+        "OFB": DES3.MODE_OFB,
+        "CFB": DES3.MODE_CFB,
+        "CTR": DES3.MODE_CTR,
+    }
+    mode_val = modes[mode]
+    # Para modos que requieren IV o nonce, se esperan en kwargs
+    if mode == "CTR":
+        if "nonce" not in kwargs:
+            raise ValueError("El modo CTR requiere un nonce.")
+    elif mode in ["CBC", "OFB", "CFB"]:
+        if "iv" not in kwargs:
+            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+    key = DES3.adjust_key_parity(key)
+    # Se trabaja sobre la imagen aplanada (todos los bytes de la imagen)
+    padded_arr = pad_image_arr(plain_img_arr, 8)
+    des3 = DES3.new(key, mode_val, **kwargs)
+    encrypted_bytes = des3.encrypt(padded_arr.tobytes())
+    encrypted_arr = np.frombuffer(encrypted_bytes, dtype=np.uint8)
+    # Se devuelve también la longitud con padding para reconstrucción
+    return encrypted_arr, int(encrypted_arr.size)
+
+def decrypt_image(cipher_img_arr, key, mode, **kwargs):
+    modes = {
+        "ECB": DES3.MODE_ECB,
+        "CBC": DES3.MODE_CBC,
+        "OFB": DES3.MODE_OFB,
+        "CFB": DES3.MODE_CFB,
+        "CTR": DES3.MODE_CTR,
+    }
+    mode_val = modes[mode]
+    if mode == "CTR":
+        if "nonce" not in kwargs:
+            raise ValueError("El modo CTR requiere un nonce.")
+    elif mode in ["CBC", "OFB", "CFB"]:
+        if "iv" not in kwargs:
+            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+    key = DES3.adjust_key_parity(key)
+    des3 = DES3.new(key, mode_val, **kwargs)
+    cipher_bytes = cipher_img_arr.tobytes()
+    decrypted_bytes = des3.decrypt(cipher_bytes)
+    decrypted_arr = np.frombuffer(decrypted_bytes, dtype=np.uint8)
+    unpadded = unpad_image_arr(decrypted_arr)
+    return unpadded
+
+# --- Funciones para incorporar metadatos en el PNG ---
+def save_encrypted_image(encrypted_arr, padded_length, original_shape, save_path):
+    """
+    Para facilitar la reconstrucción, se guarda el arreglo cifrado (que es 1D)
+    en un PNG "visual" con ancho fijo; los metadatos (longitud padded y forma original)
+    se incorporan en el PNG usando PngInfo.
+    """
+    fixed_width = 256
+    height_enc = math.ceil(encrypted_arr.size / fixed_width)
+    total_pixels = height_enc * fixed_width
+    if total_pixels > encrypted_arr.size:
+        extra = np.zeros(total_pixels - encrypted_arr.size, dtype=np.uint8)
+        encrypted_full = np.concatenate([encrypted_arr, extra])
+    else:
+        encrypted_full = encrypted_arr
+    encrypted_img_visual = encrypted_full.reshape((height_enc, fixed_width))
+    
+    # Incrustar metadatos
+    metadata = {"padded_length": padded_length, "original_shape": original_shape}
+    pnginfo = PngImagePlugin.PngInfo()
+    pnginfo.add_text("padded_length", str(padded_length))
+    pnginfo.add_text("original_shape", json.dumps(original_shape))
+    
+    Image.fromarray(encrypted_img_visual).save(save_path, "PNG", pnginfo=pnginfo)
+    return save_path
+
+def load_encrypted_metadata(image):
+    info = image.info
+    padded_length = int(info.get("padded_length"))
+    original_shape = json.loads(info.get("original_shape"))
+    return padded_length, original_shape
+
+
+
+######################
