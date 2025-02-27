@@ -195,9 +195,11 @@
             <div class="row justify-content-center text-center">
                 <div class="col-lg-12 col-12">
                     <h3 class="mb-4 pb-2">Playground!</h3>
-    
+                    <div class="container d-flex flex-column align-items-center">
+
                     <!-- Sección de generación de llaves -->
-                    <div class="container-xd mt-3 bg-light p-4" style="border-radius: 35px;">
+                     
+                    <div class="container mt-3 bg-light p-4" style="border-radius: 35px;">
                         <p class="mb-3 fs-5">Llaves de encriptación</p>
                         
                         <div class="mb-3">
@@ -223,35 +225,39 @@
                         </div>
                     </div>
     
-                    <!-- Selector de acción -->
-                    <div class="col-lg-6 col-12 mt-5">
-                        <form id="cipherForm" class="custom-form contact-form">
-                            <div class="row gy-4 justify-content-center">
-                                <div class="col-lg-12 col-12">
-                                    <div class="d-flex justify-content-center"> <!-- Contenedor flex agregado -->
-                                        <div class="btn-group gap-3" role="group"> <!-- Añadida clase gap-3 de Bootstrap -->
-                                            <input type="radio" class="btn-check" name="action" 
-                                                id="encryptRadio" value="encrypt" 
-                                                onchange="toggleUploadMenu()" checked>
-                                            <label class="btn btn-outline-primary px-4 py-2" 
-                                                style="border-radius: 20px" 
-                                                for="encryptRadio">Encriptar</label>
-                    
-                                            <input type="radio" class="btn-check" name="action" 
-                                                id="decryptRadio" value="decrypt" 
-                                                onchange="toggleUploadMenu()">
-                                            <label class="btn btn-outline-primary px-4 py-2" 
-                                                style="border-radius: 20px" 
-                                                for="decryptRadio">Desencriptar</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                                <!-- Selector de acción -->
+                                <div class="col-lg-6 col-12 mt-5">
+                                  <form id="cipherForm" class="custom-form contact-form">
+                                      <div class="row gy-4 justify-content-center">
+                                          <div class="col-lg-12 col-12 text-center">
+                                              <div class="d-flex justify-content-center"> <!-- Flexbox para centrar -->
+                                                  <div class="btn-group gap-3 d-flex justify-content-center" role="group"> <!-- Asegura el centrado -->
+                                                      <input type="radio" class="btn-check" name="action" 
+                                                          id="encryptRadio" value="encrypt" 
+                                                          onchange="toggleUploadMenu()" checked>
+                                                      <label class="btn btn-outline-primary px-4 py-2" 
+                                                          style="border-radius: 20px" 
+                                                          for="encryptRadio">Encriptar</label>
+                              
+                                                      <input type="radio" class="btn-check" name="action" 
+                                                          id="decryptRadio" value="decrypt" 
+                                                          onchange="toggleUploadMenu()">
+                                                      <label class="btn btn-outline-primary px-4 py-2" 
+                                                          style="border-radius: 20px" 
+                                                          for="decryptRadio">Desencriptar</label>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </form>
+                              </div>
+                              
+                  
+
+
     
                     <!-- Menú de Cifrado -->
-                    <div id="encryptMenu" class="container-xd mt-4 bg-light p-4" style="border-radius: 35px;">
+                    <div id="encryptMenu" class="container mt-4 bg-light p-4" style="border-radius: 35px;">
                         <h5 class="mb-4"><strong>Cifrado</strong></h5>
                         
                         <div class="col-lg-12 col-12">
@@ -293,7 +299,7 @@
                     </div>
     
                     <!-- Menú de Descifrado -->
-                    <div id="decryptMenu" class="container-xd mt-4 bg-light p-4" style="border-radius: 35px; display: none;">
+                    <div id="decryptMenu" class="container mt-4 bg-light p-4" style="border-radius: 35px; display: none;">
                         <h5 class="mb-4"><strong>Descifrado</strong></h5>
     
                         <div class="col-lg-12 col-12">
@@ -333,6 +339,7 @@
                             </div>
                         </div>
                     </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -371,6 +378,13 @@
         // Generar la matriz por defecto (2x2) para Hill
         generateMatrix();
         document.getElementById('matrixSize').addEventListener('change', generateMatrix);
+
+
+
+
+
+
+
 
         // Inicializar elementos específicos de ElGamal
         const elgamalPublicKeyField = document.getElementById("encryptPublicKey");

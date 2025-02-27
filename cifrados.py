@@ -5,10 +5,12 @@ import random
 import string
 from os.path import join
 from tempfile import gettempdir
-
+import os
+from PIL import Image, ImageOps
 import numpy as np
 from PIL import Image, PngImagePlugin
 
+from Crypto.Cipher import AES
 from Crypto.PublicKey import ElGamal
 from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
@@ -21,7 +23,13 @@ from Crypto.Hash import SHA256
 from cryptography.hazmat.primitives.asymmetric import dsa
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import utils
+from cryptography.hazmat.backends import default_backend
 import hashlib
+from itertools import combinations  # Importar combinations desde itertools
 
 
 from sympy import Matrix
@@ -134,6 +142,55 @@ def cifrado_vigenere_desencriptar(texto_cifrado, clave):
 
     return ''.join(texto_desencriptado)
 
+# Vigenere-----------
+
+def cifrado_vigenere_encriptar(texto_plano, clave):
+
+    texto_encriptado = []
+    clave = clave.upper()
+    indice_clave = 0
+
+    for caracter in texto_plano:
+        if caracter.isalpha():
+            desplazamiento = ord(clave[indice_clave]) - ord('A')
+            if caracter.isupper():
+                caracter_encriptado = chr(
+                    (ord(caracter) - ord('A') + desplazamiento) % 26 + ord('A'))
+            else:
+                caracter_encriptado = chr(
+                    (ord(caracter) - ord('a') + desplazamiento) % 26 + ord('a'))
+            texto_encriptado.append(caracter_encriptado)
+            indice_clave = (indice_clave + 1) % len(clave)
+        else:
+            # Caracteres no alfabéticos no se encriptan
+            texto_encriptado.append(caracter)
+
+    return ''.join(texto_encriptado) 
+
+
+def cifrado_vigenere_desencriptar(texto_cifrado, clave):
+    if not isinstance(clave, str) or not clave.isalpha():
+        raise ValueError("La clave debe ser un string alfabético")
+
+    texto_desencriptado = []
+    clave = clave.upper()
+    indice_clave = 0
+
+    for caracter in texto_cifrado:
+        if caracter.isalpha():
+            desplazamiento = ord(clave[indice_clave]) - ord('A')  # POSIBLE ERROR AQUÍ
+            if caracter.isupper():
+                caracter_desencriptado = chr(
+                    (ord(caracter) - ord('A') - desplazamiento) % 26 + ord('A'))
+            else:
+                caracter_desencriptado = chr(
+                    (ord(caracter) - ord('a') - desplazamiento) % 26 + ord('a'))
+            texto_desencriptado.append(caracter_desencriptado)
+            indice_clave = (indice_clave + 1) % len(clave)
+        else:
+            texto_desencriptado.append(caracter)
+
+    return ''.join(texto_desencriptado)
 
 
 
@@ -167,64 +224,6 @@ def elgamal_decrypt(private_key, ciphertext):
     s_inv = pow(s, -1, p)  # Inverso modular de s
     m = (c2 * s_inv) % p  # m = c2 * s^(-1) mod p
     return long_to_bytes(m).decode()  # Convierte número a texto
-
-# cifrado RSA
-
-
-def generar_claves_rsa():
-    key = RSA.generate(2048)  # Clave de 2048 bits
-    private_key_pem = key.export_key()
-    public_key_pem = key.publickey().export_key()
-
-    # Guardar claves en archivos (opcional)
-    with open("rsa_private.pem", "wb") as f:
-        f.write(private_key_pem)
-
-    with open("rsa_public.pem", "wb") as f:
-        f.write(public_key_pem)
-
-    print("✅ Claves RSA generadas.")
-    return private_key_pem, public_key_pem
-
-# cifrar un mensaje con RSA
-
-
-def cifrar_rsa(mensaje, public_key_pem):
-    public_key = RSA.import_key(public_key_pem)
-    cipher = PKCS1_OAEP.new(public_key)
-    return cipher.encrypt(mensaje)
-
-# descifrar un mensaje con RSA
-
-
-def descifrar_rsa(ciphertext, private_key_pem):
-    private_key = RSA.import_key(private_key_pem)
-    decipher = PKCS1_OAEP.new(private_key)
-    return decipher.decrypt(ciphertext)
-
-# Firmar un mensaje con RSA
-
-
-def firmar_rsa(mensaje, private_key_pem):
-    private_key = RSA.import_key(private_key_pem)
-    hash_obj = SHA256.new(mensaje)
-    signer = pkcs1_15.new(private_key)
-    return signer.sign(hash_obj)
-
-#  Verificar la firma con RSA
-
-
-def verificar_firma_rsa(mensaje, firma, public_key_pem):
-    public_key = RSA.import_key(public_key_pem)
-    hash_obj = SHA256.new(mensaje)
-    verifier = pkcs1_15.new(public_key)
-
-    try:
-        verifier.verify(hash_obj, firma)
-        return "✅ Firma válida."
-    except ValueError:
-        return "❌ Firma inválida."
-
 
 # DSA
 # Es un algoritmo de firma digital que usa para autenticcar mensajes
@@ -260,21 +259,12 @@ def verificar_firma_dsa(mensaje, firma, public_key_pem):
     except ValueError:
         return "❌ Firma inválida."
 
-########## Cifrado afín ###########
 
 def affine_encryption(plaintext, a, b):
-    """"
-    Pasamos un texto plano a mayúsculas para que no genere errores.
-    Definimos el alfabeto en mayúsculas.
-    Obtenemos la longitud del alfabeto.
-    Inicializamos una cadena vacía para almacenar el texto cifrado.
-    Iteramos a través de cada carácter en el texto plano y si este esta dentro del alfabeto lo ciframos usando el index de caracter y la formula del cifrado afin.
-    """
     plaintext = plaintext.upper()
     alphabet = string.ascii_uppercase
     m = len(alphabet)
     ciphertext = ''
-
     for char in plaintext:
         if char in alphabet:
             p = alphabet.index(char)
@@ -282,40 +272,23 @@ def affine_encryption(plaintext, a, b):
             ciphertext += alphabet[c]
         else:
             ciphertext += char
-    print(ciphertext)
     return ciphertext
 
 def extended_gcd(a, b):
-    """
-    Calculo del máximo común divisor de dos números enteros a y b.
-        Devuelve una tupla (g, x, y) tal que a*x + b*y = g = gcd(a, b).
-    """
     if a == 0:
         return (b, 0, 1)
     else:
         g, x, y = extended_gcd(b % a, a)
         return (g, y - (b // a) * x, x)
-   
+
 def modular_inverse(a, m):
-    """
-    Calcula el inverso multiplicativo de a en el módulo m utilizando el algoritmo de Euclides extendido.
-    """
     g, x, y = extended_gcd(a, m)
     if g != 1:
-        raise Exception('Modular inverse does not exist')
+        raise Exception('Inverso modular no existe')
     else:
         return x % m
-   
+
 def affine_decrypt(ciphertext, a, b):
-    """
-    Descifra el texto cifrado obtenido con el cifrado afín, para lo que se necesita el texto cifrado, la clave a y la clave b.
-    Se pasa el texto cifrado a mayúsculas para evitar errores.
-    Se define el alfabeto en mayúsculas.
-    Se obtiene la longitud del alfabeto.
-    Se inicializa una cadena vacía para almacenar el texto descifrado.
-    Se calcula el inverso multiplicativo de a en módulo m.
-    Se itera a través de cada carácter en el texto cifrado y si este está dentro del alfabeto se descifra usando el index del carácter y la fórmula del descifrado afín.
-    """
     ciphertext = ciphertext.upper()
     alphabet = string.ascii_uppercase
     m = len(alphabet)
@@ -329,6 +302,62 @@ def affine_decrypt(ciphertext, a, b):
         else:
             plaintext += char
     return plaintext
+
+def analyze_frequencies(text):
+    freq = {}
+    total = sum(1 for c in text if c.isalpha())
+    for c in text.upper():
+        if c.isalpha():
+            freq[c] = freq.get(c, 0) + 1/total
+    return dict(sorted(freq.items(), key=lambda x: x[1], reverse=True))
+
+def spanish_score(text):
+    spanish_freq = {
+        'E': 0.1368, 'A': 0.1253, 'O': 0.0868, 'S': 0.0798,
+        'N': 0.0701, 'R': 0.0687, 'L': 0.0647, 'D': 0.0586
+    }
+    return sum(spanish_freq.get(c, 0) for c in text.upper())
+
+def affine_crack(ciphertext, top_n=10):
+    alphabet = string.ascii_uppercase
+    valid_a = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
+    freq = analyze_frequencies(ciphertext)
+    top_chars = list(freq.keys())[:6]
+    
+    spanish_common = ['E', 'A', 'O', 'S', 'N', 'R', 'L', 'D']
+    candidates = []
+    
+    # Iterar sobre combinaciones de letras más frecuentes del cifrado y comunes en español
+    for c1, c2 in combinations(top_chars, 2):
+        for p1, p2 in combinations(spanish_common, 2):
+            try:
+                c1_idx = alphabet.index(c1)
+                c2_idx = alphabet.index(c2)
+                p1_idx = alphabet.index(p1)
+                p2_idx = alphabet.index(p2)
+                
+                delta_p = (p2_idx - p1_idx) % 26
+                delta_c = (c2_idx - c1_idx) % 26
+                a = (delta_c * modular_inverse(delta_p, 26)) % 26
+                if a not in valid_a:
+                    continue
+                
+                b = (c1_idx - a * p1_idx) % 26
+                plain = affine_decrypt(ciphertext, a, b)
+                score = spanish_score(plain)
+                candidates.append((score, a, b, plain))
+            except Exception:
+                continue
+    
+    candidates.sort(reverse=True, key=lambda x: x[0])
+    seen = set()
+    results = []
+    for cand in candidates:
+        key = (cand[1], cand[2])
+        if key not in seen:
+            seen.add(key)
+            results.append((cand[1], cand[2], cand[3]))
+    return results[:top_n]
 
 ########## Cifrado de Hill ###########
 
@@ -660,3 +689,333 @@ def verificar_firma(archivo_bytes, firma_bytes, public_key_pem):
     except Exception as e:
         print(f"Error en verificación: {str(e)}")
         return False
+    
+# AES para imagenes --------------------------------------------------------
+
+
+def validate_key_iv(key, iv=None, mode=AES.MODE_ECB):
+    """Verifica que la clave y el IV tengan la longitud correcta."""
+    if len(key) not in [16, 24, 32]:
+        raise ValueError("La clave debe tener 16, 24 o 32 bytes.")
+    if mode == AES.MODE_CBC and (iv is None or len(iv) != 16):
+        raise ValueError("El IV debe tener 16 bytes para CBC.")
+
+
+def DecimalToHex(l):
+    return ''.join(f'{i:02X}' for i in l)
+
+
+def HexToDecimal(s):
+    s = s.zfill(32)
+    return [tuple(int(s[j:j+2], 16) for j in range(i, i+8, 2)) for i in range(0, 32, 8)]
+
+
+def process_image(img_path):
+    if not os.path.exists(img_path):
+        raise FileNotFoundError(f"El archivo {img_path} no existe.")
+    img = Image.open(img_path).convert("RGBA")
+    if img.width % 4 != 0:
+        diff = 4 - (img.width % 4)
+        img = ImageOps.expand(img, border=(0, 0, diff, 0), fill=0)
+    return img
+
+
+def encrypt_image_aes(img_path, key, mode, iv=None):
+    validate_key_iv(key, iv, mode)
+
+    if mode == AES.MODE_ECB:
+        cipher = AES.new(key.encode("utf8"), mode)
+    else:
+        if iv is None:
+            raise ValueError("IV es obligatorio para CBC.")
+        cipher = AES.new(key.encode("utf8"), mode, iv.encode("utf8"))
+
+    img = process_image(img_path)
+    encrypted_img = img.copy()
+
+    for y in range(img.height):
+        row_pixels = []
+        for x in range(img.width):
+            row_pixels += img.getpixel((x, y))
+            if len(row_pixels) == 16:
+                encrypted_row = cipher.encrypt(bytes(row_pixels))
+                new_pixels = HexToDecimal(encrypted_row.hex())
+                for i, px in enumerate(new_pixels):
+                    encrypted_img.putpixel((x - 3 + i, y), px)
+                row_pixels = []
+
+    encrypted_img.save("Encrypted.png")
+
+
+def decrypt_image_aes(img_path, key, mode, iv=None):
+    validate_key_iv(key, iv, mode)
+
+    if mode == AES.MODE_ECB:
+        cipher = AES.new(key.encode("utf8"), mode)
+    else:
+        if iv is None:
+            raise ValueError("IV es obligatorio para CBC.")
+        cipher = AES.new(key.encode("utf8"), mode, iv.encode("utf8"))
+
+    img = Image.open(img_path)
+    decrypted_img = img.copy()
+
+    for y in range(img.height):
+        row_pixels = []
+        for x in range(img.width):
+            row_pixels += img.getpixel((x, y))
+            if len(row_pixels) == 16:
+                decrypted_row = cipher.decrypt(bytes(row_pixels))
+                new_pixels = HexToDecimal(decrypted_row.hex())
+                for i, px in enumerate(new_pixels):
+                    decrypted_img.putpixel((x - 3 + i, y), px)
+                row_pixels = []
+
+    decrypted_img.save("Decrypted.png")
+
+
+def generar_clave(longitud=16): #Claves aleatorias
+    """Genera una clave aleatoria de 16, 24 o 32 bytes para AES."""
+    if longitud not in [16, 24, 32]:
+        raise ValueError("La clave debe tener 16, 24 o 32 bytes.")
+    return os.urandom(longitud)
+
+def generar_iv():
+    """Genera un vector de inicialización (IV) aleatorio de 16 bytes para AES."""
+    return os.urandom(16)
+
+clave = generar_clave(16)  # Para AES-128
+iv = generar_iv()
+
+
+######################
+
+#---------Hill imagenes ----------
+
+# Función para generar una matriz clave válida (n x n invertible)
+def generar_clave(n):
+    while True:
+        clave = np.random.randint(0, 256, size=(n, n))
+        det = int(np.round(np.linalg.det(clave)))
+        if det != 0 and np.gcd(det, 256) == 1:
+            return clave
+
+# Función para calcular la inversa modular de una matriz n x n
+def inversa_modular(clave):
+    det = int(np.round(np.linalg.det(clave)))
+    det_inv = pow(det, -1, 256)
+    clave_adj = np.round(np.linalg.inv(clave) * det) % 256  # Matriz adjunta
+    clave_inv = (det_inv * clave_adj) % 256
+    return clave_inv.astype(int)
+
+# Función para cifrar una imagen a color usando el cifrado de Hill
+def hill_cipher_encrypt_color(image, key):
+    pixels = np.array(image)
+    rows, cols, channels = pixels.shape
+    n = key.shape[0]  # Tamaño de la matriz de cifrado
+
+    # Asegurar que el número de columnas es múltiplo de n, si no, rellenar con ceros
+    if cols % n != 0:
+        new_cols = cols + (n - cols % n)
+        padded_pixels = np.zeros((rows, new_cols, channels), dtype=np.uint8)
+        padded_pixels[:, :cols, :] = pixels
+        pixels = padded_pixels
+        cols = new_cols
+
+    encrypted_pixels = np.zeros_like(pixels)
+
+    for channel in range(channels):
+        for i in range(rows):
+            for j in range(0, cols, n):
+                block = pixels[i, j:j+n, channel]
+                encrypted_block = np.dot(key, block) % 256
+                encrypted_pixels[i, j:j+n, channel] = encrypted_block
+
+    return Image.fromarray(encrypted_pixels.astype('uint8'))
+
+# Función para descifrar una imagen a color usando el cifrado de Hill
+def hill_cipher_decrypt_color(image, key):
+    key_inv = inversa_modular(key)
+    pixels = np.array(image)
+    rows, cols, channels = pixels.shape
+    n = key.shape[0]
+
+    decrypted_pixels = np.zeros_like(pixels)
+
+    for channel in range(channels):
+        for i in range(rows):
+            for j in range(0, cols, n):
+                block = pixels[i, j:j+n, channel]
+                decrypted_block = np.dot(key_inv, block) % 256
+                decrypted_pixels[i, j:j+n, channel] = decrypted_block
+
+    return Image.fromarray(decrypted_pixels.astype('uint8'))
+
+
+
+
+######## Firma Digital ECDSA ########
+
+# Importar claves PEM
+def import_public_key_ecdsa(pem_public_key):
+    public_key = serialization.load_pem_public_key(
+        pem_public_key.encode(),
+        backend=default_backend()
+    )
+    return public_key
+
+def import_private_key_ecdsa(pem_private_key):
+    try: 
+        private_key = serialization.load_pem_private_key(
+            pem_private_key.encode(),
+            password=None,
+            backend=default_backend()
+        )
+        return private_key
+    except Exception as e:
+        print(f"Error al cargar clave privada: {e}")
+        return None 
+
+# Firmar un documento
+def ecdsa_sign_document(document, private_key):
+    try:
+        # Calcular el hash del documento
+        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+        digest.update(document)
+        document_hash = digest.finalize()
+
+        # Firmar el hash del documento
+        signature = private_key.sign(
+            document_hash,
+            ec.ECDSA(utils.Prehashed(hashes.SHA256()))
+        )
+        return signature
+    except Exception as e:
+        print(f"Firma fallida: {e}")
+        return None
+
+# Verificar la firma
+def ecdsa_verify_signature(document, signature, public_key):
+    # Calcular el hash del documento
+    digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    digest.update(document)
+    document_hash = digest.finalize()
+    # Verificar la firma
+    try:
+        public_key.verify(
+            signature,
+            document_hash,
+            ec.ECDSA(utils.Prehashed(hashes.SHA256())))
+        print("Firma verificada correctamente.")
+        return True
+    except Exception as e:
+        print(f"Verificación fallida: {e}")
+        return False
+
+def load_file(file_path):
+    with open(file_path, "rb") as file:
+        return file.read()
+
+def save_signature(signature, output_path):
+    with open(output_path, "wb") as file:
+        file.write(signature)
+
+def load_signature(signature_path):
+    with open(signature_path, "rb") as file:
+        return file.read()
+    
+    
+########## Cifrado DES-S ###########
+
+P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]
+P8 = [6, 3, 7, 4, 8, 5, 10, 9]
+P4 = [2, 4, 3, 1]
+IP = [2, 6, 3, 1, 4, 8, 5, 7]
+IP_INV = [4, 1, 3, 5, 7, 2, 8, 6]
+EP = [4, 1, 2, 3, 2, 3, 4, 1]
+
+S_BOXES = {
+    'S0': [
+        [1, 0, 3, 2],
+        [3, 2, 1, 0],
+        [0, 2, 1, 3],
+        [3, 1, 0, 2]
+    ],
+    'S1': [
+        [0, 1, 2, 3],
+        [2, 0, 1, 3],
+        [3, 0, 1, 2],
+        [2, 1, 0, 3]
+    ]
+}
+
+def permute(bits, table):
+    return [bits[i - 1] for i in table]
+
+def left_shift(bits, n):
+    return bits[n:] + bits[:n]
+
+def key_schedule(key):
+    key = permute(key, P10)
+    left, right = key[:5], key[5:]
+    left, right = left_shift(left, 1), left_shift(right, 1)
+    k1 = permute(left + right, P8)
+    left, right = left_shift(left, 2), left_shift(right, 2)
+    k2 = permute(left + right, P8)
+    return k1, k2
+
+def sbox_lookup(sbox, row, col):
+    return format(S_BOXES[sbox][row][col], '02b')
+
+def f_function(right, subkey):
+    expanded = permute(right, EP)
+    xored = [int(expanded[i]) ^ int(subkey[i]) for i in range(8)]
+    row0, col0 = int(str(xored[0]) + str(xored[3]), 2), int(str(xored[1]) + str(xored[2]), 2)
+    row1, col1 = int(str(xored[4]) + str(xored[7]), 2), int(str(xored[5]) + str(xored[6]), 2)
+    sbox_out = sbox_lookup('S0', row0, col0) + sbox_lookup('S1', row1, col1)
+    return permute([int(b) for b in sbox_out], P4)
+
+def fk(bits, subkey):
+    left, right = bits[:4], bits[4:]
+    f_result = f_function(right, subkey)
+    return [left[i] ^ f_result[i] for i in range(4)] + right
+
+def switch(bits):
+    return bits[4:] + bits[:4]
+
+def sdes_encrypt_block(plaintext, key):
+    k1, k2 = key_schedule(key)
+    bits = permute(plaintext, IP)
+    bits = fk(bits, k1)
+    bits = switch(bits)
+    bits = fk(bits, k2)
+    return permute(bits, IP_INV)
+
+def sdes_decrypt_block(ciphertext, key):
+    k1, k2 = key_schedule(key)
+    bits = permute(ciphertext, IP)
+    bits = fk(bits, k2)
+    bits = switch(bits)
+    bits = fk(bits, k1)
+    return permute(bits, IP_INV)
+
+def text_to_bits(text):
+    return [int(bit) for char in text for bit in format(ord(char), '08b')]
+
+def bits_to_text(bits):
+    return ''.join(chr(int(''.join(map(str, bits[i:i+8])), 2)) for i in range(0, len(bits), 8))
+
+def sdes_encrypt(text, key):
+    bits = text_to_bits(text)
+    while len(bits) % 8 != 0:
+        bits.append(0)
+    ciphertext = []
+    for i in range(0, len(bits), 8):
+        ciphertext.extend(sdes_encrypt_block(bits[i:i+8], key))
+    return bits_to_text(ciphertext)
+
+def sdes_decrypt(ciphertext, key):
+    decrypted_bits = []
+    for i in range(0, len(text_to_bits(ciphertext)), 8):
+        decrypted_bits.extend(sdes_decrypt_block(text_to_bits(ciphertext)[i:i+8], key))
+    return bits_to_text(decrypted_bits)

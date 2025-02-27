@@ -1,0 +1,514 @@
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <title>Firma digital con ECDSA</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+        rel="stylesheet"
+        />
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+        />
+        <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+        />
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+
+    <body id="top">
+        <main>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-person-lock"></i>
+                <span>CryptoPlayground</span>
+            </a>
+
+            <div class="d-lg-none ms-auto me-4">
+                <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+            </div>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="/">Inicio</a
+                    >
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="/"
+                    >Explorar cifrados</a
+                    >
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="/ #section_3"
+                    >Cómo funciona</a
+                    >
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+
+            <header
+            class="site-header d-flex flex-column justify-content-center align-items-center">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5 col-12 mb-5">
+                    <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                        <a href="{{ url_for('index') }}">Inicio</a>
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Firma digital con ECDSA
+                        </li>
+                    </ol>
+                    </nav>
+
+                    <h2 class="text-white">Firma digital con ECDSA<br /></h2>
+
+                    <div class="d-flex align-items-center mt-5">
+                    <a
+                        href="#playground"
+                        class="btn custom-btn custom-border-btn smoothscroll me-4"
+                        >Playground!</a
+                    >
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-12">
+                    <div class="topics-detail-block bg-white shadow-lg">
+                    <img
+                        src="../static/images/topics/ecc.jpg"
+                        class="topics-detail-block-image img-fluid"
+                    />
+                    </div>
+                </div>
+                </div>
+            </div>
+            </header>
+        
+        
+        <div class="row gy-4 justify-content-center">
+            {% if encrypted_message %}
+            <div class="col-lg-12 col-12">
+            <div class="alert alert-success">
+                <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
+            </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <section class="topics-detail-section section-padding" id="biblio">
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 m-auto">
+                    <h3>Criptografía de Curva Elíptica (ECC)</h3>
+
+                    <p>La criptografía de curva elíptica (ECC) es un método de cifrado basado en las matemáticas de las curvas elípticas. Es ampliamente utilizado para asegurar comunicaciones, firmar documentos digitales y proteger datos.
+                        Una de sus principales ventajas es que ofrece un nivel de seguridad similar a otros métodos criptográficos (como RSA) pero con claves mucho más cortas, lo que la hace más eficiente en términos de recursos computacionales.</p>
+                    
+                    <p><storng>¿Cómo funciona?</storng></p>
+                    <p>Las curvas elípticas son ecuaciones de la forma:</p>
+                    \[
+                    y^2 = x^3 + ax + b
+                    \]
+                    <p>Donde:<br></p>
+                    <ul>
+                        <li>\( a \) y \( b \) son parámetros de la curva.</ui>
+                        <li>\(x\) e \(y\) son coordenadas en un plano.</ui>
+                    </ul> 
+                    <p>En criptografía, estas curvas se definen sobre un campo finito (un conjunto de números enteros módulo un número primo \(p\)). Las operaciones matemáticas en estas curvas (como la suma de puntos) tienen propiedades
+                        especiales que las hacen ideales para la criptografía.</p>
+                    
+                    <p><strong>Operaciones clave:</strong></p>
+                    <ul>
+                        <li><strong>Suma de puntos</strong>: Dados dos puntos \(P\) y \(Q\) en la curva, la suma \(P + Q\) es otro punto en la curva.</li>
+                        <li><strong>Multiplicación escalar</strong>: Dado un punto \(P\) y un número entero \(k\), se puede calcular \(k \cdot P\).</li>
+                    </ul>   
+                    <p>La seguridad de ECC se basa en la dificultad de resolver el problema del logaritmo discreto en curvas elípticas.</p>
+
+                    <p><strong>Un poco más de información</strong></p>
+                    <ul>
+                        <li>Las curvas elípticas fueron propuestas para criptografía en 1985 por Neal Koblitz y Victor S. Miller de manera independiente.</li>
+                        <li>ECC se ha convertido en un estándar en la industria debido a su eficiencia. Es utilizado en protocolos como TLS/SSL (para seguridad en la web), Bitcoin (para firmas digitales) y más.</li>
+                        <li>Este sistema cuenta con muchas ventajas como: Una clave ECC de 256 bits ofrece un nivel de seguridad similar a una clave RSA de 3072 bits, esto a su vez que hay un menor consumo en recursos lo cual lo hace ideal para dispositivos móviles y sistemas embebidos.</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="section-padding section-bg" id="playground">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-12 col-12">
+                        <h3 class="mb-4 pb-2">Firma Digital ECDSA</h3>
+                    </div>
+                    
+                    <div class="col-lg-8 col-12">
+                        <!-- Sección de generación de llaves -->
+                        <div class="mb-5 p-4 bg-light" style="border-radius: 35px;">
+                            <h5 class="mb-4">Gestión de Llaves DSA</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <p>Clave pública:</p>
+                                    <div class="input-group">
+                                        <textarea id="generatedPublicKey" 
+                                            class="form-control public-key-field" 
+                                            placeholder="Llave pública generada aquí"
+                                            readonly
+                                            style="height: 100px; border-radius: 20px 0 0 20px;"></textarea>
+                                        <button class="btn btn-outline-secondary" 
+                                            style="border-radius: 0 20px 20px 0;"
+                                            onclick="copyToClipboard('generatedPublicKey')">
+                                            Copiar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <p>Clave privada</p>
+                                    <div class="input-group">
+                                        <textarea id="generatedPrivateKey" 
+                                            class="form-control private-key-field" 
+                                            placeholder="Llave privada generada aquí"
+                                            readonly
+                                            style="height: 100px; border-radius: 20px 0 0 20px;"></textarea>
+                                        <button class="btn btn-outline-secondary" 
+                                            style="border-radius: 0 20px 20px 0;"
+                                            onclick="copyToClipboard('generatedPrivateKey')">
+                                            Copiar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <button onclick="generateECDSAKeys()" 
+                                        class="btn btn-outline-primary rounded-pill px-4">
+                                        Generar Nuevas Llaves
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Selector de acción -->
+                        <form id="dsaForm" class="custom-form contact-form">
+                            <div class="row gy-4 justify-content-center">
+                                <div class="col-lg-12 col-12">
+                                    <div class="btn-group" role="group">
+                                        <input type="radio" class="btn-check" name="action" 
+                                            id="signRadio" value="sign" 
+                                            onchange="toggleDSAUploadMenu()" checked>
+                                        <label class="btn btn-outline-primary rounded-pill px-4 mx-2" 
+                                            for="signRadio">Firmar</label>
+        
+                                        <input type="radio" class="btn-check" name="action" 
+                                            id="verifyRadio" value="verify" 
+                                            onchange="toggleDSAUploadMenu()">
+                                        <label class="btn btn-outline-primary rounded-pill px-4 mx-2" 
+                                            for="verifyRadio">Verificar Firma</label>
+                                    </div>
+                                </div>
+        
+                                <!-- Sección de Firma -->
+                                <div id="signMenu" class="col-lg-12 col-12">
+                                    <div class="mt-3">
+                                        <label class="form-label">Documento a firmar:</label>
+                                        <input type="file" id="fileToSign" class="form-control">
+                                    </div>
+                                </div>
+        
+                                <!-- Sección de Verificación Modificada -->
+                                <div id="verifyMenu" class="col-lg-12 col-12" style="display: none;">
+                                    <div class="mt-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Documento original:</label>
+                                            <input type="file" id="originalFile" class="form-control" 
+                                                accept=".txt,.pdf,.doc,.docx">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Firma digital (.bin):</label>
+                                            <input type="file" id="signatureFile" class="form-control" 
+                                                accept=".bin">
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            La clave pública se obtendrá automáticamente del campo superior
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-lg-6 col-12 mt-4">
+                                    <button type="button" 
+                                        onclick="handleDSAProcess()" 
+                                        class="btn btn-primary rounded-pill w-100 py-2">
+                                        Procesar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+        
+                        <!-- Resultados -->
+                        <div id="dsaResultContainer" class="mt-4 p-4 bg-light" 
+                            style="border-radius: 35px; display: none;">
+                            <h5 class="mb-3">Resultado:</h5>
+                            <div id="signatureResult" class="alert"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        </main>
+
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/js/jquery.sticky.js"></script>
+        <script src="../static/js/custom.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+
+    <script>
+        function toggleDSAUploadMenu() {
+            const signMenu = document.getElementById('signMenu');
+            const verifyMenu = document.getElementById('verifyMenu');
+            const action = document.querySelector('input[name="action"]:checked').value;
+            
+            signMenu.style.display = action === 'sign' ? 'block' : 'none';
+            verifyMenu.style.display = action === 'verify' ? 'block' : 'none';
+        }
+
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        element.select();
+        document.execCommand('copy');
+        showResult('✓ Clave copiada al portapapeles', 'success');
+    }
+
+    async function generateECDSAKeys() {
+        try {
+            const keyPair = await window.crypto.subtle.generateKey(
+                {
+                    name: "ECDSA",
+                    namedCurve: "P-256"
+                },
+                true,
+                ["sign", "verify"]
+            );
+
+            // Exportar las claves a formato PEM
+            const publicKey = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
+            const privateKey = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+
+            // Convertir las claves a formato PEM
+            const publicKeyPem = convertArrayBufferToPem(publicKey, 'PUBLIC KEY');
+            const privateKeyPem = convertArrayBufferToPem(privateKey, 'PRIVATE KEY');
+
+            // Mostrar las claves en los campos de texto
+            document.getElementById('generatedPublicKey').value = publicKeyPem;
+            document.getElementById('generatedPrivateKey').value = privateKeyPem;
+            showResult('✓ Llaves generadas correctamente', 'success');
+
+        } catch (error) {
+            console.error('Error generando llaves:', error);
+            showResult('❌ Error generando llaves: ' + error.message, 'danger');
+        }
+    }
+
+    function convertArrayBufferToPem(buffer, label) {
+        const base64String = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        const pemString = `-----BEGIN ${label}-----\n${base64String.match(/.{1,64}/g).join('\n')}\n-----END ${label}-----`;
+        return pemString;
+    }
+
+    async function handleDSAProcess() {
+        const action = document.querySelector('input[name="action"]:checked').value;
+        const resultContainer = document.getElementById('dsaResultContainer');
+
+        try {
+            if (action === 'sign') {
+                const fileInput = document.getElementById('fileToSign');
+                const privateKeyPem = document.getElementById('generatedPrivateKey').value;
+
+                if (!fileInput.files[0]) throw new Error('Debes subir un documento');
+                if (!privateKeyPem) throw new Error('Primero genera las llaves');
+
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('private_key', privateKeyPem);
+
+
+                const response = await fetch('/ecdsa-process', { 
+                        method: 'POST', 
+                        body: formData 
+                    });
+                    
+                    if(!response.ok) throw new Error('Error en el servidor');
+                    
+                    // Convertir la firma a base64 para integridad
+                    const signatureBlob = await response.blob();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(signatureBlob);
+                    reader.onloadend = () => {
+                        const base64Data = reader.result.split(',')[1];
+                        downloadFile('firma.bin', base64Data);
+                    };
+                    showResult('✓ Firma generada y descargada', 'success');
+
+            } else {
+                const originalFile = document.getElementById('originalFile').files[0];
+                const signatureFile = document.getElementById('signatureFile').files[0];
+                const publicKeyPem = document.getElementById('generatedPublicKey').value;
+
+                if (!originalFile || !signatureFile) {
+                    throw new Error('Sube el documento y la firma');
+                }
+
+                if (!publicKeyPem) {
+                    throw new Error('Primero genera las llaves');
+                }
+
+                const signatureText = await signatureFile.text();
+                const formData = new FormData();
+                formData.append('original', originalFile);
+                formData.append('signature', signatureText);
+                formData.append('public_key', publicKeyPem);
+
+                const response = await fetch('/ecdsa-verify', { 
+                    method: 'POST', 
+                    body: formData 
+                });
+                    
+                const result = await response.json();
+                const message = result.valid ? '✓ Firma válida' : '❌ Firma inválida';
+                showResult(message, result.valid ? 'success' : 'danger');
+                }
+                
+                resultContainer.style.display = 'block';
+
+        } catch (error) {
+                showResult(`❌ Error: ${error.message}`, 'danger');
+                resultContainer.style.display = 'block';
+        }
+    }
+
+    function readFileAsArrayBuffer(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
+    function arrayBufferToBase64(buffer) {
+        return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+    }
+
+    async function importPrivateKey(pem) {
+        const binaryDerString = atob(pem.replace(/-----[^-]+-----/g, ''));
+        const binaryDer = str2ab(binaryDerString);
+
+        return window.crypto.subtle.importKey(
+            'pkcs8',
+            binaryDer,
+            {
+                name: 'ECDSA',
+                namedCurve: 'P-256'
+            },
+            true,
+            ['sign']
+        );
+    }
+
+    async function importPublicKey(pem) {
+        const binaryDerString = atob(pem.replace(/-----[^-]+-----/g, ''));
+        const binaryDer = str2ab(binaryDerString);
+
+        return window.crypto.subtle.importKey(
+            'spki',
+            binaryDer,
+            {
+                name: 'ECDSA',
+                namedCurve: 'P-256'
+            },
+            true,
+            ['verify']
+        );
+    }
+
+    function str2ab(str) {
+        const buf = new ArrayBuffer(str.length);
+        const bufView = new Uint8Array(buf);
+        for (let i = 0, strLen = str.length; i < strLen; i++) {
+            bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
+    }
+
+    async function verifySignature(publicKey, signature, data) {
+        return window.crypto.subtle.verify(
+            {
+                name: 'ECDSA',
+                hash: { name: 'SHA-256' }
+            },
+            publicKey,
+            signature,
+            data
+        );
+    }
+
+    function showResult(message, type) {
+        const resultContainer = document.getElementById('signatureResult');
+        resultContainer.className = `alert alert-${type}`;
+        resultContainer.textContent = message;
+    }
+
+    function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'application/octet-stream' });  // Tipo texto para base64
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+    </html>

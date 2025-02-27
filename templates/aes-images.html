@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>AES Para Imágenes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+    rel="stylesheet" />
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/images-selection.css" />
+</head>
+
+<body id="top">
+  <main>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <i class="bi bi-person-lock"></i>
+          <span>CryptoPlayground</span>
+        </a>
+
+        <div class="d-lg-none ms-auto me-4">
+          <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-lg-5 me-lg-auto">
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="/">Inicio</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="/">Explorar cifrados</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="/ #section_3">Cómo funciona</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="site-header d-flex flex-column justify-content-center align-items-center">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-5 col-12 mb-5">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{{ url_for('index') }}">Inicio</a>
+                </li>
+
+                <li class="breadcrumb-item active" aria-current="page">
+                  Hill para imágenes
+                </li>
+              </ol>
+            </nav>
+
+            <h2 class="text-white">AES Para Imágenes<br /></h2>
+
+            <div class="d-flex align-items-center mt-5">
+              <a href="#playground" class="btn custom-btn custom-border-btn smoothscroll me-4">Playground!</a>
+            </div>
+          </div>
+
+          <div class="col-lg-5 col-12">
+            <div class="topics-detail-block bg-white shadow-lg">
+              <img src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
+                class="topics-detail-block-image img-fluid" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section-padding section-bg" id="playground">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-12 col-12">
+            <h3 class="mb-4 pb-2">AES Para Imágenes</h3>
+          </div>
+          <div class="col-lg-6 col-12">
+            <form id="cipherForm" class="custom-form contact-form">
+              <div class="row gy-4 justify-content-center">
+                <div class="col-lg-12 col-12">
+                  <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked />
+                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">
+                      Encriptar
+                    </label>
+
+                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" />
+                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">
+                      Desencriptar
+                    </label>
+                  </div>
+
+                  <!-- Sección Encriptación -->
+                  <div id="encryptMenu" class="encrypt-container mt-3">
+                    <label for="file" class="custom-file-upload">Seleccione imagen</label>
+                    <input type="file" id="file" accept="image/*" class="ocultar" />
+                    <p id="file-name">Sin archivos seleccionados</p>
+
+                    <div class="d-flex justify-content-center">
+                      <select id="mode" class="form-control" style="width: 20%">
+                        <option value="ecb">ECB</option>
+                        <option value="cbc">CBC</option>
+                        <option value="cfb">CFB</option>
+                        <option value="ofb">OFB</option>
+                      </select>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-3">
+                      <button type="button" id="generateKey" class="custom-file-upload">
+                        Generar clave aleatoria
+                      </button>
+                      <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="key" placeholder="Clave en hexadecimal" required />
+                        <label for="key">Clave hexadecimal (16/24/32 bytes)</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-3">
+                      <button type="button" id="generateIv" class="custom-file-upload">
+                        Generar IV aleatorio
+                      </button>
+                      <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="iv" placeholder="Vector inicial" />
+                        <label for="iv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sección Desencriptación -->
+                  <div id="decryptMenu" class="encrypt-container mt-3" style="display: none">
+                    <label for="file1" class="custom-file-upload">Seleccione imagen encriptada</label>
+                    <input type="file" id="file1" accept="image/*" class="ocultar" />
+                    <p id="file-name1">Sin archivos seleccionados</p>
+
+                    <div class="d-flex justify-content-center mb-4 mt-4">
+                      <select id="decryptMode" class="form-control" style="width: 20%">
+                        <option value="ecb">ECB</option>
+                        <option value="cbc">CBC</option>
+                        <option value="cfb">CFB</option>
+                        <option value="ofb">OFB</option>
+                      </select>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-3">
+                      <button type="button" id="generateKeyDecrypt" class="custom-file-upload">
+                        Generar clave aleatoria
+                      </button>
+                      <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="decryptKey" placeholder="Clave en hexadecimal"
+                          required />
+                        <label for="decryptKey">Clave hexadecimal (16/24/32 bytes)</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 col-12 mt-3">
+                      <button type="button" id="generateIvDecrypt" class="custom-file-upload">
+                        Generar IV aleatorio
+                      </button>
+                      <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="decryptIv" placeholder="Vector inicial" />
+                        <label for="decryptIv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-12 mt-4">
+                  <button id="processAES" type="submit" class="form-control btn btn-primary">
+                    Procesar
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Contenedor de Resultados -->
+            <div id="resultado" class="mt-4 p-3 bg-light rounded-3">
+              <div class="row">
+                <div class="col-md-6 text-center">
+                  <h5>Imagen original:</h5>
+                  <img id="originalImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
+                </div>
+                <div class="col-md-6 text-center">
+                  <h5>Imagen procesada:</h5>
+                  <img id="processedImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
+                  <div class="mt-3 text-center">
+                    <a id="downloadLink" href="#" class="btn btn-success mt-2" style="display: none">
+                      Descargar imagen
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="topics-detail-section section-padding" id="biblio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-12 m-auto">
+            <h3 class="mb-4">Cifrado Hill para imagenes</h3>
+
+            <p>texto</p>
+
+            <p>
+              <strong>Historia </strong><br />
+              texto
+            </p>
+
+            <blockquote>texto</blockquote>
+
+            <div class="row my-4">
+              <div class="col-lg-6 col-md-6 col-12">
+                <img src="../static/images/businesswoman-using-tablet-analysis.jpg"
+                  class="topics-detail-block-image img-fluid" />
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
+                <img src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
+                  class="topics-detail-block-image img-fluid" />
+              </div>
+            </div>
+
+            <p>
+              Most people start with freelancing skills they already have as a
+              side hustle to build up income. This extra cash can be used for
+              a vacation, to boost up savings, investing, build business.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/js/jquery.sticky.js"></script>
+  <script src="../static/js/custom.js"></script>
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Función para alternar entre secciones de encriptación/desencriptación
+    function toggleUploadMenu() {
+      const encryptDiv = document.getElementById("encryptMenu");
+      const decryptDiv = document.getElementById("decryptMenu");
+      const encryptRadio = document.getElementById("encryptRadio");
+
+      encryptDiv.style.display = encryptRadio.checked ? "block" : "none";
+      decryptDiv.style.display = encryptRadio.checked ? "none" : "block";
+
+      // Actualizar estado de los campos IV al cambiar sección
+      const currentModeSelect = encryptRadio.checked
+        ? document.getElementById("mode")
+        : document.getElementById("decryptMode");
+      const currentIvField = encryptRadio.checked
+        ? document.getElementById("iv")
+        : document.getElementById("decryptIv");
+      toggleIV(currentModeSelect, currentIvField);
+    }
+
+    // Configurar eventos para los radio buttons
+    document
+      .getElementById("encryptRadio")
+      .addEventListener("change", toggleUploadMenu);
+    document
+      .getElementById("decryptRadio")
+      .addEventListener("change", toggleUploadMenu);
+
+    // Función para actualizar nombre de archivo y previsualización
+    function updateFileName(inputId, labelId, imgId) {
+      document
+        .getElementById(inputId)
+        .addEventListener("change", function () {
+          const file = this.files[0];
+          const labelElement = document.getElementById(labelId);
+          const imgElement = document.getElementById(imgId);
+
+          if (file) {
+            labelElement.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              imgElement.src = e.target.result;
+              imgElement.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          } else {
+            labelElement.textContent = "Sin archivos seleccionados";
+            imgElement.style.display = "none";
+          }
+        });
+    }
+
+    // Inicializar manejadores de archivos
+    updateFileName("file", "file-name", "originalImage");
+    updateFileName("file1", "file-name1", "originalImage");
+
+    // Función para generar valores hexadecimales aleatorios
+    function generateRandomHex(length) {
+      const bytes = new Uint8Array(length / 2);
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes, (byte) =>
+        byte.toString(16).padStart(2, "0"),
+      ).join("");
+    }
+
+    // Configurar generadores de claves
+    document.getElementById("generateKey").addEventListener("click", () => {
+      document.getElementById("key").value = generateRandomHex(32); // 16 bytes
+    });
+
+    document
+      .getElementById("generateKeyDecrypt")
+      .addEventListener("click", () => {
+        document.getElementById("decryptKey").value = generateRandomHex(32);
+      });
+
+    // Configurar generadores de IV
+    document.getElementById("generateIv").addEventListener("click", () => {
+      document.getElementById("iv").value = generateRandomHex(32); // 16 bytes
+    });
+
+    document
+      .getElementById("generateIvDecrypt")
+      .addEventListener("click", () => {
+        document.getElementById("decryptIv").value = generateRandomHex(32);
+      });
+
+    // Función para habilitar/deshabilitar campos IV según el modo
+    function toggleIV(modeSelect, ivField) {
+      const mode = modeSelect.value;
+      ivField.disabled = mode === "ecb";
+      if (mode === "ecb") ivField.value = "";
+    }
+
+    // Configurar eventos para los selectores de modo
+    const modeSelects = document.querySelectorAll(
+      'select[id="mode"], select[id="decryptMode"]',
+    );
+    modeSelects.forEach((select) => {
+      select.addEventListener("change", function () {
+        const ivId = this.id === "mode" ? "iv" : "decryptIv";
+        toggleIV(this, document.getElementById(ivId));
+      });
+      // Estado inicial
+      toggleIV(
+        select,
+        document.getElementById(select.id === "mode" ? "iv" : "decryptIv"),
+      );
+    });
+
+    // Manejador de envío del formulario
+    document
+      .getElementById("cipherForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const action = document.querySelector(
+          'input[name="action"]:checked',
+        ).value;
+        const fileInput = document.getElementById(
+          action === "encrypt" ? "file" : "file1",
+        );
+
+        if (!fileInput.files.length) {
+          alert("Por favor seleccione un archivo");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const base64Image = e.target.result.split(",")[1];
+            const modeElement = action === "encrypt" ? "mode" : "decryptMode";
+            const keyElement = action === "encrypt" ? "key" : "decryptKey";
+            const ivElement = action === "encrypt" ? "iv" : "decryptIv";
+
+            const requestData = {
+              image: base64Image,
+              action: action,
+              mode: document.getElementById(modeElement).value,
+              key: document.getElementById(keyElement).value,
+              iv: document.getElementById(ivElement).value || null,
+            };
+
+            const response = await fetch("/process-aes", {
+              method: "POST",
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify(requestData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              // Mostrar imagen procesada
+              const processedImg = document.getElementById("processedImage");
+              processedImg.src = `data:image/png;base64,${result.processed_image}`;
+              processedImg.style.display = "block";
+
+              // Configurar enlace de descarga
+              const downloadLink = document.getElementById("downloadLink");
+              downloadLink.href = processedImg.src;
+              downloadLink.download = `imagen_${action}ada.png`;
+              downloadLink.style.display = "block";
+            } else {
+              alert(`Error: ${result.error}`);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Error en el procesamiento");
+          }
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      });
+  });
+</script>
+
+</html>

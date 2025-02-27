@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Cifrado RSA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado RSA
+                    </li>
+                  </ol>
+                </nav>
+
+                <h2 class="text-white">Cifrado RSA<br /></h2>
+
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/rsa.png"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        
+
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado RSA</h3>
+
+                <p>
+                  El cifrado de Vigenère es un método de cifrado clásico que usa una clave para cifrar un mensaje mediante una serie de cifrados César desplazados. Se considera un cifrado por sustitución polialfabético porque emplea múltiples alfabetos para cifrar el texto, haciéndolo más seguro que un cifrado César simple.                </p>
+
+
+                <p><strong>¿Cómo funciona? </strong></p>
+                <p>
+                    Dado un alfabeto de \( n \) letras (en el caso del alfabeto inglés, \( n = 26 \)), cada letra se representa como un número entre \( 0 \) y \( n - 1 \), siguiendo la correspondencia:
+
+                    \[
+                    A = 0, \quad B = 1, \quad C = 2, \quad \dots, \quad Z = 25
+                    \]
+
+                    Sea \( P = (p_1, p_2, \dots, p_m) \) el mensaje en texto claro, donde cada \( p_i \) es un número en \( \mathbb{Z}_{26} \).  
+
+                    Sea \( K = (k_1, k_2, \dots, k_m) \) la clave, repetida hasta que tenga la misma longitud que \( P \).  
+
+                    El cifrado de cada letra se define como:
+
+                    \[
+                    C_i = (P_i + K_i) \mod 26
+                    \]
+
+                    donde \( C_i \) es el carácter cifrado correspondiente.  
+
+                    Para el descifrado, aplicamos la operación inversa:
+
+                    \[
+                    P_i = (C_i - K_i) \mod 26
+                    \]
+
+                    donde restamos la clave en módulo 26 para recuperar el texto original.
+</p>
+                  <style>
+                    body { font-family: Arial, sans-serif}
+                    table { margin: 20px auto; border-collapse: collapse; width: 80%; }
+                    th, td { border: 1px solid rgb(94, 90, 90); padding: 8px; text-align: center; }
+                    th { background-color: #f2f2f2; }
+                  </style>
+
+
+                <p><strong>Pequeño ejemplo</strong></p>
+                <h5>Descifrado</h5>
+                <p><strong>Mensaje:</strong> A T A Q U E → [0, 19, 0, 16, 20, 4]</p>
+                <p><strong>Clave:</strong> C L A V E C → [2, 11, 0, 21, 4, 2]</p>
+                
+                <p>Fórmula: \( C_i = (P_i + K_i) \mod 26 \)</p>
+                <table>
+                    <tr>
+                        <th>Letra Original (P<sub>i</sub>)</th>
+                        <th>Clave (K<sub>i</sub>)</th>
+                        <th>Suma (P<sub>i</sub> + K<sub>i</sub>)</th>
+                        <th>Módulo 26 (C<sub>i</sub>)</th>
+                        <th>Letra Cifrada</th>
+                    </tr>
+                    <tr><td>A (0)</td><td>C (2)</td><td>0 + 2 = 2</td><td>2</td><td>C</td></tr>
+                    <tr><td>T (19)</td><td>L (11)</td><td>19 + 11 = 30</td><td>4</td><td>E</td></tr>
+                    <tr><td>A (0)</td><td>A (0)</td><td>0 + 0 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>Q (16)</td><td>V (21)</td><td>16 + 21 = 37</td><td>11</td><td>L</td></tr>
+                    <tr><td>U (20)</td><td>E (4)</td><td>20 + 4 = 24</td><td>24</td><td>Y</td></tr>
+                    <tr><td>E (4)</td><td>C (2)</td><td>4 + 2 = 6</td><td>6</td><td>G</td></tr>
+                </table>
+                <p><strong>Texto cifrado:</strong> "CEALYG"</p>
+                
+                <h5>Descifrado</h5>
+                <p>Fórmula: \( P_i = (C_i - K_i) \mod 26 \)</p>
+                <table>
+                    <tr>
+                        <th>Letra Cifrada (C<sub>i</sub>)</th>
+                        <th>Clave (K<sub>i</sub>)</th>
+                        <th>Resta (C<sub>i</sub> - K<sub>i</sub>)</th>
+                        <th>Módulo 26 (P<sub>i</sub>)</th>
+                        <th>Letra Original</th>
+                    </tr>
+                    <tr><td>C (2)</td><td>C (2)</td><td>2 - 2 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>E (4)</td><td>L (11)</td><td>4 - 11 = -7</td><td>19</td><td>T</td></tr>
+                    <tr><td>A (0)</td><td>A (0)</td><td>0 - 0 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>L (11)</td><td>V (21)</td><td>11 - 21 = -10</td><td>16</td><td>Q</td></tr>
+                    <tr><td>Y (24)</td><td>E (4)</td><td>24 - 4 = 20</td><td>20</td><td>U</td></tr>
+                    <tr><td>G (6)</td><td>C (2)</td><td>6 - 2 = 4</td><td>4</td><td>E</td></tr>
+                </table>
+                <p><strong>Texto descifrado:</strong> "ATAQUE"</p>
+             
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 col-12">
+              <div class="card shadow">
+                <div class="card-body">
+                  <form id="rsaForm">
+                    <h3 class="card-title text-center mb-4">
+                      Cifrado/Descifrado RSA
+                    </h3>
+      
+                    <!-- Selector de acción -->
+                    <div class="btn-group w-100 mb-4" role="group">
+                      <input type="radio" class="btn-check" name="rsaAction" id="encryptRadio" value="encrypt" checked />
+                      <label class="btn btn-outline-primary" for="encryptRadio">Cifrar</label>
+                      <input type="radio" class="btn-check" name="rsaAction" id="decryptRadio" value="decrypt" />
+                      <label class="btn btn-outline-primary" for="decryptRadio">Descifrar</label>
+                    </div>
+      
+                    <!-- Campo de texto a procesar -->
+                    <div class="mb-3">
+                      <label class="form-label">Texto a procesar</label>
+                      <textarea class="form-control" id="message" rows="4" required></textarea>
+                    </div>
+      
+                    <!-- Generación de llaves -->
+                    <div class="mb-4">
+                      <div class="d-grid gap-2">
+                        <button type="button" id="generateKeys" class="btn btn-secondary">
+                          <i class="bi bi-key me-2"></i>Generar Nuevas Llaves
+                        </button>
+                      </div>
+                      <div class="mt-3">
+                        <select class="form-select" id="keySize">
+                          <option value="1024">Llave de 1024 bits</option>
+                          <option value="2048" selected>
+                            Llave de 2048 bits
+                          </option>
+                          <option value="3072">Llave de 3072 bits</option>
+                        </select>
+                      </div>
+                    </div>
+      
+                    <!-- Campos de llaves -->
+                    <div class="mb-3">
+                      <label class="form-label">Llave Pública (e, n)</label>
+                      <input type="text" class="form-control" id="publicKey" required />
+                    </div>
+      
+                    <div class="mb-4">
+                      <label class="form-label">Llave Privada (d, n)</label>
+                      <input type="text" class="form-control" id="privateKey" required />
+                    </div>
+      
+                    <!-- Botón de procesamiento -->
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-gear me-2"></i>Procesar
+                      </button>
+                    </div>
+      
+                    <!-- Resultados -->
+                    <div id="resultado" class="mt-4" style="display: none">
+                      <h5 class="mb-3">Resultado:</h5>
+                      <div id="resultText" class="alert alert-success alert-result"></div>
+                      <button type="button" id="copyButton" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-clipboard me-2"></i>Copiar Resultado
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.querySelector("form");
+      const resultDiv = document.getElementById("resultado");
+      const resultText = document.getElementById("resultText");
+      const copyButton = document.getElementById("copyButton");
+
+      // Generar llaves al cargar
+      generateNewKeys();
+
+      // Manejador de generación de llaves
+      document
+        .getElementById("generateKeys")
+        .addEventListener("click", generateNewKeys);
+
+      // Manejador de envío del formulario
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const action = document.querySelector(
+          'input[name="rsaAction"]:checked',
+        ).value;
+        const message = document.getElementById("message").value;
+        const publicKey = document.getElementById("publicKey").value;
+        const privateKey = document.getElementById("privateKey").value;
+
+        try {
+          const response = await fetch("/process-rsa", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+              action,
+              message,
+              public_key: publicKey,
+              private_key: privateKey,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok)
+            throw new Error(data.error || "Error del servidor");
+
+          resultText.textContent = data.result;
+          resultDiv.style.display = "block";
+          resultText.classList.remove("alert-danger");
+          resultText.classList.add("alert-success");
+        } catch (error) {
+          resultText.textContent = `Error: ${error.message}`;
+          resultDiv.style.display = "block";
+          resultText.classList.remove("alert-success");
+          resultText.classList.add("alert-danger");
+          console.error("Error:", error);
+        }
+      });
+
+      // Manejador de copiado
+      copyButton.addEventListener("click", () => {
+        navigator.clipboard
+          .writeText(resultText.textContent)
+          .then(() => alert("Texto copiado al portapapeles"))
+          .catch((err) => console.error("Error al copiar:", err));
+      });
+
+      // Función para generar llaves
+      async function generateNewKeys() {
+        const keySize = parseInt(document.getElementById("keySize").value);
+
+        try {
+          const response = await fetch("/generate-rsa-keys", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({key_size: keySize}),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok)
+            throw new Error(data.error || "Error generando llaves");
+
+          document.getElementById("publicKey").value = data.public_key;
+          document.getElementById("privateKey").value = data.private_key;
+        } catch (error) {
+          console.error("Error generando llaves:", error);
+          alert("Error generando llaves: " + error.message);
+        }
+      }
+    });
+  </script>
+  
+
+</html>

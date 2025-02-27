@@ -99,7 +99,7 @@
                   </ol>
                 </nav>
 
-                <h2 class="text-white">Cifrado afin<br /></h2>
+                <h2 class="text-white">Cifrado afín<br /></h2>
 
                 <div class="d-flex align-items-center mt-5">
                   <a
@@ -251,25 +251,25 @@
                     <h3 class="mb-4 pb-2">Playground!</h3>
                 </div>
                 <div class="col-lg-6 col-12">
+                    <!-- Formulario de cifrado/descifrado -->
                     <form id="cipherForm" class="custom-form contact-form">
                         <div class="row gy-4 justify-content-center">
                             <div class="col-lg-12 col-12">
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
                                     <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
-    
                                     <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
                                     <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
                                 </div>
                             </div>
-    
+        
                             <div class="col-lg-12 col-12">
                                 <div class="form-floating">
                                     <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                    <label for="message">Texto cifrar</label>
+                                    <label for="message">Texto a cifrar/descifrar</label>
                                 </div>
                             </div>
-    
+        
                             <div class="col-lg-6 col-12">
                                 <div class="form-floating">
                                     <select id="key1" class="form-control" required>
@@ -289,10 +289,11 @@
                                     <label for="key1">Clave a</label>
                                 </div>
                             </div>
-    
+        
                             <div class="col-lg-6 col-12">
                                 <div class="form-floating">
                                     <select id="key2" class="form-control" required>
+                                        <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -322,20 +323,34 @@
                                     <label for="key2">Clave b</label>
                                 </div>
                             </div>
-    
+        
                             <div class="col-lg-4 col-12">
                                 <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
                             </div>
                         </div>
                     </form>
-    
+        
+                    <!-- Resultados del cifrado/descifrado -->
                     <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px; display: none;">
-                      <h5>Texto cifrado:</h5>
-                      <p id="resultText" class="fw-bold text-primary"></p>
-                      <button id="copyBtn" class="btn btn-outline-secondary btn-sm"  style="border-radius: 35px;" disabled>Copiar</button>
-                      <span id="copyMessage" class="text-success ms-2" style="display: none;">¡Copiado!</span>
+                        <h5>Resultado:</h5>
+                        <p id="resultText" class="fw-bold text-primary"></p>
+                        <button id="copyBtn" class="btn btn-outline-secondary btn-sm" style="border-radius: 35px;" disabled>Copiar</button>
+                        <span id="copyMessage" class="text-success ms-2" style="display: none;">¡Copiado!</span>
                     </div>
 
+                    <!-- Nuevo container para Criptoanálisis Independiente -->
+                    <div id="cryptoSection" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
+                        <h5>Criptoanálisis por análisis de frecuencias</h5>
+                        <div class="form-floating mb-3">
+                            <textarea style="border-radius: 35px;" class="form-control" id="cryptoText" placeholder="Ingresa el texto cifrado para criptoanálisis" required></textarea>
+                            <label for="cryptoText">Texto cifrado para criptoanálisis</label>
+                        </div>
+                        <button id="cryptoBtnIndependent" class="btn btn-warning rounded-pill px-4">Criptoanalizar</button>
+                        <div id="cryptoResultIndependent" class="mt-4" style="display: none;">
+                            <h6>Iteraciones del criptoanálisis:</h6>
+                            <ul id="cryptoResultsListIndependent" class="list-unstyled"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -350,12 +365,10 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+        // Sección de cifrado/descifrado
         const resultadoDiv = document.getElementById("resultado");
         const procesarBtn = document.getElementById("procesarBtn");
         const copyBtn = document.getElementById("copyBtn");
-
-        // Ocultar el div al cargar la página
-        resultadoDiv.style.display = "none";
 
         procesarBtn.addEventListener("click", async (e) => {
             e.preventDefault();
@@ -386,21 +399,17 @@
                 resultElement.classList.remove("text-danger");
                 resultElement.classList.add("text-primary");
 
-                // Mostrar el div solo si hay un resultado
                 resultadoDiv.style.display = "block";
-                copyBtn.disabled = false; // Habilitar botón de copiar
+                copyBtn.disabled = false;
             } catch (error) {
                 resultElement.textContent = `Error: ${error.message}`;
                 resultElement.classList.remove("text-primary");
                 resultElement.classList.add("text-danger");
                 console.error("Error:", error);
-
-                // En caso de error, no mostramos el div
                 resultadoDiv.style.display = "none";
             }
         });
 
-        // Función para copiar el resultado al portapapeles
         copyBtn.addEventListener("click", () => {
             const resultText = document.getElementById("resultText").textContent;
             const copyMessage = document.getElementById("copyMessage");
@@ -412,6 +421,52 @@
                         copyMessage.style.display = "none";
                     }, 2000);
                 }).catch(err => console.error("Error al copiar:", err));
+            }
+        });
+
+        // Sección de Criptoanálisis Independiente
+        const cryptoBtnIndependent = document.getElementById("cryptoBtnIndependent");
+        const cryptoResultIndependentDiv = document.getElementById("cryptoResultIndependent");
+        const cryptoResultsListIndependent = document.getElementById("cryptoResultsListIndependent");
+
+        cryptoBtnIndependent.addEventListener("click", async () => {
+            const ciphertext = document.getElementById("cryptoText").value;
+
+            if (!ciphertext) {
+                alert('Por favor, ingresa un texto cifrado para criptoanálisis.');
+                return;
+            }
+
+            try {
+                const response = await fetch("/crypto-analisis", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ ciphertext: ciphertext }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || "Error en el servidor");
+                }
+
+                const data = await response.json();
+                cryptoResultsListIndependent.innerHTML = '';
+
+                if (data.resultados && data.resultados.length > 0) {
+                    data.resultados.forEach((result, index) => {
+                        const [a, b, plain] = result;
+                        const li = document.createElement("li");
+                        li.innerHTML = `<strong>Candidato ${index + 1}:</strong> a=${a}, b=${b}<br>
+                                          <span class="text-muted">Texto descifrado: ${plain}</span>`;
+                        cryptoResultsListIndependent.appendChild(li);
+                    });
+                    cryptoResultIndependentDiv.style.display = "block";
+                } else {
+                    alert("No se encontraron resultados válidos en el criptoanálisis.");
+                }
+            } catch (error) {
+                console.error("Error en el criptoanálisis:", error);
+                alert("Ocurrió un error al realizar el criptoanálisis.");
             }
         });
     });

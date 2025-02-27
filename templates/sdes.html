@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Cifrado DES-Simplificado</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado 1
+                    </li>
+                  </ol>
+                </nav>
+
+                <h2 class="text-white">Cifrado DES-Simplificado<br /></h2>
+
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/sdes.jpg"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      
+      <div class="row gy-4 justify-content-center">
+        {% if encrypted_message %}
+        <div class="col-lg-12 col-12">
+          <div class="alert alert-success">
+            <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado DES</h3>
+
+              <p>
+                <strong>Historia de DES</strong>
+                DES fue desarrollado en la década de 1970 por IBM y adoptado por el Instituto Nacional de Estándares y Tecnología (NIST) de EE. UU. como un estándar de cifrado en 1977. Fue ampliamente utilizado en aplicaciones gubernamentales y comerciales 
+                durante décadas. Sin embargo, con el avance de la computación y el aumento de la capacidad de cómputo, DES se volvió vulnerable a ataques de fuerza bruta y fue reemplazado por AES en 2001.
+              </p>
+
+              <p>
+                <strong>Operaciones principales de DES</strong><br>
+
+                <ol>
+                    <li><P><strong>Permutación inicial (IP)</strong></P></li>
+                    <p>El algoritmo comienza con una permutación inicial de los bits de entrada:</p>
+                    <p>\[
+                    IP: \text{Reorganiza los bits de entrada de acuerdo a una tabla de permutación}
+                    \]</p>
+
+                    <li><p><strong>División	en mitades</strong></p></li>
+                    <p>El bloque de 64 bits se divide en dos mitades de 32 bits:</p>
+                    <p>\[
+                    L_0, R_0 = \text{IP}(M)
+                    \]</p>
+
+                    <li><p><strong>Red de Feistel</strong></p></li>
+                    <p>Se aplican 16 rondas donde se calcula \(L_i\) y \(R_i\) de la siguiente manera:</p>
+                        <ol type="a">
+                            <li>Expansión y Permutación (E)</li>
+                            <p>\[E: R_{i-1} \rightarrow 48 \text{ bits}\]</p>
+                            <li>Mezcla con la subclave</li>
+                            <p>Se genera una subclave \(K_i\) a partir de la clave principal y se mezcla:</p>
+                            <p>\[
+                            X_i = E(R_{i-1}) \oplus K_i
+                            \]</p>
+                            <li>Sustitución (S-Boxes)</li>
+                            <p>Se divide en bloques de 6 bits y se aplican las cajas S para reducir a 32 bits:</p>
+                            <p>\[
+                            S(X_i) \rightarrow 32 \text{ bits}
+                            \]</p>
+                            <li>Permutación (P)</li>
+                            <p>\[
+                            P: S(X_i) \rightarrow 32 \text{ bits}
+                            \]</p>
+                            <li>Cálculo de \(L_i\) y \(R_i\)</li>
+                            <p>\[
+                                L_i = R_{i-1}
+                                \]
+                                \[
+                                R_i = L_{i-1} \oplus P(S(X_i))
+                                \]</p>
+                        </ol>
+                    <li><p><strong>Permutación final (IP⁻¹)</strong></p></li>
+                    <p>Se aplica la permutación inversa de IP para obtener el texto cifrado:</p>
+                    <p>\[
+                    C = IP^{-1}(R_{16}, L_{16})
+                    \]</p>
+                  </p>
+                </ol>
+            <p>
+                <strong>Características y Datos Claves</strong>
+                <ol>
+                    <li>Longitud de bloque: 64 bits.</li>
+                    <li>Longitud de clave: 56 bits (aunque la clave original tiene 64 bits, 8 bits se usan como bits de paridad).</li>
+                    <li>Número de rondas: 16.</li>
+                    <li>Estructura: Basado en la red de Feistel.</li>
+                </ol>
+
+                Se sabe que ataques de fuerza bruta han roto DES; hoy en día, se recomienda el uso de AES o 3DES.<br>
+
+                S-DES (Simplified DES) es una versión reducida de DES usada para propósitos educativos. Se basa en bloques de 8 bits y claves de 10 bits, utilizando menos rondas pero manteniendo el principio de Feistel.
+                Para este aplicación se implemento una versión de DES simplificado que opera con bloques de 8 bits y claves de 10 bits.
+                
+                Como permutaciones iniciales y finales se utilizan las siguientes tablas:
+            </p>
+
+            <h2>Permutaciones</h2>
+
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Valores</th>
+                    </tr>
+                    <tr>
+                        <td>P10</td>
+                        <td>[3, 5, 2, 7, 4, 10, 1, 9, 8, 6]</td>
+                    </tr>
+                    <tr>
+                        <td>P8</td>
+                        <td>[6, 3, 7, 4, 8, 5, 10, 9]</td>
+                    </tr>
+                    <tr>
+                        <td>P4</td>
+                        <td>[2, 4, 3, 1]</td>
+                    </tr>
+                    <tr>
+                        <td>IP</td>
+                        <td>[2, 6, 3, 1, 4, 8, 5, 7]</td>
+                    </tr>
+                    <tr>
+                        <td>IP_INV</td>
+                        <td>[4, 1, 3, 5, 7, 2, 8, 6]</td>
+                    </tr>
+                    <tr>
+                        <td>EP</td>
+                        <td>[4, 1, 2, 3, 2, 3, 4, 1]</td>
+                    </tr>
+                </table>
+
+                <h2>S-Boxes</h2>
+
+                <h3>S0</h3>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Col 0</th>
+                        <th>Col 1</th>
+                        <th>Col 2</th>
+                        <th>Col 3</th>
+                    </tr>
+                    <tr>
+                        <th>Fila 0</th>
+                        <td>1</td><td>0</td><td>3</td><td>2</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 1</th>
+                        <td>3</td><td>2</td><td>1</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 2</th>
+                        <td>0</td><td>2</td><td>1</td><td>3</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 3</th>
+                        <td>3</td><td>1</td><td>0</td><td>2</td>
+                    </tr>
+                </table>
+
+                <h3>S1</h3>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Col 0</th>
+                        <th>Col 1</th>
+                        <th>Col 2</th>
+                        <th>Col 3</th>
+                    </tr>
+                    <tr>
+                        <th>Fila 0</th>
+                        <td>0</td><td>1</td><td>2</td><td>3</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 1</th>
+                        <td>2</td><td>0</td><td>1</td><td>3</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 2</th>
+                        <td>3</td><td>0</td><td>1</td><td>2</td>
+                    </tr>
+                    <tr>
+                        <th>Fila 3</th>
+                        <td>2</td><td>1</td><td>0</td><td>3</td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-12 col-12">
+                    <h3 class="mb-4 pb-2">Cifrado DES-s</h3>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <form id="cipherForm" class="custom-form contact-form">
+                        <div class="row gy-4 justify-content-center">
+                            <div class="col-lg-12 col-12">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked>
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
+                    
+                                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt">
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
+                                </div>
+                            </div>
+                    
+                            <div class="col-lg-12 col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="message" name="message" placeholder="Escribe aquí..." required></textarea>
+                                    <label for="message">Texto a procesar</label>
+                                </div>
+                            </div>
+                    
+                            <div class="col-lg-12 col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="key" name="key"  required>
+                                    <label for="key">Clave de longitud 10</label>
+                                </div>
+                            </div>
+                    
+                            <div class="col-lg-4 col-12">
+                                <button id="procesarBtn" type="submit" class="form-control btn btn-primary">Procesar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px;">
+                        <h5>Resultado:</h5>
+                        <p id="resultText" class="fw-bold text-primary mb-2"></p>
+                        <button id="copyBtn" class="btn btn-sm btn-secondary" disabled>Copiar</button>
+                        <span id="copyMessage" style="display: none; color: green; margin-left: 10px;">¡Copiado!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("cipherForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const message = document.getElementById("message").value;
+            const key = document.getElementById("key").value;
+            const action = document.querySelector('input[name="action"]:checked').value;
+            const resultElement = document.getElementById("resultText");
+            const copyBtn = document.getElementById("copyBtn");
+
+            try {
+                const response = await fetch("/sdes-process", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        message: message,
+                        key: key,
+                        action: action,
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.error || "Error del servidor");
+                
+                resultElement.textContent = data.result;
+                resultElement.classList.remove("text-danger");
+                resultElement.classList.add("text-primary");
+
+                // Mostrar botón y habilitarlo
+                copyBtn.disabled = false;
+            } catch (error) {
+                resultElement.textContent = `Error: ${error.message}`;
+                resultElement.classList.remove("text-primary");
+                resultElement.classList.add("text-danger");
+                console.error("Error:", error);
+            }
+        });
+
+        // Función para copiar texto al portapapeles
+        document.getElementById("copyBtn").addEventListener("click", () => {
+            const resultText = document.getElementById("resultText").textContent;
+            const copyMessage = document.getElementById("copyMessage");
+
+            navigator.clipboard.writeText(resultText).then(() => {
+                copyMessage.style.display = "inline"; // Mostrar mensaje de copiado
+                setTimeout(() => copyMessage.style.display = "none", 2000); // Ocultar mensaje después de 2s
+            }).catch(err => console.error("Error al copiar:", err));
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const resultadoDiv = document.getElementById("resultado");
+        const procesarBtn = document.getElementById("procesarBtn");
+
+        // Ocultar el div al cargar la página
+        resultadoDiv.style.display = "none";
+
+        procesarBtn.addEventListener("click", function () {
+            // Mostrar el div de resultado
+            resultadoDiv.style.display = "block";
+        });
+    });
+</script>
+
+</html>

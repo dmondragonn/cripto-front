@@ -1,264 +1,450 @@
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <meta name="description" content="" />
-      <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-      <title>Cifrado Vigenere</title>
+    <title>Cifrado de vigenere</title>
 
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
-        rel="stylesheet"
-      />
-      <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-      <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet"
-      />
-      <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
-      <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet"
-      />
-    </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
 
-    <body id="top">
-      <main>
-        <nav class="navbar navbar-expand-lg">
-          <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-              <i class="bi bi-person-lock"></i>
-              <span>CryptoPlayground</span>
-            </a>
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
 
-            <div class="d-lg-none ms-auto me-4">
-              <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
-            </div>
-
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-lg-5 me-lg-auto">
-                <li class="nav-item">
-                  <a class="nav-link click-scroll" href="/">Inicio</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link click-scroll" href="/"
-                    >Explorar cifrados</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link click-scroll" href="/ #section_3"
-                    >Cómo funciona</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
-                </li>
-              </ul>
-            </div>
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
           </div>
-        </nav>
 
-          <header
-            class="site-header d-flex flex-column justify-content-center align-items-center"
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <div class="container">
-              <div class="row justify-content-center align-items-center">
-                <div class="col-lg-5 col-12 mb-5">
-                  <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                        <a href="{{ url_for('index') }}">Inicio</a>
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                      <li class="breadcrumb-item active" aria-current="page">
-                        Cifrado 1
-                      </li>
-                    </ol>
-                  </nav>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
 
-                  <h2 class="text-white">Cifrado de desplazamiento<br /></h2>
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
 
-                  <div class="d-flex align-items-center mt-5">
-                    <a
-                      href="#playground"
-                      class="btn custom-btn custom-border-btn smoothscroll me-4"
-                      >Playground!</a
-                    >
-                  </div>
-                </div>
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
 
-                <div class="col-lg-5 col-12">
-                  <div class="topics-detail-block bg-white shadow-lg">
-                    <img
-                      src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
-                      class="topics-detail-block-image img-fluid"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          <section class="section-padding section-bg" id="playground">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-lg-12 col-12">
-                        <h3 class="mb-4 pb-2">Cifrado de Desplazamiento</h3>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <form id="cipherForm" class="custom-form contact-form">
-                            <div class="row gy-4 justify-content-center">
-                                <div class="col-lg-12 col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" id="message" placeholder="Escribe aquí..." required></textarea>
-                                        <label for="message">Texto a cifrar</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-12">
-                                    <div class="form-floating">
-                                        <input type="number" class="form-control" id="key" placeholder="Ej: 3" min="1" max="25" required>
-                                        <label for="key">Clave de desplazamiento (ej: 3)</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12">
-                                    <button type="submit" id="encryptBtn" class="form-control btn btn-primary">Cifrar</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="resultado" class="mt-4 p-3 bg-light border rounded">
-                            <h5>Resultado:</h5>
-                            <p id="encryptedText" class="fw-bold text-primary"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        
-        <div class="row gy-4 justify-content-center">
-          {% if encrypted_message %}
-          <div class="col-lg-12 col-12">
-            <div class="alert alert-success">
-              <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
-            </div>
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
           </div>
-          {% endif %}
         </div>
+      </nav>
 
-        <section class="topics-detail-section section-padding" id="biblio">
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
           <div class="container">
-            <div class="row">
-              <div class="col-lg-8 col-12 m-auto">
-                <h3 class="mb-4">Cifrado de Desplazamiento (Cifrado César)</h3>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
 
-                <p>
-                  El cifrado de desplazamiento, también conocido como Cifrado César, es uno de los métodos de cifrado más antiguos y simples. 
-                  Consiste en sustituir cada letra de un mensaje por otra que se encuentra un número fijo de posiciones más adelante en el alfabeto.
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado Vigenère
+                    </li>
+                  </ol>
+                </nav>
 
-                  Por ejemplo, con un desplazamiento de 3 posiciones:
+                <h2 class="text-white">Cifrado Vigenère<br /></h2>
 
-                  A → D
-                  B → E
-                  C → F
-                  Hola → Krod
-                  El receptor del mensaje puede descifrarlo simplemente retrocediendo el mismo número de posiciones en el alfabeto.
-                </p>
-
-                <p>
-                  <strong>Historia del Cifrado César</strong><br>
-                  El cifrado recibe su nombre del general y político romano Julio César, quien lo utilizaba para enviar mensajes secretos a sus generales. 
-                  César solía usar un desplazamiento de tres posiciones, lo que garantizaba cierto nivel de seguridad en su época.
-                  Aunque hoy en día este cifrado es muy fácil de romper con herramientas modernas, sigue siendo un excelente punto de partida para aprender sobre criptografía.
-                </p>
-
-                <blockquote>
-                  Freelancing your skills isn’t going to make you a millionaire
-                  overnight.
-                </blockquote>
-
-                <div class="row my-4">
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <img
-                      src="../static/images/businesswoman-using-tablet-analysis.jpg"
-                      class="topics-detail-block-image img-fluid"
-                    />
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                    <img
-                      src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
-                      class="topics-detail-block-image img-fluid"
-                    />
-                  </div>
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
                 </div>
+              </div>
 
-                <p>
-                  Most people start with freelancing skills they already have as a
-                  side hustle to build up income. This extra cash can be used for
-                  a vacation, to boost up savings, investing, build business.
-                </p>
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/vigenere.png"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </header>
 
-      <script src="../static/js/jquery.min.js"></script>
-      <script src="../static/js/bootstrap.bundle.min.js"></script>
-      <script src="../static/js/jquery.sticky.js"></script>
-      <script src="../static/js/custom.js"></script>
-    </body>
+        
 
-      <script>
-      document.addEventListener("DOMContentLoaded", () => {
-          document.getElementById("cipherForm").addEventListener("submit", async (e) => {
-              e.preventDefault();
-              
-              const message = document.getElementById("message").value;
-              const key = parseInt(document.getElementById("key").value);  // Convertir a número
-              const resultElement = document.getElementById("encryptedText");
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado Vigenère</h3>
 
-              try {
-                  const response = await fetch("/encrypt", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ message, key })
-                  });
+                <p>
+                  El cifrado de Vigenère es un método de cifrado clásico que usa una clave para cifrar un mensaje mediante una serie de cifrados César desplazados. Se considera un cifrado por sustitución polialfabético porque emplea múltiples alfabetos para cifrar el texto, haciéndolo más seguro que un cifrado César simple.                </p>
 
-                  const data = await response.json();
+
+                <p><strong>¿Cómo funciona? </strong></p>
+                <p>
+                    Dado un alfabeto de \( n \) letras (en el caso del alfabeto inglés, \( n = 26 \)), cada letra se representa como un número entre \( 0 \) y \( n - 1 \), siguiendo la correspondencia:
+
+                    \[
+                    A = 0, \quad B = 1, \quad C = 2, \quad \dots, \quad Z = 25
+                    \]
+
+                    Sea \( P = (p_1, p_2, \dots, p_m) \) el mensaje en texto claro, donde cada \( p_i \) es un número en \( \mathbb{Z}_{26} \).  
+
+                    Sea \( K = (k_1, k_2, \dots, k_m) \) la clave, repetida hasta que tenga la misma longitud que \( P \).  
+
+                    El cifrado de cada letra se define como:
+
+                    \[
+                    C_i = (P_i + K_i) \mod 26
+                    \]
+
+                    donde \( C_i \) es el carácter cifrado correspondiente.  
+
+                    Para el descifrado, aplicamos la operación inversa:
+
+                    \[
+                    P_i = (C_i - K_i) \mod 26
+                    \]
+
+                    donde restamos la clave en módulo 26 para recuperar el texto original.
+</p>
+                  <style>
+                    body { font-family: Arial, sans-serif}
+                    table { margin: 20px auto; border-collapse: collapse; width: 80%; }
+                    th, td { border: 1px solid rgb(94, 90, 90); padding: 8px; text-align: center; }
+                    th { background-color: #f2f2f2; }
+                  </style>
+
+
+                <p><strong>Pequeño ejemplo</strong></p>
+                <h5>Descifrado</h5>
+                <p><strong>Mensaje:</strong> A T A Q U E → [0, 19, 0, 16, 20, 4]</p>
+                <p><strong>Clave:</strong> C L A V E C → [2, 11, 0, 21, 4, 2]</p>
+                
+                <p>Fórmula: \( C_i = (P_i + K_i) \mod 26 \)</p>
+                <table>
+                    <tr>
+                        <th>Letra Original (P<sub>i</sub>)</th>
+                        <th>Clave (K<sub>i</sub>)</th>
+                        <th>Suma (P<sub>i</sub> + K<sub>i</sub>)</th>
+                        <th>Módulo 26 (C<sub>i</sub>)</th>
+                        <th>Letra Cifrada</th>
+                    </tr>
+                    <tr><td>A (0)</td><td>C (2)</td><td>0 + 2 = 2</td><td>2</td><td>C</td></tr>
+                    <tr><td>T (19)</td><td>L (11)</td><td>19 + 11 = 30</td><td>4</td><td>E</td></tr>
+                    <tr><td>A (0)</td><td>A (0)</td><td>0 + 0 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>Q (16)</td><td>V (21)</td><td>16 + 21 = 37</td><td>11</td><td>L</td></tr>
+                    <tr><td>U (20)</td><td>E (4)</td><td>20 + 4 = 24</td><td>24</td><td>Y</td></tr>
+                    <tr><td>E (4)</td><td>C (2)</td><td>4 + 2 = 6</td><td>6</td><td>G</td></tr>
+                </table>
+                <p><strong>Texto cifrado:</strong> "CEALYG"</p>
+                
+                <h5>Descifrado</h5>
+                <p>Fórmula: \( P_i = (C_i - K_i) \mod 26 \)</p>
+                <table>
+                    <tr>
+                        <th>Letra Cifrada (C<sub>i</sub>)</th>
+                        <th>Clave (K<sub>i</sub>)</th>
+                        <th>Resta (C<sub>i</sub> - K<sub>i</sub>)</th>
+                        <th>Módulo 26 (P<sub>i</sub>)</th>
+                        <th>Letra Original</th>
+                    </tr>
+                    <tr><td>C (2)</td><td>C (2)</td><td>2 - 2 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>E (4)</td><td>L (11)</td><td>4 - 11 = -7</td><td>19</td><td>T</td></tr>
+                    <tr><td>A (0)</td><td>A (0)</td><td>0 - 0 = 0</td><td>0</td><td>A</td></tr>
+                    <tr><td>L (11)</td><td>V (21)</td><td>11 - 21 = -10</td><td>16</td><td>Q</td></tr>
+                    <tr><td>Y (24)</td><td>E (4)</td><td>24 - 4 = 20</td><td>20</td><td>U</td></tr>
+                    <tr><td>G (6)</td><td>C (2)</td><td>6 - 2 = 4</td><td>4</td><td>E</td></tr>
+                </table>
+                <p><strong>Texto descifrado:</strong> "ATAQUE"</p>
+             
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-12 col-12">
+                    <h3 class="mb-4 pb-2">Playground!</h3>
+                    <div class="container d-flex flex-column align-items-center">
+                      <!-- Selector de acción -->
+                      <div class="col-lg-6 col-12 mt-5 text-center">
+                          <form id="cipherForm" class="custom-form contact-form">
+                              <div class="row gy-4 justify-content-center">
+                                  <div class="col-lg-12 col-12 text-center">
+                                      <div class="d-flex justify-content-center"> <!-- Flexbox para centrar -->
+                                          <div class="btn-group gap-3 d-flex justify-content-center" role="group">
+                                              <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" onchange="toggleUploadMenu()" checked>
+                                              <label class="btn btn-outline-primary px-4 py-2" style="border-radius: 20px" for="encryptRadio">Encriptar</label>
                   
-                  if (!response.ok) throw new Error(data.error || "Error del servidor");
+                                              <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" onchange="toggleUploadMenu()">
+                                              <label class="btn btn-outline-primary px-4 py-2" style="border-radius: 20px" for="decryptRadio">Desencriptar</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
                   
-                  resultElement.textContent = data.encrypted_message;
-                  resultElement.classList.remove("text-danger");
-                  resultElement.classList.add("text-primary");
-              } catch (error) {
-                  resultElement.textContent = `Error: ${error.message}`;
-                  resultElement.classList.remove("text-primary");
-                  resultElement.classList.add("text-danger");
-                  console.error("Error:", error);
-              }
+                      <!-- Menú de Cifrado -->
+                      <div id="encryptMenu" class="container-xd mt-4 bg-light p-4 text-center" style="border-radius: 35px; width: 60%;">
+                          <h5 class="mb-4"><strong>Cifrado</strong></h5>
+                          
+                          <div class="col-lg-12 col-12">
+                              <div class="form-floating mb-4">
+                                  <textarea class="form-control" id="encryptMessage" placeholder="Escribe aquí..." style="border-radius: 20px; height: 120px"></textarea>
+                                  <label for="encryptMessage">Texto a cifrar</label>
+                              </div> 
+                  
+                              <div class="form-floating mb-4">
+                                  <textarea id="clave" class="form-control public-key-field" style="border-radius: 20px; height: 120px"></textarea>
+                                  <label for="clave">Clave</label>
+                              </div>
+                  
+                              <div class="d-flex justify-content-center mb-4">
+                                  <button onclick="procesarCifrado()" class="btn btn-primary px-5 py-2" style="border-radius: 20px">
+                                      Procesar
+                                  </button>
+                              </div>
+                  
+                              <h5 class="mb-3"><strong>Mensaje Cifrado</strong></h5>
+                              <div class="input-group">
+                                  <textarea id="encryptedMessage" class="form-control text-center" readonly style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                  <button class="btn btn-outline-secondary copy-btn" style="border-radius: 0 20px 20px 0" data-copy-target="encryptedMessage">
+                                      Copiar
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <!-- Menú de Descifrado -->
+                      <div id="decryptMenu" class="container-xd mt-4 bg-light p-4 text-center" style="border-radius: 35px; display: none; width: 60%;">
+                          <h5 class="mb-4"><strong>Descifrado</strong></h5>
+                  
+                          <div class="col-lg-12 col-12">
+                              <div class="form-floating mb-4">
+                                  <textarea class="form-control" id="decryptCiphertext" placeholder="Escribe aquí..." style="border-radius: 20px; height: 120px"></textarea>
+                                  <label for="decryptCiphertext">Texto cifrado </label>
+                              </div>
+                  
+                              <div class="form-floating mb-4">
+                                  <textarea id="clave1" class="form-control private-key-field" style="border-radius: 20px; height: 120px"></textarea>
+                                  <label for="clave1">Clave de cifrado</label>
+                              </div>
+                  
+                              <div class="d-flex justify-content-center mb-4">
+                                  <button onclick="procesardesCifrado()" class="btn btn-primary px-5 py-2" style="border-radius: 20px">
+                                      Procesar
+                                  </button>
+                              </div>
+                  
+                              <h5 class="mb-3"><strong>Mensaje Descifrado</strong></h5>
+                              <div class="input-group">
+                                  <textarea id="decryptedMessage" class="form-control text-center" readonly style="border-radius: 20px 0 0 20px; height: 100px"></textarea>
+                                  <button class="btn btn-outline-secondary copy-btn" style="border-radius: 0 20px 20px 0" data-copy-target="decryptedMessage">
+                                      Copiar
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+    
+          
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+
+  <script>
+  
+  
+    // Ejecutar cuando el DOM esté listo
+    document.addEventListener("DOMContentLoaded", () => {
+       
+      
+        // Ocultar menúsX inicialmente
+        toggleUploadMenu();
+    });
+
+
+    // ENCRIPTAR
+      async function procesarCifrado() {
+      try {
+          const clave = document.getElementById("clave").value.trim();
+          const message = document.getElementById("encryptMessage").value.trim();
+
+          if (!clave.match(/^[A-Za-z]+$/)) {
+              alert("La clave debe contener solo letras.");
+              return;
+          }
+
+          const response = await fetch('/veginere_encrypt', {  
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  key1: clave,  // Debe coincidir con Flask
+                  message: message
+              })
           });
-      });
-      </script>
-  </html>
+
+          const data = await response.json();
+          if (data.error) throw new Error(data.error);
+
+          document.getElementById("encryptedMessage").value = data.result;
+      } catch (error) {
+          console.error("Error:", error);
+          alert("Error al cifrar: " + error.message);
+      }
+      }
+
+
+      // Desencriptar
+
+      async function procesardesCifrado() {
+    try {
+        const clave1 = document.getElementById("clave1").value.trim();
+        const messagec = document.getElementById("decryptCiphertext").value.trim();
+
+        if (!clave1.match(/^[A-Za-z]+$/)) {  // Corrección en clave1
+            alert("La clave debe contener solo letras.");
+            return;
+        }
+
+        const response = await fetch('/veginere_D', {  
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                key2: clave1,   // Ahora coincide con Flask
+                messagec: messagec  // Ahora coincide con Flask
+            })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        document.getElementById("decryptedMessage").value = data.result;
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error al descifrar: " + error.message);
+    }
+}
+
+
+
+
+    
+
+  
+
+
+
+
+
+
+    // Alternar entre menús de cifrado/descifrado
+    function toggleUploadMenu() {
+        const encryptDiv = document.getElementById("encryptMenu");
+        const decryptDiv = document.getElementById("decryptMenu");
+        const encryptRadio = document.getElementById("encryptRadio");
+
+        if (encryptRadio.checked) {
+            encryptDiv.style.display = "block";
+            decryptDiv.style.display = "none";
+        } else {
+            encryptDiv.style.display = "none";
+            decryptDiv.style.display = "block";
+        }
+    }
+
+    // Copiar texto al portapapeles (genérico)
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const targetId = e.target.dataset.copyTarget;
+                const text = document.getElementById(targetId).value;
+                
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        const message = document.createElement('div');
+                        message.textContent = '¡Copiado!';
+                        message.className = 'copy-message';
+                        document.body.appendChild(message);
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(message);
+                        }, 2000);
+                    })
+                    .catch(err => console.error("Error al copiar: ", err));
+            });
+        });
+    });
+</script>
+  
+
+</html>
