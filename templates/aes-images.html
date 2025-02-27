@@ -1,272 +1,338 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+    <title>Cifrado visual AES</title>
 
-  <title>AES Para Imágenes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
-    rel="stylesheet" />
-  <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-    rel="stylesheet" />
-  <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="../static/css/images-selection.css" />
-</head>
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
 
-<body id="top">
-  <main>
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index') }}">
-          <i class="bi bi-person-lock"></i>
-          <span>CryptoPlayground</span>
-        </a>
-
-        <div class="d-lg-none ms-auto me-4">
-          <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-lg-5 me-lg-auto">
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/">Inicio</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/">Explorar cifrados</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="/ #section_3">Cómo funciona</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="site-header d-flex flex-column justify-content-center align-items-center">
-      <div class="container">
-        <div class="row justify-content-center align-items-center">
-          <div class="col-lg-5 col-12 mb-5">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="{{ url_for('index') }}">Inicio</a>
-                </li>
-
-                <li class="breadcrumb-item active" aria-current="page">
-                  Hill para imágenes
-                </li>
-              </ol>
-            </nav>
-
-            <h2 class="text-white">AES Para Imágenes<br /></h2>
-
-            <div class="d-flex align-items-center mt-5">
-              <a href="#playground" class="btn custom-btn custom-border-btn smoothscroll me-4">Playground!</a>
-            </div>
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
           </div>
 
-          <div class="col-lg-5 col-12">
-            <div class="topics-detail-block bg-white shadow-lg">
-              <img src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
-                class="topics-detail-block-image img-fluid" />
-            </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </header>
+      </nav>
 
-    <section class="section-padding section-bg" id="playground">
-      <div class="container">
-        <div class="row justify-content-center text-center">
-          <div class="col-lg-12 col-12">
-            <h3 class="mb-4 pb-2">AES Para Imágenes</h3>
-          </div>
-          <div class="col-lg-6 col-12">
-            <form id="cipherForm" class="custom-form contact-form">
-              <div class="row gy-4 justify-content-center">
-                <div class="col-lg-12 col-12">
-                  <div class="btn-group" role="group">
-                    <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked />
-                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">
-                      Encriptar
-                    </label>
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
 
-                    <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" />
-                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">
-                      Desencriptar
-                    </label>
-                  </div>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Cifrado visual AES
+                    </li>
+                  </ol>
+                </nav>
 
-                  <!-- Sección Encriptación -->
-                  <div id="encryptMenu" class="encrypt-container mt-3">
-                    <label for="file" class="custom-file-upload">Seleccione imagen</label>
-                    <input type="file" id="file" accept="image/*" class="ocultar" />
-                    <p id="file-name">Sin archivos seleccionados</p>
+                <h2 class="text-white">Cifrado visual AES<br /></h2>
 
-                    <div class="d-flex justify-content-center">
-                      <select id="mode" class="form-control" style="width: 20%">
-                        <option value="ecb">ECB</option>
-                        <option value="cbc">CBC</option>
-                        <option value="cfb">CFB</option>
-                        <option value="ofb">OFB</option>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-3">
-                      <button type="button" id="generateKey" class="custom-file-upload">
-                        Generar clave aleatoria
-                      </button>
-                      <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="key" placeholder="Clave en hexadecimal" required />
-                        <label for="key">Clave hexadecimal (16/24/32 bytes)</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-3">
-                      <button type="button" id="generateIv" class="custom-file-upload">
-                        Generar IV aleatorio
-                      </button>
-                      <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="iv" placeholder="Vector inicial" />
-                        <label for="iv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Sección Desencriptación -->
-                  <div id="decryptMenu" class="encrypt-container mt-3" style="display: none">
-                    <label for="file1" class="custom-file-upload">Seleccione imagen encriptada</label>
-                    <input type="file" id="file1" accept="image/*" class="ocultar" />
-                    <p id="file-name1">Sin archivos seleccionados</p>
-
-                    <div class="d-flex justify-content-center mb-4 mt-4">
-                      <select id="decryptMode" class="form-control" style="width: 20%">
-                        <option value="ecb">ECB</option>
-                        <option value="cbc">CBC</option>
-                        <option value="cfb">CFB</option>
-                        <option value="ofb">OFB</option>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-3">
-                      <button type="button" id="generateKeyDecrypt" class="custom-file-upload">
-                        Generar clave aleatoria
-                      </button>
-                      <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="decryptKey" placeholder="Clave en hexadecimal"
-                          required />
-                        <label for="decryptKey">Clave hexadecimal (16/24/32 bytes)</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-12 col-12 mt-3">
-                      <button type="button" id="generateIvDecrypt" class="custom-file-upload">
-                        Generar IV aleatorio
-                      </button>
-                      <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="decryptIv" placeholder="Vector inicial" />
-                        <label for="decryptIv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-12 mt-4">
-                  <button id="processAES" type="submit" class="form-control btn btn-primary">
-                    Procesar
-                  </button>
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
                 </div>
               </div>
-            </form>
 
-            <!-- Contenedor de Resultados -->
-            <div id="resultado" class="mt-4 p-3 bg-light rounded-3">
-              <div class="row">
-                <div class="col-md-6 text-center">
-                  <h5>Imagen original:</h5>
-                  <img id="originalImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
-                </div>
-                <div class="col-md-6 text-center">
-                  <h5>Imagen procesada:</h5>
-                  <img id="processedImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
-                  <div class="mt-3 text-center">
-                    <a id="downloadLink" href="#" class="btn btn-success mt-2" style="display: none">
-                      Descargar imagen
-                    </a>
-                  </div>
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/aes.jpg"
+                    class="topics-detail-block-image img-fluid"
+                  />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <section class="topics-detail-section section-padding" id="biblio">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-12 m-auto">
-            <h3 class="mb-4">Cifrado Hill para imagenes</h3>
+        </header>
 
-            <p>texto</p>
+        
 
-            <p>
-              <strong>Historia </strong><br />
-              texto
-            </p>
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+              <h3 class="mb-4">Cifrado visual AES</h3>
 
-            <blockquote>texto</blockquote>
-
-            <div class="row my-4">
-              <div class="col-lg-6 col-md-6 col-12">
-                <img src="../static/images/businesswoman-using-tablet-analysis.jpg"
-                  class="topics-detail-block-image img-fluid" />
+                <!-- Historia -->
+                <div class="mb-3">
+                  <p>
+                    El algoritmo AES (Advanced Encryption Standard) fue adoptado oficialmente por el NIST en 2001, sustituyendo al DES debido a sus limitaciones en seguridad. 
+                    Basado en el algoritmo Rijndael, AES se caracteriza por su alta eficiencia y robustez, lo que lo ha convertido en el estándar predominante para la protección de datos. 
+                    Su uso se ha extendido a múltiples aplicaciones, incluyendo la encriptación de imágenes, donde se requiere tanto velocidad como alta seguridad.
+                  </p>
+                </div>
+                
+                <!-- Teoría Matemática -->
+                <div class="mb-3">
+                  <p class="section-title">Teoría Matemática</p>
+                  <p>
+                    AES es un cifrado simétrico de bloques que opera sobre bloques de 128 bits, aplicando una serie de transformaciones que incluyen:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>Sustitución:</strong> Utiliza S-boxes para reemplazar bytes, introduciendo no linealidad.
+                    </li>
+                    <li>
+                      <strong>Permutación y Mezcla:</strong> Las operaciones de ShiftRows y MixColumns aseguran difusión de los datos a través del bloque.
+                    </li>
+                    <li>
+                      <strong>Adición de Clave:</strong> Se combinan los bloques de datos con la clave de cifrado en cada ronda.
+                    </li>
+                  </ul>
+                  <p>
+                    Estas operaciones se realizan en el campo finito \(GF(2^8)\), lo que contribuye a la resistencia del algoritmo frente a ataques de criptoanálisis, como el diferencial o lineal.
+                  </p>
+                </div>
+                
+                <!-- Restricciones y Valores Fijos en la Implementación -->
+                <div class="mb-3">
+                  <p class="section-title">Restricciones y Valores Fijos en la Implementación</p>
+                  <p>
+                    La implementación de AES para imágenes presentada establece las siguientes restricciones y valores fijos para garantizar un funcionamiento seguro y correcto:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>Longitud de la Clave:</strong> Se permite únicamente claves de 16, 24 o 32 bytes, correspondientes a AES-128, AES-192 y AES-256, respectivamente.
+                    </li>
+                    <li>
+                      <strong>Vector de Inicialización (IV):</strong> Para modos de operación que requieren IV (como CBC), este debe ser de 16 bytes; de lo contrario, se utiliza el modo ECB, que no emplea IV.
+                    </li>
+                    <li>
+                      <strong>Procesamiento de Imágenes:</strong> Se valida la existencia de la imagen y se asegura que su ancho sea múltiplo de 4, aplicando padding si es necesario para cumplir con el tamaño de bloque (16 bytes) en el cifrado.
+                    </li>
+                    <li>
+                      <strong>Modos de Operación:</strong> La implementación soporta varios modos (ECB, CBC, CFB, OFB) mediante un mapeo de parámetros, permitiendo flexibilidad según el nivel de seguridad y requerimientos del proceso.
+                    </li>
+                    <li>
+                      <strong>Conversiones de Datos:</strong> Se incluyen funciones para convertir entre formatos decimal y hexadecimal, lo que facilita la manipulación de los bloques de datos a nivel de píxel durante el cifrado y descifrado.
+                    </li>
+                  </ul>
+                  <p>
+                    Estos elementos garantizan que el cifrado AES se aplique de manera consistente, respetando tanto la teoría matemática que lo respalda como las restricciones prácticas derivadas del manejo de imágenes.
+                  </p>
+                </div>
               </div>
-
-              <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                <img src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
-                  class="topics-detail-block-image img-fluid" />
-              </div>
+          
+              
             </div>
-
-            <p>
-              Most people start with freelancing skills they already have as a
-              side hustle to build up income. This extra cash can be used for
-              a vacation, to boost up savings, investing, build business.
-            </p>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <script src="../static/js/jquery.min.js"></script>
-  <script src="../static/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/js/jquery.sticky.js"></script>
-  <script src="../static/js/custom.js"></script>
-</body>
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-12 col-12">
+              <h3 class="mb-4 pb-2">AES Para Imágenes</h3>
+            </div>
+            <div class="col-lg-6 col-12">
+              <form id="cipherForm" class="custom-form contact-form">
+                <div class="row gy-4 justify-content-center">
+                  <div class="col-lg-12 col-12">
+                    <div class="btn-group" role="group">
+                      <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" checked />
+                      <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">
+                        Encriptar
+                      </label>
+  
+                      <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" />
+                      <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">
+                        Desencriptar
+                      </label>
+                    </div>
+  
+                    <!-- Sección Encriptación -->
+                    <div id="encryptMenu" class="encrypt-container mt-3">
+                      <label for="file" class="custom-file-upload">Seleccione imagen</label>
+                      <input type="file" id="file" accept="image/*" class="ocultar" />
+                      <p id="file-name">Sin archivos seleccionados</p>
+  
+                      <div class="d-flex justify-content-center">
+                        <select id="mode" class="form-control" style="width: 20%">
+                          <option value="ecb">ECB</option>
+                          <option value="cbc">CBC</option>
+                          <option value="cfb">CFB</option>
+                          <option value="ofb">OFB</option>
+                        </select>
+                      </div>
+  
+                      <div class="col-lg-12 col-12 mt-3">
+                        <button type="button" id="generateKey" class="custom-file-upload">
+                          Generar clave aleatoria
+                        </button>
+                        <div class="form-floating mt-2">
+                          <input type="text" class="form-control" id="key" placeholder="Clave en hexadecimal" required />
+                          <label for="key">Clave hexadecimal (16/24/32 bytes)</label>
+                        </div>
+                      </div>
+  
+                      <div class="col-lg-12 col-12 mt-3">
+                        <button type="button" id="generateIv" class="custom-file-upload">
+                          Generar IV aleatorio
+                        </button>
+                        <div class="form-floating mt-2">
+                          <input type="text" class="form-control" id="iv" placeholder="Vector inicial" />
+                          <label for="iv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <!-- Sección Desencriptación -->
+                    <div id="decryptMenu" class="encrypt-container mt-3" style="display: none">
+                      <label for="file1" class="custom-file-upload">Seleccione imagen encriptada</label>
+                      <input type="file" id="file1" accept="image/*" class="ocultar" />
+                      <p id="file-name1">Sin archivos seleccionados</p>
+  
+                      <div class="d-flex justify-content-center mb-4 mt-4">
+                        <select id="decryptMode" class="form-control" style="width: 20%">
+                          <option value="ecb">ECB</option>
+                          <option value="cbc">CBC</option>
+                          <option value="cfb">CFB</option>
+                          <option value="ofb">OFB</option>
+                        </select>
+                      </div>
+  
+                      <div class="col-lg-12 col-12 mt-3">
+                        <button type="button" id="generateKeyDecrypt" class="custom-file-upload">
+                          Generar clave aleatoria
+                        </button>
+                        <div class="form-floating mt-2">
+                          <input type="text" class="form-control" id="decryptKey" placeholder="Clave en hexadecimal"
+                            required />
+                          <label for="decryptKey">Clave hexadecimal (16/24/32 bytes)</label>
+                        </div>
+                      </div>
+  
+                      <div class="col-lg-12 col-12 mt-3">
+                        <button type="button" id="generateIvDecrypt" class="custom-file-upload">
+                          Generar IV aleatorio
+                        </button>
+                        <div class="form-floating mt-2">
+                          <input type="text" class="form-control" id="decryptIv" placeholder="Vector inicial" />
+                          <label for="decryptIv">Vector inicial (16 bytes - CBC/CFB/OFB)</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-lg-4 col-12 mt-4">
+                    <button id="processAES" type="submit" class="form-control btn btn-primary">
+                      Procesar
+                    </button>
+                  </div>
+                </div>
+              </form>
+  
+              <!-- Contenedor de Resultados -->
+              <div id="resultado" class="mt-4 p-3 bg-light rounded-3">
+                <div class="row">
+                  <div class="col-md-6 text-center">
+                    <h5>Imagen original:</h5>
+                    <img id="originalImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <h5>Imagen procesada:</h5>
+                    <img id="processedImage" src="" class="img-fluid rounded" style="max-height: 300px; display: none" />
+                    <div class="mt-3 text-center">
+                      <a id="downloadLink" href="#" class="btn btn-success mt-2" style="display: none">
+                        Descargar imagen
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+  </body>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
     // Función para alternar entre secciones de encriptación/desencriptación
     function toggleUploadMenu() {
       const encryptDiv = document.getElementById("encryptMenu");
@@ -440,6 +506,8 @@
         reader.readAsDataURL(fileInput.files[0]);
       });
   });
-</script>
+
+  </script>
+  
 
 </html>

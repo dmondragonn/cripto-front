@@ -129,89 +129,106 @@
             <div class="col-lg-8 col-12 m-auto">
               <h3 class="mb-4">Cifrado RSA</h3>
 
-                <p>
-                  El cifrado de Vigenère es un método de cifrado clásico que usa una clave para cifrar un mensaje mediante una serie de cifrados César desplazados. Se considera un cifrado por sustitución polialfabético porque emplea múltiples alfabetos para cifrar el texto, haciéndolo más seguro que un cifrado César simple.                </p>
-
-
-                <p><strong>¿Cómo funciona? </strong></p>
-                <p>
-                    Dado un alfabeto de \( n \) letras (en el caso del alfabeto inglés, \( n = 26 \)), cada letra se representa como un número entre \( 0 \) y \( n - 1 \), siguiendo la correspondencia:
-
-                    \[
-                    A = 0, \quad B = 1, \quad C = 2, \quad \dots, \quad Z = 25
-                    \]
-
-                    Sea \( P = (p_1, p_2, \dots, p_m) \) el mensaje en texto claro, donde cada \( p_i \) es un número en \( \mathbb{Z}_{26} \).  
-
-                    Sea \( K = (k_1, k_2, \dots, k_m) \) la clave, repetida hasta que tenga la misma longitud que \( P \).  
-
-                    El cifrado de cada letra se define como:
-
-                    \[
-                    C_i = (P_i + K_i) \mod 26
-                    \]
-
-                    donde \( C_i \) es el carácter cifrado correspondiente.  
-
-                    Para el descifrado, aplicamos la operación inversa:
-
-                    \[
-                    P_i = (C_i - K_i) \mod 26
-                    \]
-
-                    donde restamos la clave en módulo 26 para recuperar el texto original.
-</p>
-                  <style>
-                    body { font-family: Arial, sans-serif}
-                    table { margin: 20px auto; border-collapse: collapse; width: 80%; }
-                    th, td { border: 1px solid rgb(94, 90, 90); padding: 8px; text-align: center; }
-                    th { background-color: #f2f2f2; }
-                  </style>
-
-
-                <p><strong>Pequeño ejemplo</strong></p>
-                <h5>Descifrado</h5>
-                <p><strong>Mensaje:</strong> A T A Q U E → [0, 19, 0, 16, 20, 4]</p>
-                <p><strong>Clave:</strong> C L A V E C → [2, 11, 0, 21, 4, 2]</p>
-                
-                <p>Fórmula: \( C_i = (P_i + K_i) \mod 26 \)</p>
-                <table>
-                    <tr>
-                        <th>Letra Original (P<sub>i</sub>)</th>
-                        <th>Clave (K<sub>i</sub>)</th>
-                        <th>Suma (P<sub>i</sub> + K<sub>i</sub>)</th>
-                        <th>Módulo 26 (C<sub>i</sub>)</th>
-                        <th>Letra Cifrada</th>
-                    </tr>
-                    <tr><td>A (0)</td><td>C (2)</td><td>0 + 2 = 2</td><td>2</td><td>C</td></tr>
-                    <tr><td>T (19)</td><td>L (11)</td><td>19 + 11 = 30</td><td>4</td><td>E</td></tr>
-                    <tr><td>A (0)</td><td>A (0)</td><td>0 + 0 = 0</td><td>0</td><td>A</td></tr>
-                    <tr><td>Q (16)</td><td>V (21)</td><td>16 + 21 = 37</td><td>11</td><td>L</td></tr>
-                    <tr><td>U (20)</td><td>E (4)</td><td>20 + 4 = 24</td><td>24</td><td>Y</td></tr>
-                    <tr><td>E (4)</td><td>C (2)</td><td>4 + 2 = 6</td><td>6</td><td>G</td></tr>
-                </table>
-                <p><strong>Texto cifrado:</strong> "CEALYG"</p>
-                
-                <h5>Descifrado</h5>
-                <p>Fórmula: \( P_i = (C_i - K_i) \mod 26 \)</p>
-                <table>
-                    <tr>
-                        <th>Letra Cifrada (C<sub>i</sub>)</th>
-                        <th>Clave (K<sub>i</sub>)</th>
-                        <th>Resta (C<sub>i</sub> - K<sub>i</sub>)</th>
-                        <th>Módulo 26 (P<sub>i</sub>)</th>
-                        <th>Letra Original</th>
-                    </tr>
-                    <tr><td>C (2)</td><td>C (2)</td><td>2 - 2 = 0</td><td>0</td><td>A</td></tr>
-                    <tr><td>E (4)</td><td>L (11)</td><td>4 - 11 = -7</td><td>19</td><td>T</td></tr>
-                    <tr><td>A (0)</td><td>A (0)</td><td>0 - 0 = 0</td><td>0</td><td>A</td></tr>
-                    <tr><td>L (11)</td><td>V (21)</td><td>11 - 21 = -10</td><td>16</td><td>Q</td></tr>
-                    <tr><td>Y (24)</td><td>E (4)</td><td>24 - 4 = 20</td><td>20</td><td>U</td></tr>
-                    <tr><td>G (6)</td><td>C (2)</td><td>6 - 2 = 4</td><td>4</td><td>E</td></tr>
-                </table>
-                <p><strong>Texto descifrado:</strong> "ATAQUE"</p>
-             
-
+              <p>
+                El cifrado RSA es uno de los esquemas de criptografía de clave pública más importantes y ampliamente utilizados en la historia de la seguridad informática.
+              </p>
+              
+              <p><strong>Contexto Histórico</strong></p>
+              <p>
+                RSA fue propuesto en 1977 por Ron Rivest, Adi Shamir y Leonard Adleman, de quienes toma su nombre. Antes de RSA, la criptografía se basaba mayormente en sistemas simétricos, en los cuales el mismo secreto se utilizaba tanto para cifrar como para descifrar. RSA introdujo la idea revolucionaria de la criptografía de clave pública, permitiendo distribuir abiertamente una clave para cifrar la información, mientras que una clave privada, mantenida en secreto, se usa para descifrarla. Este avance facilitó el intercambio seguro de datos en redes abiertas, como Internet, y sentó las bases para la infraestructura de clave pública (PKI).
+              </p>
+              
+              <p><strong>Teoría Matemática detrás del Cifrado RSA</strong></p>
+              <p>
+                RSA se fundamenta en varios principios de la teoría de números:
+              </p>
+              <ul>
+                <li>
+                  <strong>Números Primos y Factorización:</strong>  
+                  Se seleccionan dos números primos grandes, \( p \) y \( q \). Se define el módulo como:
+                  <br>
+                  \( n = p \times q \).
+                  <br>
+                  La seguridad de RSA se basa en la dificultad de factorizar \( n \) en sus factores primos.
+                </li>
+                <li>
+                  <strong>Función Totiente de Euler:</strong>  
+                  Se calcula:
+                  <br>
+                  \( \phi(n) = (p-1)(q-1) \),
+                  <br>
+                  que representa la cantidad de enteros menores que \( n \) que son coprimos con \( n \).
+                </li>
+                <li>
+                  <strong>Selección del Exponente de Cifrado:</strong>  
+                  Se elige un entero \( e \) tal que \( 1 < e < \phi(n) \) y que sea coprimo con \( \phi(n) \). Este valor \( e \) se utiliza como exponente público.
+                </li>
+                <li>
+                  <strong>Cálculo del Exponente de Descifrado:</strong>  
+                  Se determina \( d \) como el inverso modular de \( e \) respecto a \( \phi(n) \), es decir, se cumple que:
+                  <br>
+                  \( d \times e \equiv 1 \pmod{\phi(n)} \).
+                  <br>
+                  La pareja \( (n, e) \) constituye la <em>clave pública</em>, y \( d \) es la <em>clave privada</em>.
+                </li>
+                <li>
+                  <strong>Proceso de Cifrado y Descifrado:</strong>  
+                  Convertido el mensaje \( m \) a un número menor que \( n \), se cifra como:
+                  <br>
+                  \( c = m^e \mod n \),
+                  <br>
+                  y se descifra como:
+                  <br>
+                  \( m = c^d \mod n \).
+                  <br>
+                  Estas operaciones se realizan en aritmética modular.
+                </li>
+              </ul>
+              
+              <p><strong>Restricciones y Consideraciones de Seguridad</strong></p>
+              <ul>
+                <li>
+                  <strong>Tamaño de la Clave:</strong>  
+                  Es esencial utilizar un tamaño de clave lo suficientemente grande (por ejemplo, 2048 bits o más) para que la factorización de \( n \) sea inviable con la tecnología actual.
+                </li>
+                <li>
+                  <strong>Relleno (Padding):</strong>  
+                  La versión básica de RSA es vulnerable a ciertos ataques, por lo que se emplean esquemas de relleno como PKCS1 OAEP, que añaden aleatoriedad y aseguran una estructura adecuada al mensaje cifrado.
+                </li>
+                <li>
+                  <strong>Conversión de Datos:</strong>  
+                  Dado que RSA opera sobre números, es necesario convertir los mensajes a un formato numérico. En la práctica se utilizan codificaciones (como Base64) para transmitir datos binarios de forma segura en canales basados en texto (por ejemplo, en JSON).
+                </li>
+              </ul>
+              
+              <p><strong>Restricciones y valores definidos en la implementación</strong></p>
+              <p>
+                La implementación en Python establece ciertos parámetros y restricciones clave para garantizar la seguridad y correcto funcionamiento del cifrado RSA:
+              </p>
+              <ul>
+                <li>
+                  <strong>Tamaño de llave por defecto:</strong>  
+                  Se utiliza un tamaño de llave por defecto de 2048 bits, configurable mediante el parámetro <code>key_size</code> en el endpoint <code>/generate-rsa-keys</code>.
+                </li>
+                <li>
+                  <strong>Generación de la llave:</strong>  
+                  La llave RSA se genera usando <code>RSA.generate(key_size)</code>. Posteriormente, la llave pública y la privada se exportan en formato DER, lo que estandariza su representación.
+                </li>
+                <li>
+                  <strong>Codificación en Base64:</strong>  
+                  Tanto la clave pública como la privada se codifican en Base64 para facilitar su transmisión en formato JSON, permitiendo su almacenamiento y distribución segura.
+                </li>
+                <li>
+                  <strong>Proceso de cifrado:</strong>  
+                  El endpoint <code>/process-rsa</code> recibe, en formato JSON, el mensaje a procesar, la acción deseada (cifrar o descifrar) y la llave correspondiente codificada en Base64. Para cifrar, se decodifica e importa la llave pública, se utiliza el esquema PKCS1 OAEP para aplicar un relleno seguro, y luego el mensaje se cifra; el resultado se vuelve a codificar en Base64 para su devolución.
+                </li>
+                <li>
+                  <strong>Proceso de descifrado:</strong>  
+                  Para descifrar, se decodifica e importa la llave privada, se descifra el mensaje (previamente decodificado de Base64) utilizando el mismo esquema de relleno, y finalmente el mensaje resultante se decodifica en UTF-8 para ser presentado en un formato legible.
+                </li>
+              </ul>
+          
+              
             </div>
           </div>
         </div>
