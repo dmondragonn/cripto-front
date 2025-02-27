@@ -595,4 +595,63 @@ def load_encrypted_metadata(image):
 
 
 
-######################
+#---------Hill imagenes ----------
+
+# Función para generar una matriz clave válida (n x n invertible)
+def generar_clave(n):
+    while True:
+        clave = np.random.randint(0, 256, size=(n, n))
+        det = int(np.round(np.linalg.det(clave)))
+        if det != 0 and np.gcd(det, 256) == 1:
+            return clave
+
+# Función para calcular la inversa modular de una matriz n x n
+def inversa_modular(clave):
+    det = int(np.round(np.linalg.det(clave)))
+    det_inv = pow(det, -1, 256)
+    clave_adj = np.round(np.linalg.inv(clave) * det) % 256  # Matriz adjunta
+    clave_inv = (det_inv * clave_adj) % 256
+    return clave_inv.astype(int)
+
+# Función para cifrar una imagen a color usando el cifrado de Hill
+def hill_cipher_encrypt_color(image, key):
+    pixels = np.array(image)
+    rows, cols, channels = pixels.shape
+    n = key.shape[0]  # Tamaño de la matriz de cifrado
+
+    # Asegurar que el número de columnas es múltiplo de n, si no, rellenar con ceros
+    if cols % n != 0:
+        new_cols = cols + (n - cols % n)
+        padded_pixels = np.zeros((rows, new_cols, channels), dtype=np.uint8)
+        padded_pixels[:, :cols, :] = pixels
+        pixels = padded_pixels
+        cols = new_cols
+
+    encrypted_pixels = np.zeros_like(pixels)
+
+    for channel in range(channels):
+        for i in range(rows):
+            for j in range(0, cols, n):
+                block = pixels[i, j:j+n, channel]
+                encrypted_block = np.dot(key, block) % 256
+                encrypted_pixels[i, j:j+n, channel] = encrypted_block
+
+    return Image.fromarray(encrypted_pixels.astype('uint8'))
+
+# Función para descifrar una imagen a color usando el cifrado de Hill
+def hill_cipher_decrypt_color(image, key):
+    key_inv = inversa_modular(key)
+    pixels = np.array(image)
+    rows, cols, channels = pixels.shape
+    n = key.shape[0]
+
+    decrypted_pixels = np.zeros_like(pixels)
+
+    for channel in range(channels):
+        for i in range(rows):
+            for j in range(0, cols, n):
+                block = pixels[i, j:j+n, channel]
+                decrypted_block = np.dot(key_inv, block) % 256
+                decrypted_pixels[i, j:j+n, channel] = decrypted_block
+
+    return Image.fromarray(decrypted_pixels.astype('uint8'))

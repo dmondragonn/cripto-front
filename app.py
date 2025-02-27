@@ -416,6 +416,22 @@ def elgamal_decrypt():
         return jsonify(plaintext=plaintext)
     except Exception as e:
         return jsonify(error=str(e)), 400
+    
+
+
+
+#------ Rutas hill imagenes ----------
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

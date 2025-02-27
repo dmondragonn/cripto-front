@@ -4,23 +4,52 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
   <title>Hill Para Imágenes</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
-    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" />
   <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet" />
   <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-    rel="stylesheet" />
   <link rel="stylesheet" href="../static/css/images-selection.css">
+  <style>
+    .download-box {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #54c6b5;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .download-box:hover {
+      background-color: #45a049;
+    }
+
+    .ocultar {
+      display: none;
+    }
+
+    .custom-file-upload {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #54c6b5;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .custom-file-upload:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 
 <body id="top">
@@ -31,29 +60,20 @@
           <i class="bi bi-person-lock"></i>
           <span>CryptoPlayground</span>
         </a>
-
-        <div class="d-lg-none ms-auto me-4">
-          <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-lg-5 me-lg-auto">
             <li class="nav-item">
               <a class="nav-link click-scroll" href="/">Inicio</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link click-scroll" href="/">Explorar cifrados</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link click-scroll" href="/ #section_3">Cómo funciona</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
             </li>
@@ -71,29 +91,82 @@
                 <li class="breadcrumb-item">
                   <a href="{{ url_for('index') }}">Inicio</a>
                 </li>
-
                 <li class="breadcrumb-item active" aria-current="page">
                   Hill para imágenes
                 </li>
               </ol>
             </nav>
-
             <h2 class="text-white">Hill para Imágenes<br /></h2>
-
             <div class="d-flex align-items-center mt-5">
               <a href="#playground" class="btn custom-btn custom-border-btn smoothscroll me-4">Playground!</a>
             </div>
           </div>
-
           <div class="col-lg-5 col-12">
             <div class="topics-detail-block bg-white shadow-lg">
-              <img src="../static/images/topics/undraw_Remote_design_team_re_urdx.png"
-                class="topics-detail-block-image img-fluid" />
+              <img src="../static/images/topics/hillimg.png" class="topics-detail-block-image img-fluid" />
             </div>
           </div>
         </div>
       </div>
     </header>
+
+    <section class="topics-detail-section section-padding" id="biblio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-12 m-auto">
+            <h3 class="mb-4">Cifrado de Hill</h3>
+
+            <p>El cifrado de Hill es un método de cifrado basado en álgebra lineal que usa matrices invertibles para transformar bloques de texto encriptado. Para imágenes, este principio se aplica tomando bloques de píxeles y realizando operaciones matriciales sobre ellos.</p>
+
+
+              <p><strong>Cifrado en Imágenes a Color</strong></p>
+              <p>Cuando la imagen es a color, cada píxel tiene tres valores (Rojo, Verde y Azul - RGB), por lo que cada componente de color debe cifrarse por separado o la matriz de cifrado debe operar sobre un vector que incluya los tres valores a la vez.</p>
+
+              <p><strong>Matemática Detrás del Cifrado de Hill</strong></p>
+              <ul>
+                <li>Se elige una matriz <strong>K</strong> de tamaño <em>n × n</em>, que sea invertible en aritmética modular (generalmente módulo 256, ya que los valores de color van de 0 a 255).</li>
+                <li>Cada bloque de <em>n</em> píxeles o valores RGB se representa como un vector columna <strong>P</strong>.</li>
+                <li>Se multiplica <strong>K</strong> por <strong>P</strong> módulo 256:</li>
+            </ul>
+            <p style="text-align: center;">C = K ⋅ P mod 256</p>
+            <p>donde <strong>C</strong> es el vector cifrado correspondiente.</p>
+
+            <p><strong>Proceso de Cifrado</strong></p>
+            <ul>
+              <li>Convertir la imagen en una matriz de valores numéricos según su escala de colores (grises o RGB).</li>
+              <li>Agrupar los valores en bloques de tamaño <em>n</em>, según la dimensión de la matriz clave <strong>K</strong>.</li>
+              <li>Multiplicar cada bloque por <strong>K</strong> y aplicar módulo 256.</li>
+              <li>Reestructurar los valores cifrados en la imagen resultante.</li>
+          </ul>
+
+          <p><strong>Proceso de Descifrado</strong></p>
+          <ul>
+            <li>Se obtiene la imagen cifrada y se reorganiza en bloques de tamaño <em>n</em>.</li>
+            <li>Se usa la matriz inversa <strong>K<sup>-1</sup></strong> (calculada módulo 256).</li>
+            <li>Se multiplica cada bloque cifrado <strong>C</strong> por <strong>K<sup>-1</sup></strong>:</li>
+          </ul>
+          <p style="text-align: center;"> <strong>P = K<sup>-1</sup> ⋅ C mod 256</strong> </p>
+          <p>Se reconstruye la imagen con los valores originales.</p>
+
+          <p>Este método funciona bien si <strong>K</strong> es invertible en módulo 256, lo que requiere que su determinante sea coprimo con 256 (es decir, <strong>gcd(det(K), 256) = 1</strong>)</p>
+    
+        
+    
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding section-bg" id="playground">
+      <div class="container">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-12 col-12">
+                  <h3 class="mb-4 pb-2">Playground!</h3>
+              </div>
+              <div style="text-align: center;">
+                <img src="../static/images/topics/comphill.png">
+              </div>
+    
 
     <section class="section-padding section-bg" id="playground">
       <div class="container">
@@ -105,106 +178,90 @@
             <form id="cipherForm" class="custom-form contact-form">
               <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 col-12">
-                  <div class="btn-group" role="group">  
-                    
-                    
-                   <!-- Botones de selección -->
+                  <div class="btn-group" role="group">
                     <input type="radio" class="btn-check" name="action" id="encryptRadio" value="encrypt" onchange="toggleUploadMenu()" checked />
                     <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="encryptRadio">Encriptar</label>
-
                     <input type="radio" class="btn-check" name="action" id="decryptRadio" value="decrypt" onchange="toggleUploadMenu()" />
                     <label class="btn btn-outline-primary rounded-pill px-4 mx-2 custom-radio-btn" for="decryptRadio">Desencriptar</label>
-                </div>
+                  </div>
 
-                    <!-- Menú de Encriptación (Subir 1 imagen) -->
-                    <div id="encryptMenu" class="container-xd mt-3">
-                        <label for="file" class="custom-file-upload">Seleccione imágen</label>
-                        <input type="file" id="file" accept="image/*" class="ocultar">
-                        <p id="file-name">Sin archivos seleccionados</p>
+                  <!-- Menú de Encriptación (Subir 1 imagen) -->
+                  <div id="encryptMenu" class="container-xd mt-3">
+                    <div class="col-lg-12 col-12">
+                      <p class="mb-2">Construye tu clave</p>
+                      <label for="matrixSize" class="d-block mb-2">Seleccionar tamaño de la matriz:</label>
+                      <select id="matrixSize" class="form-control" onchange="generateMatrix()">
+                        <option value="2">2x2</option>
+                        <option value="3">3x3</option>
+                        <option value="4">4x4</option>
+                        <option value="5">5x5</option>
+                        <option value="6">6x6</option>
+                        <option value="7">7x7</option>
+                        <option value="8">8x8</option>
+                      </select>
+
+                      <input type="hidden" id="matrixSizeInput" name="matrixSize" value="2">
+
+
+
+
+                      <div class="container-xd mt-3">
+                        <label for="matriz" class="mb-2">Matriz de cifrado</label>
+                        <textarea id="matriz" class="form-control mb-3" readonly></textarea>
+                        <button class="download-box" onclick="descargarArchivo()">📥 Descargar Matriz de Cifrado</button>
+                      </div>
+                      <label for="file" class="custom-file-upload">Seleccione imágen</label>
+                      <input type="file" id="file" accept="image/*" class="ocultar">
+                      <p id="file-name">Sin archivos seleccionados</p>
                     </div>
-
-
-                    <!-- Menú de Desencriptación (Subir 2 imágenes) -->
-                    <div id="decryptMenu" class="container-xd mt-3" style="display: none;">
-                        <label for="file1" class="custom-file-upload">Seleccione imágen encriptada</label>
-                        <input type="file" id="file1" accept="image/*" class="ocultar">
-                        <p id="file-name1">Sin archivos seleccionados</p>
-
-                        <label for="file2" class="custom-file-upload mt-3">Seleccione imágen Llave</label>
-                        <input type="file" id="file2" accept="image/*" class="ocultar">
-                        <p id="file-name2">Sin archivos seleccionados</p>
+                    <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px">
+                      <h5>Imagen procesada:</h5>
+                      <img id="imageResult" src="#" alt="Imagen procesada" style="display: none; max-width: 100%; height: auto;" />
+                      <p id="resultText" class="fw-bold text-primary"></p>
                     </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-                    <div class="col-lg-4 col-12">
+                    <div class="container-xd class="col-lg-4 col-12">
                       <button id="procesar-hill" type="submit" class="form-control btn btn-primary">
                         Procesar
                       </button>
+                      <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px">
+                        <h5>Imagen cifrada:</h5>
+                        <p id="resultText" class="fw-bold text-primary"></p>
+                      </div>
                     </div>
                   </div>
+
+                   <!-- Menú de Desencriptación (Subir 1 imagen cifrada y 1 matriz de cifrado en .txt) -->
+                  <div id="decryptMenu" class="container-xd" style="display: none;">
+                    <div class="col-lg-12 col-12">
+                      <!-- Input para la imagen cifrada -->
+                      <label for="file1" class="custom-file-upload">Seleccione imagen cifrada</label>
+                      <input type="file" id="file1" accept="image/*" class="ocultar">
+                      <p id="file-name1">Sin archivos seleccionados</p>
+                      <h5>Imagen procesada:</h5>
+                      <img id="imageResult" src="#" alt="Imagen procesada" style="display: none; max-width: 100%; height: auto;" />
+                      <p id="resultText" class="fw-bold text-primary"></p>
+                    </div>
+
+                      <!-- Input para la matriz de cifrado (archivo .txt) -->
+                      <label for="file2" class="custom-file-upload">Seleccione matriz de cifrado (formato .txt)</label>
+                      <input type="file" id="file2" accept=".txt" class="ocultar">
+                      <p id="file-name2">Sin archivos seleccionados</p>
+
+                      <!-- Botón de procesar -->
+                      <button id="procesar-hill" type="submit" class="form-control btn btn-primary">
+                        Procesar
+                      </button>
+
+                      <!-- Resultado -->
+                      <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px">
+                        <h5>Imagen descifrada:</h5>
+                        <p id="resultText" class="fw-bold text-primary"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
-            <div id="resultado" class="mt-4 p-3 bg-light" style="border-radius: 35px">
-              <h5>Imagen cifrada:</h5>
-              <p id="resultText" class="fw-bold text-primary"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="row gy-4 justify-content-center">
-      <div class="col-lg-12 col-12">
-        <div class="alert alert-success">
-          <strong>Mensaje cifrado:</strong> Exitosamente
-        </div>
-      </div>
-    </div>
-
-    <section class="topics-detail-section section-padding" id="biblio">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-12 m-auto">
-            <h3 class="mb-4">Cifrado Hill para imagenes</h3>
-
-            <p>
-             texto
-            </p>
-
-            <p>
-              <strong>Historia </strong><br />
-             texto
-
-            <blockquote>
-              texto
-            </blockquote>
-
-            <div class="row my-4">
-              <div class="col-lg-6 col-md-6 col-12">
-                <img src="../static/images/businesswoman-using-tablet-analysis.jpg"
-                  class="topics-detail-block-image img-fluid" />
-              </div>
-
-              <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                <img src="../static/images/colleagues-working-cozy-office-medium-shot.jpg"
-                  class="topics-detail-block-image img-fluid" />
-              </div>
-            </div>
-
-            <p>
-              Most people start with freelancing skills they already have as a
-              side hustle to build up income. This extra cash can be used for
-              a vacation, to boost up savings, investing, build business.
-            </p>
           </div>
         </div>
       </div>
@@ -215,97 +272,164 @@
   <script src="../static/js/bootstrap.bundle.min.js"></script>
   <script src="../static/js/jquery.sticky.js"></script>
   <script src="../static/js/custom.js"></script>
-</body>
-
-
-
-
-<script>
+  <script>
     function toggleUploadMenu() {
-            let encryptDiv = document.getElementById("encryptMenu");
-            let decryptDiv = document.getElementById("decryptMenu");
-            let encryptRadio = document.getElementById("encryptRadio");
+      var encryptMenu = document.getElementById("encryptMenu");
+      var decryptMenu = document.getElementById("decryptMenu");
 
-            if (encryptRadio.checked) {
-                encryptDiv.style.display = "block";
-                decryptDiv.style.display = "none";
-            } else {
-                encryptDiv.style.display = "none";
-                decryptDiv.style.display = "block";
+      if (document.getElementById("encryptRadio").checked) {
+        encryptMenu.style.display = "block";
+        decryptMenu.style.display = "none";
+      } else {
+        encryptMenu.style.display = "none";
+        decryptMenu.style.display = "block";
+      }
+    }
+        // Función para generar la matriz dinámica según el tamaño seleccionado
+function generateMatrix() {
+    const size = parseInt(document.getElementById('matrixSize').value);
+    document.getElementById('matrixSizeInput').value = size; // Actualizar el valor del campo oculto
+    const matrixContainer = document.getElementById('matrixContainer');
+    matrixContainer.innerHTML = ''; // Limpiar contenido anterior
+
+    // Enviar el tamaño al backend
+    fetch('/generar_clave', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ size: size }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Mostrar la matriz generada en el textarea
+        document.getElementById('matriz').value = JSON.stringify(data.clave, null, 2);
+
+        // Generar la tabla en el frontend
+        let table = '<table class="table table-bordered text-center"><tbody>';
+        for (let i = 0; i < size; i++) {
+            table += '<tr>';
+            for (let j = 0; j < size; j++) {
+                table += `<td><input type="number" class="form-control" id="matrix_${i}_${j}" placeholder="0" value="${data.clave[i][j]}"></td>`;
             }
+            table += '</tr>';
         }
+        table += '</tbody></table>';
+        matrixContainer.innerHTML = table;
+    })
+    .catch(error => console.error('Error:', error));
+}
+    
 
-        document.getElementById("file").addEventListener("change", function () {
-    const fileInput = this;
-    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
-    document.getElementById("file-name").textContent = fileName;
-});
+    function descargarArchivo() {
+      const contenido = "Aquí va el contenido de la matriz de cifrado."; // Puedes modificar el contenido del archivo
+      const blob = new Blob([contenido], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
 
-document.getElementById("file1").addEventListener("change", function () {
-    const fileInput = this;
-    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
-    document.getElementById("file-name1").textContent = fileName;
-});
-
-document.getElementById("file2").addEventListener("change", function () {
-    const fileInput = this;
-    const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
-    document.getElementById("file-name2").textContent = fileName;
-});
-
-document.getElementById("procesar-hill").addEventListener("click", async function (event) {
-    event.preventDefault();
-
-    const fileInput = document.getElementById("file");
-    const fileInput1 = document.getElementById("file1");
-    const fileInput2 = document.getElementById("file2");
-    const uploadResult = document.getElementById("resultText");
-
-    // Verifica qué menú está activo y qué archivos deben enviarse
-    const encryptMenu = document.getElementById("encryptMenu").style.display !== "none";
-    const decryptMenu = document.getElementById("decryptMenu").style.display !== "none";
-
-    const formData = new FormData();
-
-    if (encryptMenu) {
-        if (fileInput.files.length === 0) {
-            uploadResult.textContent = "Por favor, seleccione un archivo.";
-            uploadResult.style.color = "red";
-            return;
-        }
-        formData.append("image", fileInput.files[0]);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "MatrizDeCifrado_HillImg.txt"; // Nombre del archivo
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
-    if (decryptMenu) {
-        if (fileInput1.files.length === 0 || fileInput2.files.length === 0) {
-            uploadResult.textContent = "Por favor, seleccione ambas imágenes.";
-            uploadResult.style.color = "red";
-            return;
-        }
-        formData.append("image1", fileInput1.files[0]);
-        formData.append("image2", fileInput2.files[0]);
+    document.getElementById("file").addEventListener("change", function () {
+      const fileInput = this;
+      const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+      document.getElementById("file-name").textContent = fileName;
+    });
+
+    document.getElementById("file1").addEventListener("change", function () {
+      const fileInput = this;
+      const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+      document.getElementById("file-name1").textContent = fileName;
+    });
+
+    document.getElementById("file2").addEventListener("change", function () {
+      const fileInput = this;
+      const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "Sin archivos seleccionados";
+      document.getElementById("file-name2").textContent = fileName;
+    });
+
+    document.getElementById("procesar-hill").addEventListener("click", async function (event) {
+  event.preventDefault();
+
+  const fileInput = document.getElementById("file"); // Para encriptar (imagen)
+  const fileInput1 = document.getElementById("file1"); // Para desencriptar (imagen cifrada)
+  const fileInput2 = document.getElementById("file2"); // Para desencriptar (matriz de cifrado .txt)
+  const uploadResult = document.getElementById("resultText");
+  const imageResult = document.getElementById("imageResult"); // Elemento <img> para mostrar la imagen
+
+  const encryptMenu = document.getElementById("encryptMenu").style.display !== "none";
+  const decryptMenu = document.getElementById("decryptMenu").style.display !== "none";
+
+  const formData = new FormData();
+
+  if (encryptMenu) {
+    // Menú de encriptación: Subir 1 imagen y el tamaño de la matriz
+    if (fileInput.files.length === 0) {
+      uploadResult.textContent = "Por favor, seleccione un archivo.";
+      uploadResult.style.color = "red";
+      return;
+    }
+    formData.append("image", fileInput.files[0]); // Imagen para encriptar
+    formData.append("matrixSize", document.getElementById('matrixSizeInput').value); // Tamaño de la matriz
+  }
+
+  if (decryptMenu) {
+    // Menú de desencriptación: Subir 1 imagen cifrada y 1 matriz de cifrado (.txt)
+    if (fileInput1.files.length === 0 || fileInput2.files.length === 0) {
+      uploadResult.textContent = "Por favor, seleccione ambos archivos.";
+      uploadResult.style.color = "red";
+      return;
     }
 
-    try {
-        const response = await fetch("/upload-image", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || "Error del servidor");
-
-        uploadResult.textContent = "Archivo(s) cargado(s) con éxito.";
-        uploadResult.style.color = "green";
-    } catch (error) {
-        uploadResult.textContent = `Error: ${error.message}`;
-        uploadResult.style.color = "red";
-        console.error("Error:", error);
+    // Validar que el segundo archivo sea un .txt
+    const matrizFile = fileInput2.files[0];
+    if (matrizFile.type !== "text/plain" && !matrizFile.name.endsWith(".txt")) {
+      uploadResult.textContent = "El archivo de la matriz de cifrado debe ser un archivo .txt.";
+      uploadResult.style.color = "red";
+      return;
     }
+
+    formData.append("image1", fileInput1.files[0]); // Imagen cifrada
+    formData.append("matrixFile", fileInput2.files[0]); // Matriz de cifrado (.txt)
+  }
+
+  try {
+    const response = await fetch("/upload-image", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Error del servidor");
+    }
+
+    // Convertir la respuesta a un blob (imagen)
+    const imageBlob = await response.blob();
+
+    // Crear una URL para la imagen
+    const imageUrl = URL.createObjectURL(imageBlob);
+
+    // Mostrar la imagen en el elemento <img>
+    imageResult.src = imageUrl;
+    imageResult.style.display = "block"; // Asegúrate de que el elemento <img> sea visible
+
+    uploadResult.textContent = "Archivo(s) cargado(s) con éxito.";
+    uploadResult.style.color = "green";
+  } catch (error) {
+    uploadResult.textContent = `Error: ${error.message}`;
+    uploadResult.style.color = "red";
+    console.error("Error:", error);
+  }
 });
 
-</script>
-
+   
+  </script>
+</body>
 
 </html>
