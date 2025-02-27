@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Firma digital con DSA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body id="top">
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <i class="bi bi-person-lock"></i>
+            <span>CryptoPlayground</span>
+          </a>
+
+          <div class="d-lg-none ms-auto me-4">
+            <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+          </div>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5 me-lg-auto">
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/">Inicio</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/"
+                  >Explorar cifrados</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="/ #section_3"
+                  >Cómo funciona</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link click-scroll" href="{{ url_for('contact') }}">Nosotros</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+        <header
+          class="site-header d-flex flex-column justify-content-center align-items-center">
+          <div class="container">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-lg-5 col-12 mb-5">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="{{ url_for('index') }}">Inicio</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Firma digital con DSA
+                    </li>
+                  </ol>
+                </nav>
+
+                <h2 class="text-white">Firma digital con DSA<br /></h2>
+
+                <div class="d-flex align-items-center mt-5">
+                  <a
+                    href="#playground"
+                    class="btn custom-btn custom-border-btn smoothscroll me-4"
+                    >Playground!</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                  <img
+                    src="../static/images/topics/dsa.png"
+                    class="topics-detail-block-image img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      
+      
+      <div class="row gy-4 justify-content-center">
+        {% if encrypted_message %}
+        <div class="col-lg-12 col-12">
+          <div class="alert alert-success">
+            <strong>Mensaje cifrado:</strong> {{ encrypted_message }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <section class="topics-detail-section section-padding" id="biblio">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12 m-auto">
+                <h3>Funcionamiento del Algoritmo DSA (Digital Signature Algorithm)</h3>
+
+                <p>El DSA es un esquema de firma digital basado en la complejidad del <strong>problema del logaritmo discreto en grupos cíclicos</strong>.</p>
+
+                <h4>1. Parámetros Matemáticos</h4>
+                <ul>
+                    <li><strong>p</strong>: Número primo de 2048 bits</li>
+                    <li><strong>q</strong>: Divisor primo de \( p - 1 \) (256 bits)</li>
+                    <li><strong>g</strong>: Generador calculado como \( g = h^{(p-1)/q} \mod p \)</li>
+                </ul>
+
+                <h4>2. Llaves Criptográficas</h4>
+                <ul>
+                    <li><strong>Llave privada (x)</strong>: \( x \in [1, q-1] \)</li>
+                    <li><strong>Llave pública (y)</strong>: \( y = g^x \mod p \)</li>
+                </ul>
+
+                <h4>3. Proceso de Firma</h4>
+                <ol>
+                    <li>Se genera el hash <strong>SHA-256</strong> del documento \( H(m) \)</li>
+                    <li>Se calculan:
+                        \[
+                        r = (g^k \mod p) \mod q
+                        \]
+                        \[
+                        s = k^{-1} \cdot (H(m) + x \cdot r) \mod q
+                        \]
+                        donde \( k \) es un número aleatorio secreto \( k \in [1, q-1] \)
+                    </li>
+                </ol>
+
+                <h4>4. Verificación de la Firma</h4>
+                <p>La firma es válida si:</p>
+                \[
+                v = \left( g^{H(m) \cdot s^{-1}} \cdot y^{r \cdot s^{-1}} \mod p \right) \mod q
+                \]
+                <p>cumple \( v = r \)</p>
+
+                <h4>5. Contexto Histórico y Evolución</h4>
+                <ul>
+                    <li><strong>1991</strong>: NIST propone DSA como parte del <em>Estándar de Firma Digital (DSS)</em>. Genera controversia frente a RSA.</li>
+                    <li><strong>1994</strong>: Adoptado como estándar federal (<em>FIPS 186</em>), limitado a claves de 1024 bits y SHA-1.</li>
+                    <li><strong>2000</strong>: <em>FIPS 186-2</em> introduce soporte para claves de 2048 bits.</li>
+                    <li><strong>2013</strong>: <em>FIPS 186-4</em> impone SHA-256 para claves ≥2048 bits.</li>
+                    <li><strong>2022</strong>: <em>FIPS 186-5</em> desaconseja DSA en favor de ECDSA y EdDSA.</li>
+                </ul>
+
+                <h4>6. Detalles de Implementación</h4>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Componente</th>
+                            <th>Valor Fijo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tamaño de \( p \)</td>
+                            <td>2048 bits</td>
+                        </tr>
+                        <tr>
+                            <td>Tamaño de \( q \)</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td>Función hash</td>
+                            <td>SHA-256</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-padding section-bg" id="playground">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-12 col-12">
+                    <h3 class="mb-4 pb-2">Firma Digital DSA</h3>
+                </div>
+                
+                <div class="col-lg-8 col-12">
+                    <!-- Sección de generación de llaves -->
+                    <div class="mb-5 p-4 bg-light" style="border-radius: 35px;">
+                        <h5 class="mb-4">Gestión de Llaves DSA</h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <textarea id="generatedPublicKey" 
+                                        class="form-control public-key-field" 
+                                        placeholder="Llave pública generada aquí"
+                                        readonly
+                                        style="height: 100px; border-radius: 20px 0 0 20px;"></textarea>
+                                    <button class="btn btn-outline-secondary" 
+                                        style="border-radius: 0 20px 20px 0;"
+                                        onclick="copyToClipboard('generatedPublicKey')">
+                                        Copiar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <textarea id="generatedPrivateKey" 
+                                        class="form-control private-key-field" 
+                                        placeholder="Llave privada generada aquí"
+                                        readonly
+                                        style="height: 100px; border-radius: 20px 0 0 20px;"></textarea>
+                                    <button class="btn btn-outline-secondary" 
+                                        style="border-radius: 0 20px 20px 0;"
+                                        onclick="copyToClipboard('generatedPrivateKey')">
+                                        Copiar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <button onclick="generateDSADSAKeys()" 
+                                    class="btn btn-outline-primary rounded-pill px-4">
+                                    Generar Nuevas Llaves
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Selector de acción -->
+                    <form id="dsaForm" class="custom-form contact-form">
+                        <div class="row gy-4 justify-content-center">
+                            <div class="col-lg-12 col-12">
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="action" 
+                                        id="signRadio" value="sign" 
+                                        onchange="toggleDSAUploadMenu()" checked>
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2" 
+                                        for="signRadio">Firmar</label>
+    
+                                    <input type="radio" class="btn-check" name="action" 
+                                        id="verifyRadio" value="verify" 
+                                        onchange="toggleDSAUploadMenu()">
+                                    <label class="btn btn-outline-primary rounded-pill px-4 mx-2" 
+                                        for="verifyRadio">Verificar Firma</label>
+                                </div>
+                            </div>
+    
+                            <!-- Sección de Firma -->
+                            <div id="signMenu" class="col-lg-12 col-12">
+                                <div class="mt-3">
+                                    <label class="form-label">Documento a firmar:</label>
+                                    <input type="file" id="fileToSign" class="form-control">
+                                </div>
+                            </div>
+    
+                            <!-- Sección de Verificación Modificada -->
+                            <div id="verifyMenu" class="col-lg-12 col-12" style="display: none;">
+                                <div class="mt-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Documento original:</label>
+                                        <input type="file" id="originalFile" class="form-control" 
+                                            accept=".txt,.pdf,.doc,.docx">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Firma digital (.sig):</label>
+                                        <input type="file" id="signatureFile" class="form-control" 
+                                            accept=".sig">
+                                    </div>
+                                    
+                                    <div class="alert alert-info">
+                                        La clave pública se obtendrá automáticamente del campo superior
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-12 mt-4">
+                                <button type="button" 
+                                    onclick="handleDSAProcess()" 
+                                    class="btn btn-primary rounded-pill w-100 py-2">
+                                    Procesar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+    
+                    <!-- Resultados -->
+                    <div id="dsaResultContainer" class="mt-4 p-4 bg-light" 
+                        style="border-radius: 35px; display: none;">
+                        <h5 class="mb-3">Resultado:</h5>
+                        <div id="signatureResult" class="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    </main>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/custom.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+
+  <script>
+    function toggleDSAUploadMenu() {
+        const signMenu = document.getElementById('signMenu');
+        const verifyMenu = document.getElementById('verifyMenu');
+        const action = document.querySelector('input[name="action"]:checked').value;
+        
+        signMenu.style.display = action === 'sign' ? 'block' : 'none';
+        verifyMenu.style.display = action === 'verify' ? 'block' : 'none';
+    }
+
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        element.select();
+        document.execCommand('copy');
+        showResult('✓ Clave copiada al portapapeles', 'success');
+    }
+    
+    async function generateDSADSAKeys() {
+        try {
+            const response = await fetch('/generate-dsa-keys', { method: 'POST' });
+            const data = await response.json();
+            
+            document.getElementById('generatedPublicKey').value = data.public_key;
+            document.getElementById('generatedPrivateKey').value = data.private_key;
+            showResult('✓ Llaves generadas correctamente', 'success');
+            
+        } catch (error) {
+            console.error('Error generando llaves:', error);
+            showResult('❌ Error generando llaves: ' + error.message, 'danger');
+        }
+    }
+    
+    async function handleDSAProcess() {
+        const action = document.querySelector('input[name="action"]:checked').value;
+        const resultContainer = document.getElementById('dsaResultContainer');
+
+        try {
+            if(action === 'sign') {
+                const fileInput = document.getElementById('fileToSign');
+                const privateKey = document.getElementById('generatedPrivateKey').value;
+                
+                if(!fileInput.files[0]) throw new Error('Debes subir un documento');
+                if(!privateKey) throw new Error('Primero genera las llaves');
+
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('private_key', privateKey);
+
+                const response = await fetch('/sign-file', { 
+                    method: 'POST', 
+                    body: formData 
+                });
+                
+                if(!response.ok) throw new Error('Error en el servidor');
+                
+                // Convertir la firma a base64 para integridad
+                const signatureBlob = await response.blob();
+                const reader = new FileReader();
+                reader.readAsDataURL(signatureBlob);
+                reader.onloadend = () => {
+                    const base64Data = reader.result.split(',')[1];
+                    downloadFile('firma.sig', base64Data);
+                };
+                showResult('✓ Firma generada y descargada', 'success');
+
+            } else {
+                const originalFile = document.getElementById('originalFile').files[0];
+                const signatureFile = document.getElementById('signatureFile').files[0];
+                const publicKey = document.getElementById('generatedPublicKey').value;
+                
+                if(!originalFile || !signatureFile) {
+                    throw new Error('Sube el documento y la firma');
+                }
+                
+                if(!publicKey) {
+                    throw new Error('Primero genera las llaves');
+                }
+
+                // Leer la firma como base64
+                const signatureText = await signatureFile.text();
+                const formData = new FormData();
+                formData.append('original', originalFile);
+                formData.append('signature', signatureText);  // Enviar como texto
+                formData.append('public_key', publicKey);
+
+                const response = await fetch('/verify-signature', { 
+                    method: 'POST', 
+                    body: formData 
+                });
+                
+                const result = await response.json();
+                const message = result.valid ? '✓ Firma válida' : '❌ Firma inválida';
+                showResult(message, result.valid ? 'success' : 'danger');
+            }
+            
+            resultContainer.style.display = 'block';
+            
+        } catch (error) {
+            showResult(`❌ Error: ${error.message}`, 'danger');
+            resultContainer.style.display = 'block';
+        }
+    }   
+    
+    function downloadFile(filename, content) {
+        const blob = new Blob([content], { type: 'text/plain' });  // Tipo texto para base64
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    
+    function showResult(message, type) {
+        const alert = document.getElementById('signatureResult');
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+    }
+</script>
+
+</html>

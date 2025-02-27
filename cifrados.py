@@ -18,6 +18,12 @@ from Crypto.Cipher import PKCS1_OAEP, DES3
 from Crypto.Signature import pkcs1_15, DSS
 from Crypto.Hash import SHA256
 
+from cryptography.hazmat.primitives.asymmetric import dsa
+from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.backends import default_backend
+import hashlib
+
+
 from sympy import Matrix
 
 #Desplazamiento
@@ -594,4 +600,63 @@ def load_encrypted_metadata(image):
 
 
 
-######################
+##########DSA Firmas digitales############
+
+
+def generar_llaves_dsa():
+    """Genera par de llaves DSA (2048 bits)"""
+    private_key = dsa.generate_private_key(key_size=2048)  # Cambiar 1024 → 2048
+    
+    private_pem = private_key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption()
+    ).decode()
+    
+    public_pem = private_key.public_key().public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    ).decode()
+    
+    return private_pem, public_pem
+
+def firmar_archivo(archivo_bytes, private_key_pem):
+    """Firma un archivo usando DSA con SHA-256"""
+    private_key = serialization.load_pem_private_key(
+        private_key_pem.encode(),
+        password=None,
+        backend=default_backend()
+    )
+    
+    # Usar SHA-256 para DSA de 2048 bits
+    hasher = hashes.Hash(hashes.SHA256(), backend=default_backend())  # Cambiar SHA1 → SHA256
+    hasher.update(archivo_bytes)
+    hash_digest = hasher.finalize()
+    
+    return private_key.sign(
+        hash_digest,
+        algorithm=hashes.SHA256()  # Cambiar SHA1 → SHA256
+    )
+
+def verificar_firma(archivo_bytes, firma_bytes, public_key_pem):
+    """Verifica una firma DSA con SHA-256"""
+    try:
+        public_key = serialization.load_pem_public_key(
+            public_key_pem.encode(),
+            backend=default_backend()
+        )
+        
+        # Calcular hash SHA-256
+        hasher = hashes.Hash(hashes.SHA256(), backend=default_backend())  # Cambiar SHA1 → SHA256
+        hasher.update(archivo_bytes)
+        hash_digest = hasher.finalize()
+        
+        public_key.verify(
+            firma_bytes,
+            hash_digest,
+            algorithm=hashes.SHA256()  # Cambiar SHA1 → SHA256
+        )
+        return True
+    except Exception as e:
+        print(f"Error en verificación: {str(e)}")
+        return False

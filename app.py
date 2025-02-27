@@ -9,6 +9,7 @@ import json
 import math
 import numpy as np
 from PIL import Image
+import base64
 
 
 app = Flask(__name__)
@@ -360,6 +361,45 @@ def elgamal_decrypt():
         return jsonify(plaintext=plaintext)
     except Exception as e:
         return jsonify(error=str(e)), 400
+    
+@app.route('/dsa')
+def dsa_playground():
+    return render_template('dsa.html')
+
+@app.route('/generate-dsa-keys', methods=['POST'])
+def generate_dsa_keys():
+    private_pem, public_pem = cifrados.generar_llaves_dsa()
+    return jsonify({
+        'private_key': private_pem,
+        'public_key': public_pem
+    })
+
+@app.route('/sign-file', methods=['POST'])
+def sign_file():
+    private_key_pem = request.form['private_key']
+    file = request.files['file']
+    signature = cifrados.firmar_archivo(file.read(), private_key_pem)
+    return signature, 200, {'Content-Type': 'application/octet-stream'}
+
+@app.route('/verify-signature', methods=['POST'])
+def verify_signature():
+    try:
+        # Leer archivo original
+        original = request.files['original'].read()
+        
+        # Leer y decodificar firma
+        signature_b64 = request.form['signature']
+        signature = base64.b64decode(signature_b64)  # Decodificar desde base64
+        
+        # Leer clave pública
+        public_key_pem = request.form['public_key']
+        
+        # Verificar
+        es_valida = cifrados.verificar_firma(original, signature, public_key_pem)
+        return jsonify({'valid': es_valida})
+        
+    except Exception as e:
+        return jsonify({'error': f'Error en verificación: {str(e)}'}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
