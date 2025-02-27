@@ -5,22 +5,20 @@ import random
 import string
 from os.path import join
 from tempfile import gettempdir
-
 import numpy as np
-from PIL import Image, PngImagePlugin
-
+from PIL import Image, PngImagePlugin, ImageOps
 from Crypto.PublicKey import ElGamal
 from Crypto.Random import get_random_bytes
 from Crypto.Random.random import randint
 from Crypto.Util.number import bytes_to_long, long_to_bytes
 from Crypto.PublicKey import RSA, DSA
-from Crypto.Cipher import PKCS1_OAEP, DES3
+from Crypto.Cipher import PKCS1_OAEP, DES3, AES
 from Crypto.Signature import pkcs1_15, DSS
 from Crypto.Hash import SHA256
-
 from sympy import Matrix
+import os
+# Desplazamiento
 
-#Desplazamiento
 
 def shift_cipher_encrypt(text, key):
     encrypted_text = ""
@@ -35,7 +33,7 @@ def shift_cipher_encrypt(text, key):
 
 
 # Permutacion
-        
+
 def cifrado_permutacion_encriptar(texto_plano, clave):
 
     permutacion = [int(x) - 1 for x in clave]
@@ -129,8 +127,6 @@ def cifrado_vigenere_desencriptar(texto_cifrado, clave):
     return ''.join(texto_desencriptado)
 
 
-
-
 # ElGamal---------------
 
 # Generación de claves
@@ -141,11 +137,14 @@ def generate_keys(bits=512):
     return public_key, private_key
 
 # Cifrado
+
+
 def elgamal_encrypt(public_key, message):
     p, g, y = public_key
     m = bytes_to_long(message.encode())  # Convierte texto a número
     if m >= p:
-        raise ValueError("El mensaje es demasiado grande para el tamaño del primo.")
+        raise ValueError(
+            "El mensaje es demasiado grande para el tamaño del primo.")
 
     k = randint(1, p - 2)  # Número aleatorio secreto
     c1 = pow(g, k, p)  # c1 = g^k mod p
@@ -153,6 +152,8 @@ def elgamal_encrypt(public_key, message):
     return (c1, c2)
 
 # Descifrado (solo requiere clave privada y texto cifrado)
+
+
 def elgamal_decrypt(private_key, ciphertext):
     x, p = private_key  # Extraer x y p de la clave privada
     c1, c2 = ciphertext
@@ -256,6 +257,7 @@ def verificar_firma_dsa(mensaje, firma, public_key_pem):
 
 ########## Cifrado afín ###########
 
+
 def affine_encryption(plaintext, a, b):
     """"
     Pasamos un texto plano a mayúsculas para que no genere errores.
@@ -279,6 +281,7 @@ def affine_encryption(plaintext, a, b):
     print(ciphertext)
     return ciphertext
 
+
 def extended_gcd(a, b):
     """
     Calculo del máximo común divisor de dos números enteros a y b.
@@ -289,7 +292,8 @@ def extended_gcd(a, b):
     else:
         g, x, y = extended_gcd(b % a, a)
         return (g, y - (b // a) * x, x)
-   
+
+
 def modular_inverse(a, m):
     """
     Calcula el inverso multiplicativo de a en el módulo m utilizando el algoritmo de Euclides extendido.
@@ -299,7 +303,8 @@ def modular_inverse(a, m):
         raise Exception('Modular inverse does not exist')
     else:
         return x % m
-   
+
+
 def affine_decrypt(ciphertext, a, b):
     """
     Descifra el texto cifrado obtenido con el cifrado afín, para lo que se necesita el texto cifrado, la clave a y la clave b.
@@ -326,25 +331,26 @@ def affine_decrypt(ciphertext, a, b):
 
 ########## Cifrado de Hill ###########
 
+
 def hill_encriptar(message, key):
     """ Generar encripcion
 
     Args:
         message ( str ): Recibe frase a encriptar
         key ( array ): Recibe matriz llave
-         
+
 
     Returns:
         str : Retorna cadena string encriptada
     """
 
     diccionario_encryt = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11,
-            'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
-            '0':26, '1': 27, '2':28, '3':29, '4':30, '5':31, '6':32, '7':33, '8':34, '9':35, '.': 36, ',': 37, ':': 38, '?': 39 , ' ': 40}
+                          'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
+                          '0': 26, '1': 27, '2': 28, '3': 29, '4': 30, '5': 31, '6': 32, '7': 33, '8': 34, '9': 35, '.': 36, ',': 37, ':': 38, '?': 39, ' ': 40}
 
-    diccionario_decrypt = {'0' : 'A', '1': 'B', '2': 'C', '3': 'D', '4': 'E', '5': 'F', '6': 'G', '7': 'H', '8': 'I', '9': 'J', '10': 'K', '11': 'L', '12': 'M',
-                '13': 'N', '14': 'O', '15': 'P', '16': 'Q', '17': 'R', '18': 'S', '19': 'T', '20': 'U', '21': 'V', '22': 'W', '23': 'X', '24': 'Y', '25': 'Z', '26': '0',
-                '27': '1', '28': '2', '29': '3', '30': '4', '31': '5', '32' : '6', '33' : '7', '34' : '8', '35' : '9', '36' : '.', '37' : ',', '38' : ':', '39' : '?', '40' : ' '}
+    diccionario_decrypt = {'0': 'A', '1': 'B', '2': 'C', '3': 'D', '4': 'E', '5': 'F', '6': 'G', '7': 'H', '8': 'I', '9': 'J', '10': 'K', '11': 'L', '12': 'M',
+                           '13': 'N', '14': 'O', '15': 'P', '16': 'Q', '17': 'R', '18': 'S', '19': 'T', '20': 'U', '21': 'V', '22': 'W', '23': 'X', '24': 'Y', '25': 'Z', '26': '0',
+                           '27': '1', '28': '2', '29': '3', '30': '4', '31': '5', '32': '6', '33': '7', '34': '8', '35': '9', '36': '.', '37': ',', '38': ':', '39': '?', '40': ' '}
 
     ciphertext = ''
 
@@ -373,7 +379,7 @@ def hill_encriptar(message, key):
 
         matrix_mensaje = [message[i:i + len(key)] for i in range(0,
                           len(message), len(key))]
-        
+
         for bloque in matrix_mensaje:
             for i in range(0, len(bloque)):
                 list_temp.append(diccionario_encryt[bloque[i]])
@@ -400,18 +406,18 @@ def hill_desencriptar(message, key):
     Args:
         message ( str ): Recibe frase encriptada
         key ( array ): Recibe matriz llave
-         
+
 
     Returns:
         str : Retorna cadena string desencriptada
     """
     diccionario_encryt = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11,
-            'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
-            '0':26, '1': 27, '2':28, '3':29, '4':30, '5':31, '6':32, '7':33, '8':34, '9':35, '.': 36, ',': 37, ':': 38, '?': 39 , ' ': 40}
+                          'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
+                          '0': 26, '1': 27, '2': 28, '3': 29, '4': 30, '5': 31, '6': 32, '7': 33, '8': 34, '9': 35, '.': 36, ',': 37, ':': 38, '?': 39, ' ': 40}
 
-    diccionario_decrypt = {'0' : 'A', '1': 'B', '2': 'C', '3': 'D', '4': 'E', '5': 'F', '6': 'G', '7': 'H', '8': 'I', '9': 'J', '10': 'K', '11': 'L', '12': 'M',
-                '13': 'N', '14': 'O', '15': 'P', '16': 'Q', '17': 'R', '18': 'S', '19': 'T', '20': 'U', '21': 'V', '22': 'W', '23': 'X', '24': 'Y', '25': 'Z', '26': '0',
-                '27': '1', '28': '2', '29': '3', '30': '4', '31': '5', '32' : '6', '33' : '7', '34' : '8', '35' : '9', '36' : '.', '37' : ',', '38' : ':', '39' : '?', '40' : ' '}
+    diccionario_decrypt = {'0': 'A', '1': 'B', '2': 'C', '3': 'D', '4': 'E', '5': 'F', '6': 'G', '7': 'H', '8': 'I', '9': 'J', '10': 'K', '11': 'L', '12': 'M',
+                           '13': 'N', '14': 'O', '15': 'P', '16': 'Q', '17': 'R', '18': 'S', '19': 'T', '20': 'U', '21': 'V', '22': 'W', '23': 'X', '24': 'Y', '25': 'Z', '26': '0',
+                           '27': '1', '28': '2', '29': '3', '30': '4', '31': '5', '32': '6', '33': '7', '34': '8', '35': '9', '36': '.', '37': ',', '38': ':', '39': '?', '40': ' '}
 
     plaintext = ''
     matrix_mensaje = []
@@ -450,10 +456,12 @@ def hill_desencriptar(message, key):
 
 ########## Cifrado multiplicativo ###########
 
+
 def gcd(a, b):
     while b:
         a, b = b, a % b
     return a
+
 
 def modular_inverse(a, m):
     a = a % m
@@ -462,11 +470,12 @@ def modular_inverse(a, m):
             return x
     return None
 
+
 def multi_encrypt(plaintext, key):
     print("entre")
     if gcd(key, 26) != 1:
         raise ValueError("Key must be coprime to 26.")
-    
+
     ciphertext = ""
     for char in plaintext:
         if char.isalpha():
@@ -478,16 +487,18 @@ def multi_encrypt(plaintext, key):
     print(ciphertext)
     return ciphertext
 
+
 def multi_decrypt(ciphertext, key):
     if gcd(key, 26) != 1:
         raise ValueError("Key must be coprime to 26.")
-    
+
     key_inverse = modular_inverse(key, 26)
     plaintext = ""
     for char in ciphertext:
         if char.isalpha():
             shift = ord('A') if char.isupper() else ord('a')
-            decrypted_char = chr((key_inverse * (ord(char) - shift)) % 26 + shift)
+            decrypted_char = chr(
+                (key_inverse * (ord(char) - shift)) % 26 + shift)
             plaintext += decrypted_char
         else:
             plaintext += char
@@ -497,6 +508,8 @@ def multi_decrypt(ciphertext, key):
 
 ########## Visual Triple DES ###########
 # --- Funciones de padding PKCS7 ---
+
+
 def pad_image_arr(arr, block_size=8):
     flat = arr.flatten()
     pad_len = block_size - (len(flat) % block_size)
@@ -506,12 +519,15 @@ def pad_image_arr(arr, block_size=8):
     padded = np.concatenate([flat, padding])
     return padded
 
+
 def unpad_image_arr(arr):
     flat = arr.flatten()
     pad_len = int(flat[-1])
     return flat[:-pad_len]
 
 # --- Funciones de encriptado y desencriptado 3DES ---
+
+
 def encrypt_image(plain_img_arr, key, mode, **kwargs):
     modes = {
         "ECB": DES3.MODE_ECB,
@@ -527,7 +543,8 @@ def encrypt_image(plain_img_arr, key, mode, **kwargs):
             raise ValueError("El modo CTR requiere un nonce.")
     elif mode in ["CBC", "OFB", "CFB"]:
         if "iv" not in kwargs:
-            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+            raise ValueError(
+                f"El modo {mode} requiere un vector de inicialización (IV).")
     key = DES3.adjust_key_parity(key)
     # Se trabaja sobre la imagen aplanada (todos los bytes de la imagen)
     padded_arr = pad_image_arr(plain_img_arr, 8)
@@ -536,6 +553,7 @@ def encrypt_image(plain_img_arr, key, mode, **kwargs):
     encrypted_arr = np.frombuffer(encrypted_bytes, dtype=np.uint8)
     # Se devuelve también la longitud con padding para reconstrucción
     return encrypted_arr, int(encrypted_arr.size)
+
 
 def decrypt_image(cipher_img_arr, key, mode, **kwargs):
     modes = {
@@ -551,7 +569,8 @@ def decrypt_image(cipher_img_arr, key, mode, **kwargs):
             raise ValueError("El modo CTR requiere un nonce.")
     elif mode in ["CBC", "OFB", "CFB"]:
         if "iv" not in kwargs:
-            raise ValueError(f"El modo {mode} requiere un vector de inicialización (IV).")
+            raise ValueError(
+                f"El modo {mode} requiere un vector de inicialización (IV).")
     key = DES3.adjust_key_parity(key)
     des3 = DES3.new(key, mode_val, **kwargs)
     cipher_bytes = cipher_img_arr.tobytes()
@@ -561,6 +580,8 @@ def decrypt_image(cipher_img_arr, key, mode, **kwargs):
     return unpadded
 
 # --- Funciones para incorporar metadatos en el PNG ---
+
+
 def save_encrypted_image(encrypted_arr, padded_length, original_shape, save_path):
     """
     Para facilitar la reconstrucción, se guarda el arreglo cifrado (que es 1D)
@@ -576,15 +597,18 @@ def save_encrypted_image(encrypted_arr, padded_length, original_shape, save_path
     else:
         encrypted_full = encrypted_arr
     encrypted_img_visual = encrypted_full.reshape((height_enc, fixed_width))
-    
+
     # Incrustar metadatos
-    metadata = {"padded_length": padded_length, "original_shape": original_shape}
+    metadata = {"padded_length": padded_length,
+                "original_shape": original_shape}
     pnginfo = PngImagePlugin.PngInfo()
     pnginfo.add_text("padded_length", str(padded_length))
     pnginfo.add_text("original_shape", json.dumps(original_shape))
-    
-    Image.fromarray(encrypted_img_visual).save(save_path, "PNG", pnginfo=pnginfo)
+
+    Image.fromarray(encrypted_img_visual).save(
+        save_path, "PNG", pnginfo=pnginfo)
     return save_path
+
 
 def load_encrypted_metadata(image):
     info = image.info
@@ -592,6 +616,100 @@ def load_encrypted_metadata(image):
     original_shape = json.loads(info.get("original_shape"))
     return padded_length, original_shape
 
+# AES para imagenes --------------------------------------------------------
 
 
+def validate_key_iv(key, iv=None, mode=AES.MODE_ECB):
+    """Verifica que la clave y el IV tengan la longitud correcta."""
+    if len(key) not in [16, 24, 32]:
+        raise ValueError("La clave debe tener 16, 24 o 32 bytes.")
+    if mode == AES.MODE_CBC and (iv is None or len(iv) != 16):
+        raise ValueError("El IV debe tener 16 bytes para CBC.")
+
+
+def DecimalToHex(l):
+    return ''.join(f'{i:02X}' for i in l)
+
+
+def HexToDecimal(s):
+    s = s.zfill(32)
+    return [tuple(int(s[j:j+2], 16) for j in range(i, i+8, 2)) for i in range(0, 32, 8)]
+
+
+def process_image(img_path):
+    if not os.path.exists(img_path):
+        raise FileNotFoundError(f"El archivo {img_path} no existe.")
+    img = Image.open(img_path).convert("RGBA")
+    if img.width % 4 != 0:
+        diff = 4 - (img.width % 4)
+        img = ImageOps.expand(img, border=(0, 0, diff, 0), fill=0)
+    return img
+
+
+def encrypt_image_aes(img_path, key, mode, iv=None):
+    validate_key_iv(key, iv, mode)
+
+    if mode == AES.MODE_ECB:
+        cipher = AES.new(key.encode("utf8"), mode)
+    else:
+        if iv is None:
+            raise ValueError("IV es obligatorio para CBC.")
+        cipher = AES.new(key.encode("utf8"), mode, iv.encode("utf8"))
+
+    img = process_image(img_path)
+    encrypted_img = img.copy()
+
+    for y in range(img.height):
+        row_pixels = []
+        for x in range(img.width):
+            row_pixels += img.getpixel((x, y))
+            if len(row_pixels) == 16:
+                encrypted_row = cipher.encrypt(bytes(row_pixels))
+                new_pixels = HexToDecimal(encrypted_row.hex())
+                for i, px in enumerate(new_pixels):
+                    encrypted_img.putpixel((x - 3 + i, y), px)
+                row_pixels = []
+
+    encrypted_img.save("Encrypted.png")
+
+
+def decrypt_image_aes(img_path, key, mode, iv=None):
+    validate_key_iv(key, iv, mode)
+
+    if mode == AES.MODE_ECB:
+        cipher = AES.new(key.encode("utf8"), mode)
+    else:
+        if iv is None:
+            raise ValueError("IV es obligatorio para CBC.")
+        cipher = AES.new(key.encode("utf8"), mode, iv.encode("utf8"))
+
+    img = Image.open(img_path)
+    decrypted_img = img.copy()
+
+    for y in range(img.height):
+        row_pixels = []
+        for x in range(img.width):
+            row_pixels += img.getpixel((x, y))
+            if len(row_pixels) == 16:
+                decrypted_row = cipher.decrypt(bytes(row_pixels))
+                new_pixels = HexToDecimal(decrypted_row.hex())
+                for i, px in enumerate(new_pixels):
+                    decrypted_img.putpixel((x - 3 + i, y), px)
+                row_pixels = []
+
+    decrypted_img.save("Decrypted.png")
+
+
+def generar_clave(longitud=16): #Claves aleatorias
+    """Genera una clave aleatoria de 16, 24 o 32 bytes para AES."""
+    if longitud not in [16, 24, 32]:
+        raise ValueError("La clave debe tener 16, 24 o 32 bytes.")
+    return os.urandom(longitud)
+
+def generar_iv():
+    """Genera un vector de inicialización (IV) aleatorio de 16 bytes para AES."""
+    return os.urandom(16)
+
+clave = generar_clave(16)  # Para AES-128
+iv = generar_iv()
 ######################
